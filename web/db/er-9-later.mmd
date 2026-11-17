@@ -1,0 +1,110 @@
+erDiagram
+  customers ||--o{ memberships : "holds"
+  customers ||--o{ protection_claims : "makes"
+  bookings ||--o{ protection_claims : "is about"
+  partners ||--o{ partner_cover : "is covered by"
+  partners ||--o{ partner_advances : "takes"
+  partners ||--o| savings_pots : "saves in"
+  savings_pots ||--o{ savings_transactions : "has"
+  campaigns ||--o{ campaign_deliveries : "is sent as"
+  customers |o--o{ campaign_deliveries : "receives"
+  partners |o--o{ campaign_deliveries : "receives"
+  addresses ||--o| households : "is shared as"
+  households ||--o{ household_members : "has"
+  customers ||--o{ household_members : "joins"
+  partners ||--o{ kit_orders : "places"
+  kit_orders ||--o{ kit_order_items : "contains"
+  kit_products ||--o{ kit_order_items : "is ordered as"
+
+  customers { bigint id PK
+    text name }
+  partners { bigint id PK
+    text name }
+  bookings { bigint id PK
+    text status }
+  addresses { bigint id PK
+    text line1 }
+  memberships { bigint id PK
+    bigint customer_id FK
+    text term
+    numeric price
+    date starts_on
+    date ends_on
+    text status
+    bigint payment_id FK }
+  protection_claims { bigint id PK
+    bigint booking_id FK
+    bigint customer_id FK
+    text description
+    numeric claimed_amount
+    numeric approved_amount
+    text_array photo_urls
+    text status
+    bigint decided_by FK
+    text provider_ref }
+  partner_cover { bigint id PK
+    bigint partner_id FK
+    text kind
+    text insurer
+    text provider_ref
+    numeric cover_amount
+    date valid_from
+    date valid_until }
+  partner_advances { bigint id PK
+    bigint partner_id FK
+    numeric amount
+    smallint repay_weeks
+    numeric outstanding
+    text status
+    bigint approved_by FK
+    text provider_ref }
+  savings_pots { bigint id PK
+    bigint partner_id FK
+    text goal_name
+    numeric goal_amount
+    numeric per_payout
+    boolean save_tips
+    text provider_ref }
+  savings_transactions { bigint id PK
+    bigint pot_id FK
+    numeric amount
+    text kind
+    bigint payout_id FK }
+  campaigns { bigint id PK
+    text name
+    text audience
+    text segment
+    text_array channels
+    text message
+    bigint coupon_id FK
+    text status
+    timestamptz scheduled_for
+    bigint created_by FK }
+  campaign_deliveries { bigint id PK
+    bigint campaign_id FK
+    bigint customer_id FK
+    bigint partner_id FK
+    text channel
+    timestamptz sent_at
+    bigint booking_id FK }
+  households { bigint id PK
+    bigint address_id FK
+    text name
+    boolean split_equally }
+  household_members { bigint household_id PK,FK
+    bigint customer_id PK,FK
+    boolean can_book
+    numeric share_pct }
+  kit_products { bigint id PK
+    text name
+    numeric price
+    boolean first_one_free }
+  kit_orders { bigint id PK
+    bigint partner_id FK
+    text pickup_hub
+    numeric total
+    text status }
+  kit_order_items { bigint order_id PK,FK
+    bigint product_id PK,FK
+    smallint quantity
+    numeric unit_price }

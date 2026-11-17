@@ -1,6 +1,6 @@
 /**
  * Saathi design tokens — shared by the React Native apps (customer, partner)
- * and the React web admin panel. Source: docs/design/kleankart-design.html :root.
+ * and the React web admin panel. Source: web/design/saathi-design.html :root.
  */
 export const palette = {
   green: '#0b5d4b', // Saathi Green — buttons, headers

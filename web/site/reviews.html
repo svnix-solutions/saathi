@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customer reviews · Saathi</title>
+<link rel="stylesheet" href="pages.css">
+</head>
+<body>
+<header><div><a class="logo" href="index.html"><b>Saathi</b></a><a href="index.html">Back to home</a></div></header>
+<main class="wide">
+<h1>What customers say</h1>
+<p>Real words from real customers, approved by our team, shown with their permission and never edited.</p>
+<div class="tgrid" id="list"></div>
+<p class="card" id="none">No reviews are published yet. Be the first to share yours below.</p>
+
+<h2 id="share" style="margin-top:48px">Share your experience</h2>
+<p>Used Saathi? Tell us how it went. Your review is not public when you send it. Our team approves each one before it is shown, and publishes your words unchanged.</p>
+<form class="card" id="f" novalidate style="max-width:640px">
+  <label>Your name<input name="name" required maxlength="60" autocomplete="name"></label>
+  <label>Mobile number you booked with<input name="mobile" type="tel" required pattern="[6-9][0-9]{9}" maxlength="10" inputmode="numeric" autocomplete="tel-national"></label>
+  <label id="rl">Your rating</label>
+  <fieldset class="rate" aria-labelledby="rl">
+    <label><input type="radio" name="stars" value="1" required><span>1</span></label>
+    <label><input type="radio" name="stars" value="2"><span>2</span></label>
+    <label><input type="radio" name="stars" value="3"><span>3</span></label>
+    <label><input type="radio" name="stars" value="4"><span>4</span></label>
+    <label><input type="radio" name="stars" value="5"><span>5</span></label>
+  </fieldset>
+  <label>Your review<textarea name="quote" required maxlength="400"></textarea></label>
+  <label class="check"><input type="checkbox" name="consent" required><span>Saathi may show this review with my first name and area on its website and app. I can ask for it to be taken down at any time.</span></label>
+  <button>Send review</button>
+  <p class="err" id="err" role="alert"></p>
+  <p class="ok" id="ok" role="status" hidden></p>
+</form>
+</main>
+<script>
+// Approved reviews come from the server; nothing is shown until an admin has approved it.
+fetch("/api/reviews").then(r => r.ok ? r.json() : []).then(list => {
+  if (!list.length) return;
+  document.getElementById("none").hidden = true;
+  document.getElementById("list").append(...list.map(v => {
+    const card = document.createElement("figure"); card.className = "card";
+    const stars = document.createElement("div"); stars.className = "stars"; stars.textContent = "★".repeat(v.stars);
+    stars.setAttribute("role", "img"); stars.setAttribute("aria-label", v.stars + " out of 5 stars");
+    const quote = document.createElement("blockquote"); quote.textContent = v.quote;
+    const who = document.createElement("small"); who.textContent = v.name;
+    card.append(stars, quote, who); return card;
+  }));
+}).catch(() => {});
+const f = document.getElementById("f"), err = document.getElementById("err"), ok = document.getElementById("ok");
+const MSG = { name: "Fill in your name.", mobile: "Enter the 10-digit mobile number you booked with.", stars: "Choose a rating from 1 to 5.",
+              quote: "Write a few words about your visit.", consent: "Tick the box to let us show your review." };
+f.addEventListener("submit", e => {
+  e.preventDefault();
+  if (!f.quote.value.trim()) f.quote.value = "";
+  const bad = [...f.elements].find(el => el.name && !el.checkValidity());
+  err.textContent = bad ? MSG[bad.name] : "";
+  if (bad) { bad.focus(); return; }
+  const r = Object.fromEntries(new FormData(f));
+  fetch("/api/reviews", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...r, stars: +r.stars, consent: true }) })
+    .then(v => { if (!v.ok) throw 0; })
+    .catch(() => { try { localStorage.setItem("reviewSubmissions", JSON.stringify([...(JSON.parse(localStorage.getItem("reviewSubmissions")) || []), r])); } catch {} });
+  ok.textContent = "Thank you, " + r.name.trim() + ". Your review is waiting for approval and is not public yet. We usually decide within a day.";
+  ok.hidden = false; f.reset();
+});
+</script>
+</body>
+</html>

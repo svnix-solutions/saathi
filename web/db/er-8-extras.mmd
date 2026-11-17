@@ -1,0 +1,112 @@
+erDiagram
+  bookings ||--o{ booking_messages : "has chat"
+  bookings ||--o{ booking_items : "includes"
+  products ||--o{ booking_items : "is added as"
+  bookings |o--o{ safety_alerts : "is about"
+  customers |o--o{ safety_alerts : "raises"
+  partners |o--o{ safety_alerts : "raises"
+  customers |o--o{ notifications : "gets"
+  partners |o--o{ notifications : "gets"
+  customers ||--o{ points_transactions : "earns"
+  customers ||--o{ gift_vouchers : "buys"
+  zones ||--o{ societies : "contains"
+  partners ||--o{ partner_time_off : "asks for"
+  partners ||--o{ partner_lessons : "takes"
+  training_lessons ||--o{ partner_lessons : "is taken as"
+  partners ||--o{ partner_badges : "earns"
+  badges ||--o{ partner_badges : "is given as"
+  zones |o--o{ bonus_schemes : "limits"
+
+  bookings { bigint id PK
+    text contact_name
+    varchar contact_mobile
+    smallint helpers_count }
+  customers { bigint id PK
+    text name }
+  partners { bigint id PK
+    text name }
+  zones { bigint id PK
+    text name UK }
+  safety_alerts { bigint id PK
+    bigint booking_id FK
+    bigint customer_id FK
+    bigint partner_id FK
+    numeric lat
+    numeric lng
+    text status
+    bigint handled_by FK
+    text note }
+  booking_messages { bigint id PK
+    bigint booking_id FK
+    text sender
+    text body
+    timestamptz read_at }
+  notifications { bigint id PK
+    bigint customer_id FK
+    bigint partner_id FK
+    text kind
+    text title
+    text body
+    bigint booking_id FK
+    timestamptz read_at }
+  products { bigint id PK
+    text name
+    numeric price
+    boolean is_live }
+  booking_items { bigint booking_id PK,FK
+    bigint product_id PK,FK
+    smallint quantity
+    numeric unit_price }
+  points_transactions { bigint id PK
+    bigint customer_id FK
+    integer points
+    text reason
+    bigint booking_id FK }
+  gift_vouchers { bigint id PK
+    text code
+    bigint bought_by FK
+    bigint payment_id FK
+    text recipient_name
+    varchar recipient_mobile
+    text message
+    numeric value
+    numeric balance
+    bigint redeemed_by FK
+    date expires_at }
+  societies { bigint id PK
+    bigint zone_id FK
+    text name
+    numeric discount_pct
+    date offer_until }
+  partner_time_off { bigint id PK
+    bigint partner_id FK
+    date from_date
+    date to_date
+    text reason
+    text status
+    bigint decided_by FK }
+  training_lessons { bigint id PK
+    text title
+    text video_url
+    smallint minutes
+    smallint sort_order
+    bigint unlocks_service_id FK }
+  partner_lessons { bigint partner_id PK,FK
+    bigint lesson_id PK,FK
+    smallint watched_minutes
+    timestamptz completed_at }
+  badges { bigint id PK
+    text code
+    text name
+    text rule }
+  partner_badges { bigint partner_id PK,FK
+    bigint badge_id PK,FK
+    timestamptz earned_at }
+  bonus_schemes { bigint id PK
+    text name
+    text kind
+    bigint zone_id FK
+    integer target
+    numeric amount
+    date starts_on
+    date ends_on }

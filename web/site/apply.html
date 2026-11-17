@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Become a partner · Saathi</title>
+<link rel="stylesheet" href="pages.css">
+</head>
+<body>
+<header><div><a class="logo" href="index.html"><b>Saathi</b></a><a href="index.html">Back to home</a></div></header>
+<main>
+<h1>Join Saathi Partner</h1>
+<p>Work near home, choose your hours, and get paid every Monday. Fill this in and our team will call you.</p>
+<form class="card" id="f" novalidate>
+  <label>Your name<input name="name" required maxlength="60" autocomplete="name"></label>
+  <label>Mobile number<input name="mobile" type="tel" required pattern="[6-9][0-9]{9}" maxlength="10" inputmode="numeric" autocomplete="tel-national"></label>
+  <label>Area you live in<input name="area" required maxlength="60"></label>
+  <label>Work you have done before
+    <select name="work"><option>House cleaning</option><option>Cooking or kitchen help</option><option>Laundry and ironing</option><option>Nursing or patient care</option><option>Electrician, plumber or carpenter</option><option>Barber</option><option>New to this work</option></select>
+  </label>
+  <button>Send application</button>
+  <p class="err" id="err" role="alert"></p>
+  <p class="ok" id="ok" role="status" hidden></p>
+</form>
+<script>
+// Sent to the server (server.py); kept in this browser instead if the page is opened as a file.
+const f = document.getElementById("f"), err = document.getElementById("err"), ok = document.getElementById("ok");
+f.addEventListener("submit", e => {
+  e.preventDefault();
+  const bad = [...f.elements].find(el => el.name && !el.checkValidity());
+  err.textContent = !bad ? "" : bad.name === "mobile" ? "Enter a 10-digit mobile number." : "Fill in your " + (bad.name === "area" ? "area" : "name") + ".";
+  if (bad) { bad.focus(); return; }
+  const a = Object.fromEntries(new FormData(f));
+  fetch("/api/applications", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(a) })
+    .then(r => { if (!r.ok) throw 0; })
+    .catch(() => { try { localStorage.setItem("partnerApplications", JSON.stringify([...(JSON.parse(localStorage.getItem("partnerApplications")) || []), a])); } catch {} });
+  ok.textContent = "Thank you, " + a.name.trim() + ". We will call " + a.mobile + " within two working days.";
+  ok.hidden = false; f.reset();
+});
+</script>
+</main>
+</body>
+</html>

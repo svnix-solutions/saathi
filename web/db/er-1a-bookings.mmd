@@ -1,0 +1,107 @@
+erDiagram
+  zones ||--o{ addresses : "contains"
+  zones ||--o{ bookings : "served in"
+  customers ||--o{ addresses : "has"
+  customers ||--o{ bookings : "makes"
+  addresses ||--o{ bookings : "is where"
+  services ||--o{ service_tasks : "lists"
+  services ||--o{ bookings : "is booked as"
+  bookings ||--o{ booking_tasks : "includes"
+  service_tasks ||--o{ booking_tasks : "chosen as"
+  bookings ||--o| visits : "becomes"
+  visits ||--o{ visit_photos : "has"
+  bookings ||--o{ ratings : "gets"
+
+  zones { bigint id PK
+    text name UK
+    text city
+    boolean is_live
+    numeric busy_surcharge_pct
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  customers { bigint id PK
+    varchar mobile UK
+    text name
+    text language
+    boolean is_blocked
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  addresses { bigint id PK
+    bigint customer_id FK
+    bigint zone_id FK
+    text line1
+    numeric lat
+    numeric lng
+    text entry_note
+    boolean is_default
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  services { bigint id PK
+    text code UK
+    text name
+    numeric rate_per_30_min
+    boolean needs_skill
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  service_tasks { bigint id PK
+    bigint service_id FK
+    text name
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  bookings { bigint id PK
+    bigint customer_id FK
+    bigint address_id FK
+    bigint zone_id FK
+    bigint service_id FK
+    bigint partner_id FK
+    smallint minutes
+    timestamptz scheduled_for
+    text status
+    char start_code
+    char finish_ok_code
+    char finish_issue_code
+    numeric amount
+    numeric partner_earning
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  booking_tasks { bigint booking_id PK,FK
+    bigint task_id PK,FK
+    timestamptz done_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  visits { bigint booking_id PK,FK
+    timestamptz check_in_at
+    integer check_in_distance_m
+    boolean check_in_matched
+    timestamptz check_out_at
+    boolean check_out_matched
+    timestamptz start_code_at
+    timestamptz finish_code_at
+    text outcome
+    smallint code_tries
+    smallint extra_minutes
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  visit_photos { bigint id PK
+    bigint booking_id FK
+    text label
+    text file_url
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  ratings { bigint id PK
+    bigint booking_id FK
+    text rated_by
+    smallint stars
+    numeric tip
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }

@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saathi · Book a helper</title>
+<style>
+  :root { --bg:#f3f7f5; --card:#fff; --ink:#0f1f1c; --mut:#5b6b67; --line:#dbe5e1; --green:#0b5d4b; --green-d:#073f33; --mint:#e3f2ec; --yellow:#ffc93c; --on-green:#fff; --warn:#b3261e; --shadow:rgba(7,63,51,.28); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0e1614; --card:#172320; --ink:#eef3f1; --mut:#a3b3ae; --line:#2a3a35; --green:#17806a; --green-d:#0f5f4e; --mint:#1c3830; --warn:#ffa59e; --shadow:rgba(0,0,0,.5); }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 "Avenir Next","Helvetica Neue",Arial,sans-serif; font-variant-numeric:tabular-nums; }
+  main { max-width:520px; margin:0 auto; padding:0 16px 40px; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:18px 0 14px; }
+  .logo { display:flex; align-items:center; gap:10px; font-size:22px; font-weight:700; letter-spacing:-.02em; }
+  header a { color:var(--mut); font-size:14px; font-weight:600; text-decoration:none; padding:8px 12px; border-radius:10px; }
+  header a:hover { background:var(--mint); color:var(--ink); }
+  h2 { font-size:18px; letter-spacing:-.01em; margin:30px 0 12px; }
+  fieldset { border:0; padding:0; margin:0; }
+  svg.i { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex:none; }
+
+  .hero { display:flex; align-items:center; gap:14px; background:var(--yellow); color:#0f1f1c; border-radius:20px; padding:14px 18px 14px 14px; box-shadow:0 14px 26px -18px rgba(255,201,60,.9); }
+  .hero b { display:block; font-size:19px; line-height:1.2; }
+  .ch { width:60px; height:60px; border-radius:16px; background:var(--mint) no-repeat; background-size:230%; flex:none; }
+  .hero .ch { animation:bob 3s ease-in-out infinite; }
+  .hero .ch { width:74px; height:74px; background-color:rgba(255,255,255,.6); }
+  .c-clean { background-image:url(design/img/cut/clean.png); background-position:65% 13%; }
+  .c-deep { background-image:url(design/img/cut/deep.png); background-position:50% 9%; animation-delay:-.6s; }
+  .c-kitchen { background-image:url(design/img/cut/kitchen.png); background-position:46% 3%; animation-delay:-1.2s; }
+  .c-laundry { background-image:url(design/img/cut/laundry.png); background-position:38% 4%; animation-delay:-1.8s; }
+  .c-custom { background-image:url(design/img/cut/custom.png); background-position:46% 15%; animation-delay:-2.4s; }
+  .c-hero { background-image:url(design/img/cut/hero.png); background-position:52% 4%; }
+  .c-nurse_visit, .c-patient_care { background-image:url(design/img/cut/pro-nurse.png); background-position:50% 8%; }
+  .c-electrician, .c-plumber { background-image:url(design/img/cut/pro-repair.png); background-position:57% 4%; }
+  .c-haircut, .c-kids_haircut { background-image:url(design/img/cut/pro-barber.png); background-position:50% 8%; }
+  @keyframes bob { 50% { transform:translateY(-4px); } }
+  @media (prefers-reduced-motion: reduce) { .hero .ch { animation:none; } }
+
+  .grid { display:grid; gap:10px; }
+  .row3 { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .opt { display:block; position:relative; }
+  .opt input { position:absolute; opacity:0; inset:0; }
+  .opt > span { display:block; padding:14px; background:var(--card); border:1.5px solid var(--line); border-radius:16px; cursor:pointer; font-weight:600; transition:border-color .15s, background .15s, transform .15s, box-shadow .15s; box-shadow:0 1px 2px rgba(15,31,28,.05); }
+  .opt:hover > span { transform:translateY(-1px); box-shadow:0 10px 20px -14px var(--shadow); }
+  .opt input:checked + span { border-color:var(--green); background:var(--mint); }
+  .opt input:focus-visible + span { outline:2px solid var(--green); outline-offset:2px; }
+  .svc > span { display:flex; align-items:center; gap:14px; }
+  .svc .t { flex:1; min-width:0; }
+  .svc small { display:block; color:var(--mut); font-weight:400; font-size:14px; }
+  .svc .p { text-align:right; white-space:nowrap; font-weight:700; }
+  .svc .p small { font-size:12px; }
+  .svc input:checked + span .ch { background-color:var(--card); }
+  .tick { width:22px; height:22px; border-radius:50%; border:1.5px solid var(--line); display:grid; place-items:center; color:transparent; flex:none; }
+  .tick svg { width:13px; height:13px; stroke-width:3; }
+  .opt input:checked + span .tick { background:var(--green); border-color:var(--green); color:var(--on-green); }
+  .pill > span { text-align:center; padding:12px 4px; }
+  .when > span { display:flex; align-items:center; gap:10px; }
+  .when small { display:block; color:var(--mut); font-weight:400; font-size:13px; }
+  .when svg { color:var(--green); }
+
+  label.f { display:block; margin-top:12px; font-size:14px; font-weight:600; color:var(--mut); }
+  input[type=datetime-local], textarea { width:100%; margin-top:6px; padding:13px 14px; font:inherit; color:var(--ink); background:var(--card); border:1.5px solid var(--line); border-radius:14px; }
+  input[type=datetime-local]:focus, textarea:focus { outline:none; border-color:var(--green); box-shadow:0 0 0 3px var(--mint); }
+  textarea { resize:vertical; min-height:70px; }
+
+  .bar { position:sticky; bottom:12px; z-index:2; display:flex; justify-content:space-between; align-items:center; gap:14px; margin-top:26px; padding:12px 12px 12px 18px; background:var(--card); border:1px solid var(--line); border-radius:20px; box-shadow:0 18px 34px -18px var(--shadow); }
+  .bar small { display:block; color:var(--mut); font-size:13px; }
+  .price { font-size:26px; font-weight:700; letter-spacing:-.02em; line-height:1.1; }
+  button { font:inherit; font-weight:700; border:0; border-radius:14px; padding:15px 26px; background:var(--green); color:var(--on-green); cursor:pointer; box-shadow:0 10px 18px -10px var(--shadow); transition:transform .15s, background .15s; }
+  button:hover { background:var(--green-d); transform:translateY(-1px); }
+  button.ghost { background:none; color:var(--warn); padding:6px 0; font-weight:600; box-shadow:none; font-size:14px; }
+  button.ghost:hover { background:none; text-decoration:underline; transform:none; }
+  #err { color:var(--warn); min-height:1.5em; margin:10px 4px 0; font-size:14px; font-weight:600; }
+
+  .bk { display:flex; gap:14px; padding:14px; background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:0 1px 2px rgba(15,31,28,.05); }
+  .bk.new { animation:pop .5s ease-out; border-color:var(--green); }
+  @keyframes pop { from { transform:scale(.96); opacity:0; } }
+  .bk div { flex:1; min-width:0; }
+  .bk b { display:block; }
+  .bk p { margin:2px 0; color:var(--mut); font-size:14px; overflow-wrap:anywhere; }
+  .tag { display:inline-block; margin:2px 0 4px; background:var(--yellow); color:#0f1f1c; border-radius:20px; padding:2px 10px; font-size:12px; font-weight:700; }
+  .empty { text-align:center; color:var(--mut); padding:26px 14px; border:1.5px dashed var(--line); border-radius:16px; }
+  [hidden] { display:none !important; }
+
+  /* sign-in, code and registration screens */
+  .auth { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:22px 20px; margin-top:16px; }
+  .auth h1 { font-size:24px; line-height:1.2; letter-spacing:-.02em; margin:0 0 6px; }
+  .auth p { color:var(--mut); margin:0 0 4px; }
+  .auth button { width:100%; margin-top:18px; }
+  .auth button.ghost { width:auto; margin-top:12px; color:var(--green); }
+  .auth button:disabled { opacity:.5; cursor:default; }
+  input[type=tel], input[type=text] { width:100%; margin-top:6px; padding:13px 14px; font:inherit; font-weight:600; color:var(--ink); background:var(--card); border:1.5px solid var(--line); border-radius:14px; }
+  input[type=tel]:focus, input[type=text]:focus { outline:none; border-color:var(--green); box-shadow:0 0 0 3px var(--mint); }
+  #code { text-align:center; font-size:26px; letter-spacing:.5em; }
+  .msg { color:var(--warn); min-height:1.5em; margin:10px 0 0; font-size:14px; font-weight:600; }
+  .steps { display:flex; gap:6px; margin-bottom:14px; }
+  .steps i { flex:1; height:5px; border-radius:3px; background:var(--line); }
+  .steps i.on { background:var(--green); }
+  .stepno { font-size:13px; color:var(--mut); margin:0 0 4px; }
+  .hint { font-size:13px; color:var(--mut); margin:14px 0 0; }
+  .lang legend { padding:0; font-size:14px; font-weight:600; color:var(--mut); }
+  .lang + .hint { margin-top:10px; }
+  .dev { background:var(--yellow); color:#0f1f1c; border-radius:12px; padding:10px 14px; margin-top:12px; font-weight:600; }
+  header .who { display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; color:var(--mut); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+  <symbol id="bolt" viewBox="0 0 24 24"><path d="M13 2L5 13h6l-1 9 8-12h-6z"/></symbol>
+  <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="mark" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#0b5d4b"/><path d="M41 21c-2-3-5.5-4.5-9.5-4.5-5.5 0-9.5 3-9.5 7.5 0 9.5 20 6 20 16 0 5-4.5 8-10.5 8-4.5 0-8.5-2-10.5-5.5" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M48 10l2 5.5 5.5 2-5.5 2-2 5.5-2-5.5-5.5-2 5.5-2z" fill="#ffc93c"/></symbol>
+</svg>
+
+<main>
+  <header>
+    <div class="logo"><svg width="36" height="36" aria-hidden="true"><use href="#mark"/></svg>Saathi</div>
+    <div class="who"><span id="hello"></span><button class="ghost" id="logout" hidden style="color:var(--mut)">Log out</button><a href="site/index.html" id="about">About Saathi</a></div>
+  </header>
+
+  <!-- Exactly one of these four sections is shown. Home appears only for a signed-in customer whose details are complete. -->
+  <section id="vLoading"><p class="empty">Loading…</p></section>
+
+  <section id="vLogin" hidden>
+    <div class="hero">
+      <div class="ch c-hero" role="img" aria-label="Saathi helper waving"></div>
+      <div><b>A trained helper at your door in 15 minutes</b>Sign in to book.</div>
+    </div>
+    <form class="auth" id="loginForm" novalidate>
+      <h1>Enter your mobile number</h1>
+      <p>We will send a 4-digit code to confirm it is you. New here? The same step creates your account.</p>
+      <label class="f">Mobile number
+        <input type="tel" id="mobile" inputmode="numeric" maxlength="10" autocomplete="tel-national" placeholder="10-digit number" required>
+      </label>
+      <button>Send code</button>
+      <p class="msg" id="loginMsg" role="alert"></p>
+    </form>
+    <form class="auth" id="otpForm" novalidate hidden>
+      <h1>Enter the code</h1>
+      <p>Sent by SMS to +91 <b id="sentTo"></b>. It works for 5 minutes.</p>
+      <label class="f">4-digit code
+        <input type="text" id="code" inputmode="numeric" maxlength="4" autocomplete="one-time-code" required>
+      </label>
+      <div class="dev" id="devCode" hidden></div>
+      <button>Verify and continue</button>
+      <p class="msg" id="otpMsg" role="alert"></p>
+      <button type="button" class="ghost" id="resend" disabled>Resend code</button>
+      <button type="button" class="ghost" id="changeNumber" style="float:right">Change number</button>
+    </form>
+  </section>
+
+  <section id="vRegister" hidden>
+    <!-- Two short steps, as in the design: name and language, then the address. Home stays closed until both are saved. -->
+    <form class="auth" id="regName" novalidate>
+      <div class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></div>
+      <p class="stepno">New customer · step 2 of 3</p>
+      <h1>Welcome. What should we call you?</h1>
+      <label class="f">Your name
+        <input type="text" name="name" maxlength="60" autocomplete="name" required>
+      </label>
+      <fieldset class="row3 lang" style="margin-top:14px">
+        <legend class="f" style="margin-bottom:6px">Language</legend>
+        <label class="opt pill"><input type="radio" name="language" value="en" checked><span>English</span></label>
+        <label class="opt pill"><input type="radio" name="language" value="hi"><span>हिन्दी</span></label>
+        <label class="opt pill"><input type="radio" name="language" value="pa"><span>ਪੰਜਾਬੀ</span></label>
+      </fieldset>
+      <p class="hint">There is no skip. Home opens only when your name and address are saved.</p>
+      <button>Continue</button>
+      <p class="msg" id="regMsg" role="alert"></p>
+    </form>
+    <form class="auth" id="regAddress" novalidate hidden>
+      <div class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+      <p class="stepno">New customer · step 3 of 3</p>
+      <h1>Where should the helper come?</h1>
+      <label class="f">Flat and building
+        <textarea name="address" maxlength="300" autocomplete="street-address" placeholder="Flat, building, area" required></textarea>
+      </label>
+      <label class="f">How to reach (optional)
+        <input type="text" name="entry_note" maxlength="200" placeholder="For example: Gate 2, tell the guard flat 204">
+      </label>
+      <button>Save and open Home</button>
+      <p class="msg" id="addrMsg" role="alert"></p>
+      <button type="button" class="ghost" id="backToName">Back</button>
+    </form>
+  </section>
+
+  <section id="vHome" hidden>
+    <div class="hero">
+      <div class="ch c-hero" role="img" aria-label="Saathi helper waving"></div>
+      <div><b>A trained helper at your door in 15 minutes</b>Or pick a time that suits you.</div>
+    </div>
+
+    <form id="form" novalidate>
+      <h2>What do you need?</h2>
+      <fieldset class="grid" id="services"></fieldset>
+
+      <h2>How long?</h2>
+      <fieldset class="row3" id="durations"></fieldset>
+
+      <h2>When?</h2>
+      <fieldset class="row2">
+        <label class="opt when"><input type="radio" name="when" value="now" checked><span><svg class="i" aria-hidden="true"><use href="#bolt"/></svg><span>Now<small>Arrives in 15 min</small></span></span></label>
+        <label class="opt when"><input type="radio" name="when" value="later"><span><svg class="i" aria-hidden="true"><use href="#clock"/></svg><span>Schedule<small>Pick date and time</small></span></span></label>
+      </fieldset>
+      <label class="f" id="atWrap" hidden>Date and time
+        <input type="datetime-local" name="at">
+      </label>
+
+      <h2>Where?</h2>
+      <label class="f" style="margin-top:0">Address
+        <textarea name="address" required maxlength="300" autocomplete="street-address" placeholder="Flat, building, area"></textarea>
+      </label>
+      <label class="f">Tell the helper what to focus on (optional)
+        <textarea name="notes" maxlength="300" placeholder="For example: kitchen first"></textarea>
+      </label>
+      <p id="err" role="alert"></p>
+
+      <div class="bar">
+        <div><small id="sum"></small><span class="price" id="price"></span></div>
+        <button>Book helper</button>
+      </div>
+    </form>
+
+    <h2>Your bookings</h2>
+    <div class="grid" id="bookings"></div>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const form = $('form');
+const fmtMin = m => m < 60 ? `${m} min` : `${m / 60} hr`;
+const esc = s => String(s).replace(/[&<>"']/g, c => `&#${c.charCodeAt(0)};`);
+const TICK = '<i class="tick"><svg class="i" aria-hidden="true"><use href="#check"/></svg></i>';
+
+// One helper for every call to the server. A 401 anywhere means the session ended, so the sign-in screen comes back.
+async function api(path, body) {
+  const r = await fetch(path, body === undefined ? {} : { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw Object.assign(new Error(data.error || 'Something went wrong. Try again.'), { status: r.status });
+  return data;
+}
+
+// ---- Which screen is showing. The server decides: not signed in -> sign in; details missing -> registration; else home.
+const VIEWS = ['vLoading', 'vLogin', 'vRegister', 'vHome'];
+const show = view => VIEWS.forEach(v => $(v).hidden = v !== view);
+function route(me) {
+  $('logout').hidden = !me; $('about').hidden = !!me;
+  $('hello').textContent = me && me.complete ? 'Hi, ' + me.name.split(' ')[0] : '';
+  if (!me) { show('vLogin'); $('loginForm').hidden = false; $('otpForm').hidden = true; $('mobile').focus(); }
+  else if (!me.complete) {
+    show('vRegister');
+    const step2 = !!me.name;   // name already saved: go straight to the address step
+    $('regName').hidden = step2; $('regAddress').hidden = !step2;
+    $('regName').elements.name.value = me.name;
+    $('regName').querySelector(`input[value="${me.language || 'en'}"]`).checked = true;
+    $('regAddress').elements.address.value = me.address; $('regAddress').elements.entry_note.value = me.entry_note || '';
+    (step2 ? $('regAddress').elements.address : $('regName').elements.name).focus();
+  }
+  else { show('vHome'); openHome(me); }
+}
+api('/api/me').then(route).catch(e => {
+  if (e.status === 401) return route(null);
+  $('vLoading').firstElementChild.textContent = 'Saathi could not be reached. Open this page through the server (python3 server.py).';
+});
+
+// ---- Sign in: mobile number, then the code
+let mobile = '', timer;
+async function sendCode() {
+  const sent = await api('/api/auth/otp', { mobile });
+  $('sentTo').textContent = mobile; $('loginForm').hidden = true; $('otpForm').hidden = false;
+  $('code').value = ''; $('otpMsg').textContent = ''; $('code').focus();
+  $('devCode').hidden = !sent.dev_code;   // test mode only: the server sends the code back because no SMS provider is connected
+  if (sent.dev_code) { $('devCode').textContent = 'Test mode, no SMS sent. Your code is ' + sent.dev_code; $('devCode').dataset.code = sent.dev_code; }
+  let left = sent.resend_after; clearInterval(timer);
+  const tick = () => { $('resend').disabled = left > 0; $('resend').textContent = left > 0 ? `Resend code in ${left}s` : 'Resend code'; if (left-- <= 0) clearInterval(timer); };
+  tick(); timer = setInterval(tick, 1000);
+}
+$('loginForm').addEventListener('submit', e => {
+  e.preventDefault(); mobile = $('mobile').value.trim();
+  if (!/^[6-9]\d{9}$/.test(mobile)) { $('loginMsg').textContent = 'Enter a 10-digit mobile number.'; return; }
+  $('loginMsg').textContent = ''; sendCode().catch(err => $('loginMsg').textContent = err.message);
+});
+$('resend').onclick = () => sendCode().catch(err => $('otpMsg').textContent = err.message);
+$('changeNumber').onclick = () => route(null);
+$('otpForm').addEventListener('submit', e => {
+  e.preventDefault();
+  if (!/^\d{4}$/.test($('code').value)) { $('otpMsg').textContent = 'Enter the 4-digit code.'; return; }
+  api('/api/auth/verify', { mobile, code: $('code').value }).then(route).catch(err => $('otpMsg').textContent = err.message);
+});
+
+// ---- Registration, two steps: name and language, then address. Shown instead of home until both are saved.
+$('regName').addEventListener('submit', e => {
+  e.preventDefault();
+  const f = e.target.elements, name = f.name.value.trim();
+  if (!name) { $('regMsg').textContent = 'Fill in your name.'; f.name.focus(); return; }
+  api('/api/me', { name, language: f.language.value }).then(route).catch(err => $('regMsg').textContent = err.message);
+});
+$('regAddress').addEventListener('submit', e => {
+  e.preventDefault();
+  const f = e.target.elements, address = f.address.value.trim();
+  if (!address) { $('addrMsg').textContent = 'Add your home address.'; f.address.focus(); return; }
+  api('/api/me', { address, entry_note: f.entry_note.value.trim() }).then(route).catch(err => $('addrMsg').textContent = err.message);
+});
+$('backToName').onclick = () => { $('regAddress').hidden = true; $('regName').hidden = false; $('regName').elements.name.focus(); };
+$('logout').onclick = () => api('/api/logout', {}).finally(() => route(null));
+
+// ---- Home. Services, durations and every price come from the server's database; bookings are the signed-in customer's own.
+let SERVICES = [], DURATIONS = [], bookings = [];
+const service = code => SERVICES.find(s => s.code === code);
+const price = (code, minutes) => service(code).prices[minutes];
+const expired = e => { if (e.status === 401) route(null); else $('err').textContent = e.message; };
+
+function refresh() {
+  if (!SERVICES.length) return;
+  const minutes = +form.minutes.value;
+  $('price').textContent = '₹' + price(form.service.value, minutes);
+  $('sum').textContent = `${service(form.service.value).name} · ${fmtMin(minutes)}`;
+  $('atWrap').hidden = form.when.value !== 'later';
+}
+form.addEventListener('change', refresh);
+
+async function openHome(me) {
+  form.address.value = me.address;
+  try {
+    const p = await api('/api/pricing');
+    SERVICES = p.services; DURATIONS = p.durations;
+    $('services').innerHTML = SERVICES.map((s, i) =>
+      `<label class="opt svc"><input type="radio" name="service" value="${esc(s.code)}" ${i ? '' : 'checked'}>
+       <span><i class="ch c-${esc(s.code)}"></i><span class="t">${esc(s.name)}<small>${esc(s.description)}</small></span>
+       <span class="p">₹${s.rate}<small>per 30 min</small></span>${TICK}</span></label>`).join('');
+    const first = DURATIONS.includes(60) ? 60 : DURATIONS[0];
+    $('durations').innerHTML = DURATIONS.map(m =>
+      `<label class="opt pill"><input type="radio" name="minutes" value="${m}" ${m === first ? 'checked' : ''}><span>${fmtMin(m)}</span></label>`).join('');
+    refresh(); await loadBookings();
+  } catch (e) { expired(e); }
+}
+async function loadBookings(newId) { bookings = await api('/api/bookings'); render(newId); }
+
+function render(newId) {
+  const box = $('bookings');
+  box.replaceChildren(...bookings.map(b => {
+    const el = document.createElement('div');
+    el.className = 'bk' + (b.id === newId ? ' new' : '');
+    const pic = document.createElement('i');
+    pic.className = 'ch c-' + b.service;
+    const body = document.createElement('div');
+    el.append(pic, body);
+    const add = (tag, text) => { const n = document.createElement(tag); n.textContent = text; body.append(n); return n; };
+    add('b', `${(service(b.service) || { name: b.service }).name} · ${fmtMin(b.minutes)} · ₹${b.price}`);
+    add('span', b.at ? new Date(b.at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : 'Arriving in about 15 minutes').className = 'tag';
+    add('p', b.address);
+    if (b.notes) add('p', 'Focus: ' + b.notes);
+    const x = add('button', 'Cancel booking');
+    x.className = 'ghost';
+    x.onclick = () => api(`/api/bookings/${b.id}/cancel`, {}).then(() => loadBookings()).catch(expired);
+    return el;
+  }));
+  if (!bookings.length) {
+    const e = document.createElement('div');
+    e.className = 'empty';
+    e.textContent = 'Nothing booked yet. Your visits will show here.';
+    box.append(e);
+  }
+}
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const address = form.address.value.trim();
+  const later = form.when.value === 'later';
+  const at = later ? form.at.value : '';
+  const err = !address ? 'Add your address.'
+    : later && !at ? 'Pick a date and time.'
+    : later && new Date(at) <= new Date() ? 'Pick a time in the future.' : '';
+  $('err').textContent = err;
+  if (err) { (address ? form.at : form.address).focus(); return; }
+  api('/api/bookings', { service: form.service.value, minutes: +form.minutes.value, at, address, notes: form.notes.value.trim() })
+    .then(made => { form.notes.value = ''; return loadBookings(made.id); })
+    .then(() => $('bookings').scrollIntoView({ behavior: 'smooth' }))
+    .catch(expired);
+});
+</script>
+</body>
+</html>

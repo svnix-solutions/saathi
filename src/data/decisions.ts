@@ -1,5 +1,5 @@
 /**
- * Working launch values (docs/design/decisions.html). Every price/rule the
+ * Working launch values (web/design/saathi-design.html, Decisions page). Every price/rule the
  * prototype shows should come from here so the founders can change it in one place.
  */
 export const decisions = {

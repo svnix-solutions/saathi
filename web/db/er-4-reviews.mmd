@@ -1,0 +1,73 @@
+erDiagram
+  bookings ||--o{ ratings : "gets"
+  ratings ||--o| reviews : "may be published as"
+  customers ||--o{ reviews : "writes"
+  partners ||--o{ reviews : "is about"
+  admin_users |o--o{ reviews : "approves and replies to"
+  reviews ||--o{ review_photos : "has"
+  reviews |o--o{ testimonials : "is picked as"
+  customers |o--o{ testimonials : "is quoted in"
+  partners |o--o{ testimonials : "is quoted in"
+  admin_users |o--o{ testimonials : "approves"
+
+  bookings { bigint id PK
+    text status }
+  customers { bigint id PK
+    text name }
+  partners { bigint id PK
+    text name
+    numeric rating_avg }
+  admin_users { bigint id PK
+    text name }
+  ratings { bigint id PK
+    bigint booking_id FK
+    text rated_by
+    smallint stars
+    text_array tags
+    text comment
+    numeric tip }
+  reviews { bigint id PK
+    bigint rating_id FK,UK
+    bigint customer_id FK
+    bigint partner_id FK
+    smallint on_time_stars
+    smallint quality_stars
+    smallint behaviour_stars
+    text body
+    boolean show_first_name
+    text status
+    bigint approved_by FK
+    timestamptz approved_at
+    text hidden_reason
+    boolean contested_by_partner
+    text reply
+    bigint replied_by FK
+    timestamptz replied_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  review_photos { bigint id PK
+    bigint review_id FK
+    text file_url
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  testimonials { bigint id PK
+    text audience
+    bigint review_id FK
+    bigint customer_id FK
+    bigint partner_id FK
+    text author_name
+    text quote
+    smallint stars
+    text photo_url
+    text_array show_on
+    smallint sort_order
+    timestamptz consent_given_at
+    text status
+    bigint approved_by FK
+    timestamptz approved_at
+    text rejected_reason
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }

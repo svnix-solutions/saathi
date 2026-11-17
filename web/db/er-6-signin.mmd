@@ -1,0 +1,64 @@
+erDiagram
+  customers ||--o{ auth_sessions : "is signed in by"
+  partners ||--o{ auth_sessions : "is signed in by"
+  customers ||--o{ addresses : "has"
+  partners ||--o{ partner_references : "names"
+  partners ||--o{ partner_documents : "uploads"
+
+  otp_requests { bigint id PK
+    varchar mobile
+    text audience
+    text code_hash
+    timestamptz expires_at
+    smallint attempts
+    timestamptz used_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  auth_sessions { bigint id PK
+    text token_hash UK
+    bigint customer_id FK
+    bigint partner_id FK
+    text device
+    timestamptz expires_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  customers { bigint id PK
+    varchar mobile UK
+    text name
+    text language
+    timestamptz profile_completed_at
+    boolean is_active }
+  partners { bigint id PK
+    varchar mobile UK
+    text name
+    text email UK
+    timestamptz email_verified_at
+    timestamptz signup_completed_at
+    text status }
+  partner_references { bigint id PK
+    bigint partner_id FK
+    smallint position
+    text name
+    varchar mobile
+    text relation
+    timestamptz verified_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partner_documents { bigint id PK
+    bigint partner_id FK
+    bigint document_type_id FK
+    text status
+    text file_url
+    text file_back_url
+    char number_last4
+    text name_on_document
+    text rejected_reason
+    bigint verified_by FK
+    timestamptz verified_at }
+  addresses { bigint id PK
+    bigint customer_id FK
+    text line1
+    boolean is_default }

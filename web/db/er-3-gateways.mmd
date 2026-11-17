@@ -1,0 +1,111 @@
+erDiagram
+  payment_gateways ||--o{ gateway_orders : "takes"
+  payment_gateways ||--o{ gateway_webhook_events : "sends"
+  payment_gateways ||--o{ partner_payout_accounts : "holds"
+  payment_gateways |o--o{ payouts : "pays through"
+  partners ||--o{ partner_payout_accounts : "has"
+  bookings ||--o{ payments : "is paid by"
+  payments ||--o| gateway_orders : "online payment opens"
+  gateway_orders ||--o{ gateway_transactions : "has attempts"
+  payments ||--o{ refunds : "may have"
+  refunds ||--o| gateway_refunds : "is sent as"
+  gateway_transactions ||--o{ gateway_refunds : "is refunded by"
+  partners ||--o{ payouts : "receives"
+
+  bookings { bigint id PK
+    numeric amount
+    text status }
+  payments { bigint id PK
+    bigint booking_id FK
+    text method
+    numeric amount
+    text status }
+  gateway_orders { bigint id PK
+    bigint payment_id FK
+    bigint gateway_id FK
+    text provider_order_id
+    integer amount_paise
+    char currency
+    text receipt UK
+    text status
+    timestamptz expires_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  gateway_transactions { bigint id PK
+    bigint gateway_order_id FK
+    bigint gateway_id FK
+    text provider_payment_id
+    text status
+    text method
+    integer amount_paise
+    integer fee_paise
+    integer tax_paise
+    text vpa
+    text bank
+    char card_last4
+    text error_code
+    text error_description
+    boolean signature_verified
+    timestamptz captured_at
+    jsonb raw
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  refunds { bigint id PK
+    bigint payment_id FK
+    numeric amount
+    text reason }
+  gateway_refunds { bigint id PK
+    bigint refund_id FK,UK
+    bigint gateway_transaction_id FK
+    bigint gateway_id FK
+    text provider_refund_id
+    integer amount_paise
+    text status
+    timestamptz processed_at
+    jsonb raw
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  gateway_webhook_events { bigint id PK
+    bigint gateway_id FK
+    text provider_event_id
+    text event_type
+    boolean signature_valid
+    jsonb payload
+    timestamptz processed_at
+    text error
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partners { bigint id PK
+    text name }
+  payouts { bigint id PK
+    bigint partner_id FK
+    numeric amount
+    text status
+    bigint gateway_id FK
+    text provider_payout_id
+    text utr
+    text failure_reason }
+  payment_gateways { bigint id PK
+    text code UK
+    text name
+    boolean takes_payments
+    boolean sends_payouts
+    boolean is_live
+    smallint priority
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partner_payout_accounts { bigint id PK
+    bigint partner_id FK
+    bigint gateway_id FK
+    text provider_contact_id
+    text provider_account_id
+    text account_hint
+    boolean is_default
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }

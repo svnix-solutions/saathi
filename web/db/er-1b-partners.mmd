@@ -1,0 +1,104 @@
+erDiagram
+  zones ||--o{ partners : "home zone of"
+  zones ||--o{ bookings : "served in"
+  customers ||--o{ bookings : "makes"
+  services ||--o{ bookings : "is booked as"
+  partners |o--o{ bookings : "does"
+  partners ||--o{ partner_documents : "submits"
+  partners ||--o{ partner_shifts : "works"
+  partners ||--o{ partner_services : "trained for"
+  services ||--o{ partner_services : "needs"
+  bookings ||--o{ booking_offers : "is offered in"
+  partners ||--o{ booking_offers : "receives"
+  customers ||--o{ customer_partner_prefs : "sets"
+  partners ||--o{ customer_partner_prefs : "is in"
+
+  zones { bigint id PK
+    text name UK
+    text city
+    boolean is_live
+    numeric busy_surcharge_pct
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partners { bigint id PK
+    varchar mobile UK
+    text name
+    bigint zone_id FK
+    bigint profession_id FK
+    text status
+    boolean is_online
+    numeric rating_avg
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partner_documents { bigint id PK
+    bigint partner_id FK
+    bigint document_type_id FK
+    text status
+    date expires_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partner_shifts { bigint id PK
+    bigint partner_id FK
+    smallint weekday
+    time starts_at
+    time ends_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partner_services { bigint partner_id PK,FK
+    bigint service_id PK,FK
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  services { bigint id PK
+    text code UK
+    bigint profession_id FK
+    bigint specialization_id FK
+    text name
+    numeric rate_per_30_min
+    boolean needs_skill
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  bookings { bigint id PK
+    bigint customer_id FK
+    bigint address_id FK
+    bigint zone_id FK
+    bigint service_id FK
+    bigint partner_id FK
+    smallint minutes
+    timestamptz scheduled_for
+    text status
+    char start_code
+    char finish_ok_code
+    char finish_issue_code
+    numeric amount
+    numeric partner_earning
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  booking_offers { bigint id PK
+    bigint booking_id FK
+    bigint partner_id FK
+    text response
+    boolean assigned_by_admin
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  customers { bigint id PK
+    varchar mobile UK
+    text name
+    text language
+    boolean is_blocked
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  customer_partner_prefs { bigint customer_id PK,FK
+    bigint partner_id PK,FK
+    text pref
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }

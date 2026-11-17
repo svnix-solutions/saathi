@@ -1,0 +1,84 @@
+erDiagram
+  customers ||--o{ plans : "subscribes to"
+  addresses ||--o{ plans : "is for"
+  services ||--o{ plans : "covers"
+  partners |o--o{ plans : "regular helper of"
+  plans |o--o{ bookings : "creates"
+  customers ||--o{ wallet_transactions : "has"
+  bookings |o--o{ wallet_transactions : "relates to"
+  coupons ||--o{ coupon_uses : "is used in"
+  bookings ||--o| coupon_uses : "applies"
+  customers ||--o{ referrals : "refers"
+  customers ||--o| referrals : "was referred by"
+
+  customers { bigint id PK
+    varchar mobile UK
+    text name
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  addresses { bigint id PK
+    bigint customer_id FK
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  services { bigint id PK
+    text code UK
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partners { bigint id PK
+    text name
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  bookings { bigint id PK
+    bigint customer_id FK
+    bigint plan_id FK
+    numeric amount
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  plans { bigint id PK
+    bigint customer_id FK
+    bigint address_id FK
+    bigint service_id FK
+    bigint partner_id FK
+    smallint_array weekdays
+    time starts_at
+    smallint minutes
+    numeric discount_pct
+    text status
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  wallet_transactions { bigint id PK
+    bigint customer_id FK
+    numeric amount
+    text kind
+    bigint booking_id FK
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  coupons { bigint id PK
+    text code UK
+    numeric amount_off
+    numeric percent_off
+    boolean first_visit_only
+    date valid_until
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  coupon_uses { bigint coupon_id PK,FK
+    bigint booking_id PK,FK
+    numeric discount
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  referrals { bigint id PK
+    bigint referrer_id FK
+    bigint referred_id FK
+    timestamptz rewarded_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }

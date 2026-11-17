@@ -4,3 +4,15 @@ storybook-static
 *.log
 docs/design/
 docs/design.zip
+# web/: generated files and local data (rebuild with the commands in README.md)
+web/data/
+web/**/__pycache__/
+web/design/img/raw/
+web/**/*.pdf
+web/design/customer-app.html
+web/design/worker-app.html
+web/design/admin-panel.html
+web/design/decisions.html
+web/design/brand.html
+web/design/version-1.html
+web/db/er-diagram.html
