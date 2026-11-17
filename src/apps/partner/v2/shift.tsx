@@ -201,7 +201,7 @@ export function DoorCodeScreen({ params }: { params: { code?: string } }) {
   const locked = left <= 0;
   const start = () => {
     if (code !== right) { set({ startTries: tries + 1 }); setError(true); setCode(''); return; }
-    set({ jobStarted: true, startTries: 0 });
+    set({ jobStarted: true, startTries: 0, startVerified: true });
     nav.toast(t(`Code matches. ${job.minutes / 60 >= 1 ? job.minutes / 60 + ' hr' : job.minutes + ' min'} clock started.`, 'कोड सही है। घड़ी शुरू।'));
     nav.replace('onJob');
   };

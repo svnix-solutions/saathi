@@ -7,7 +7,8 @@ import { Badge, Big, Page, Plain, TopBar, TopH2, defaultToday, type V1State } fr
 import { serviceHi } from './jobs';
 
 /** The design's sample earning for this job (page 30). */
-const EARN = 258;
+/** what this job pays the partner (₹258 in the design's 2-hour sample) */
+const earnOf = (st: V1State) => st.job?.earn ?? 258;
 const firstName = (st: V1State) => st.job.customer.split(' ')[0];
 
 /* 42 · Finish code. Same screen for both codes: the partner is never told which is which. */
@@ -27,11 +28,11 @@ export function FinishCode({ params }: { params: { code?: string } }) {
       const happy = code === codes.finishHappy;
       const today = st.today ?? defaultToday;
       set({
-        finishTries: 0, selfieIn: false, selfieOut: false, jobEndsAt: undefined, photos: undefined, familyLive: false,
+        finishTries: 0, startTries: 0, startVerified: false, selfieIn: false, selfieOut: false, jobEndsAt: undefined, photos: undefined, familyLive: false,
         ...(happy ? {
-          earnedToday: (st.earnedToday ?? 412) + EARN, jobsToday: (st.jobsToday ?? 3) + 1,
-          week: (st.week ?? 2846) + EARN, weekJobs: (st.weekJobs ?? 19) + 1,
-          today: [{ title: job.service, titleHi: serviceHi[job.service] ?? job.service, sub: '11:00 am · 1 hr', amt: EARN }, ...today],
+          earnedToday: (st.earnedToday ?? 412) + earnOf(st), jobsToday: (st.jobsToday ?? 3) + 1,
+          week: (st.week ?? 2846) + earnOf(st), weekJobs: (st.weekJobs ?? 19) + 1,
+          today: [{ title: job.service, titleHi: serviceHi[job.service] ?? job.service, sub: '11:00 am · 1 hr', amt: earnOf(st) }, ...today],
         } : {}),
       });
       nav.reset(happy ? 'finish.happy' : 'finish.notHappy');
@@ -96,7 +97,7 @@ export function FinishHappy() {
         <View style={{ marginTop: 14 }}><Badge name="check" /></View>
         <H center>{t('Job complete', 'काम पूरा हुआ')}</H>
         <T m center>{t(`${name} was happy with the work.`, `${name} काम से ख़ुश थे।`)}</T>
-        <Card row><T m>{t('Added to this week', 'इस हफ़्ते में जुड़े')}</T><H size={20}>{rupees(EARN)}</H></Card>
+        <Card row><T m>{t('Added to this week', 'इस हफ़्ते में जुड़े')}</T><H size={20}>{rupees(earnOf(st))}</H></Card>
         <Spacer />
         <Big onPress={() => nav.push('rateCustomer')}>{t(`Rate ${name}`, `${name} को रेटिंग दें`)}</Big>
       </Screen>
@@ -123,7 +124,7 @@ export function FinishNotHappy() {
         </View>
         <H center>{t('Job closed', 'काम बंद हुआ')}</H>
         <T m center>{t(`${name} was not happy with this visit. Support will call him, then you.`, `${name} इस बार के काम से ख़ुश नहीं थे। सपोर्ट पहले उन्हें, फिर आपको कॉल करेगा।`)}</T>
-        <Card row><T m style={{ flex: 1 }}>{t(`${rupees(EARN)} on hold until then`, `तब तक ${rupees(EARN)} रुके रहेंगे`)}</T><Tag>{t('Usually 1 day', 'आमतौर पर 1 दिन')}</Tag></Card>
+        <Card row><T m style={{ flex: 1 }}>{t(`${rupees(earnOf(st))} on hold until then`, `तब तक ${rupees(earnOf(st))} रुके रहेंगे`)}</T><Tag>{t('Usually 1 day', 'आमतौर पर 1 दिन')}</Tag></Card>
         <H2>{t('Anything support should know?', 'सपोर्ट को कुछ बताना है?')}</H2>
         <Input multiline value={note} onChangeText={setNote} placeholder={t('Customer asked me to skip the balcony', 'ग्राहक ने बालकनी छोड़ने को कहा')} style={{ minHeight: 58 }} />
         <Spacer />

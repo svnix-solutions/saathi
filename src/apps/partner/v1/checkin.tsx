@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Pressable, View, type ViewStyle } from 'react-native';
 import {
-  Avatar, Card, Grid, H, H2, Hr, Icon, IconTile, Lft, MapMock, Row, Screen, Spacer, T, Tag, Toggle,
+  Avatar, Button, Card, Grid, H, H2, Hr, Icon, IconTile, Lft, MapMock, OtpInput, Row, Screen, Spacer, T, Tag, Toggle,
   palette, useAppState, useNav, useT, useTheme,
 } from '@/native/ui';
 import { codes, rupees } from '@/data/decisions';
@@ -26,11 +26,22 @@ function CheckLine({ on, title, sub, icon, sel, onPress, busy }: { on?: boolean;
 export function CheckIn() {
   const t = useT();
   const nav = useNav();
-  const [st] = useAppState<V1State>();
+  const { c } = useTheme();
+  const [st, set] = useAppState<V1State>();
   const [located, setLocated] = useState(false);
   useEffect(() => { const id = setTimeout(() => setLocated(true), 1200); return () => clearTimeout(id); }, []);
   const job = st.job;
   const selfie = !!st.selfieIn;
+  // start code: typed by the partner, read out by the customer; 5 wrong tries, then support (shared with the start-code screen)
+  const verified = !!st.startVerified;
+  const tries = st.startTries ?? 0;
+  const left = codes.maxTries - tries;
+  const [code, setCode] = useState('');
+  const [wrong, setWrong] = useState(false);
+  const verify = () => {
+    if (code === codes.start) { set({ startVerified: true, startTries: 0 }); nav.toast(t('Start code matches', 'स्टार्ट कोड सही है')); return; }
+    set({ startTries: tries + 1 }); setWrong(true); setCode('');
+  };
   return (
     <Page>
       <TopBar>
@@ -43,14 +54,29 @@ export function CheckIn() {
           sub={located ? t('You are 12 m from the door', 'आप दरवाज़े से 12 मीटर दूर हैं') : t('Stand near the door', 'दरवाज़े के पास खड़े हों')}
           onPress={() => !located && nav.push('err.locationOff')} />
         <CheckLine on icon="clock" title={t('Time 11:08 am', 'समय 11:08 am')} sub={t('On time · due by 11:10', 'समय पर · 11:10 तक पहुँचना था')} />
-        <CheckLine on title={t(`Start code ${codes.start}`, `स्टार्ट कोड ${codes.start}`)} sub={t('Given by the customer', 'ग्राहक ने दिया')} />
-        <CheckLine on={selfie} sel={!selfie} icon="user" title={t('Selfie', 'सेल्फ़ी')}
-          sub={selfie ? t('Added · clock started', 'जुड़ गई · समय शुरू') : t('Needed to start the clock', 'समय शुरू करने के लिए ज़रूरी')}
-          onPress={() => nav.push('selfie', { mode: 'in' })} />
+        {verified
+          ? <CheckLine on title={t('Start code matched', 'स्टार्ट कोड मिल गया')} sub={t('Read out by the customer', 'ग्राहक ने बताया')} />
+          : left <= 0
+            ? <Card tone="red" style={{ gap: 8 }}>
+                <H2>{t('Only support can start this job now', 'अब यह काम सिर्फ़ सपोर्ट शुरू कर सकता है')}</H2>
+                <T s m>{t(`${codes.maxTries} wrong start codes were typed.`, `${codes.maxTries} बार गलत स्टार्ट कोड डाला गया।`)}</T>
+                <Button icon="call" onPress={() => nav.toast(t('Calling Saathi support…', 'साथी सपोर्ट को कॉल हो रहा है…'))}>{t('Call support', 'सपोर्ट को कॉल करें')}</Button>
+              </Card>
+            : <Card sel style={{ gap: 9 }}>
+                <H2>{t('Ask the customer for the start code', 'ग्राहक से स्टार्ट कोड पूछें')}</H2>
+                <OtpInput value={code} error={wrong} onChange={(v) => { setCode(v); setWrong(false); }} />
+                {wrong
+                  ? <T s color={c.red}>{t(`That code does not match. ${left} ${left === 1 ? 'try' : 'tries'} left.`, `कोड मेल नहीं खाता। ${left} कोशिश बाकी।`)}</T>
+                  : <T s m>{t(`It is in the customer's app. Prototype code: ${codes.start}`, `यह ग्राहक के ऐप में है। प्रोटोटाइप कोड: ${codes.start}`)}</T>}
+                <Button disabled={code.length < 4} onPress={verify}>{t('Verify code', 'कोड जाँचें')}</Button>
+              </Card>}
+        <CheckLine on={selfie} sel={verified && !selfie} icon="user" title={t('Selfie', 'सेल्फ़ी')}
+          sub={selfie ? t('Added · clock started', 'जुड़ गई · समय शुरू') : verified ? t('Needed to start the clock', 'समय शुरू करने के लिए ज़रूरी') : t('After the start code', 'स्टार्ट कोड के बाद')}
+          onPress={() => (verified ? nav.push('selfie', { mode: 'in' }) : nav.toast(t('Enter the start code first', 'पहले स्टार्ट कोड डालें')))} />
         <Spacer />
         {selfie
           ? <Big onPress={() => nav.reset('onJob')}>{t('Start the job', 'काम शुरू करें')}</Big>
-          : <Big disabled={!located} onPress={() => nav.push('selfie', { mode: 'in' })}>{t('Take selfie and check in', 'सेल्फ़ी लें और चेक-इन करें')}</Big>}
+          : <Big disabled={!located || !verified} onPress={() => nav.push('selfie', { mode: 'in' })}>{t('Take selfie and check in', 'सेल्फ़ी लें और चेक-इन करें')}</Big>}
       </Screen>
     </Page>
   );
@@ -176,17 +202,6 @@ export function CheckOut() {
     set({ photos: [...photos, next] });
     nav.toast(t('Photo added', 'फ़ोटो जुड़ गई'));
   };
-  const finish = () => {
-    const today = st.today ?? defaultToday;
-    set({
-      earnedToday: (st.earnedToday ?? 412) + job.earn, jobsToday: (st.jobsToday ?? 3) + 1,
-      week: (st.week ?? 2846) + job.earn, weekJobs: (st.weekJobs ?? 19) + 1,
-      today: [{ title: job.service, titleHi: serviceHi[job.service] ?? job.service, sub: '12:10 pm · 1 hr', amt: job.earn }, ...today],
-      selfieIn: false, selfieOut: false, jobEndsAt: undefined, photos: undefined, familyLive: false,
-    });
-    nav.reset('home');
-    nav.toast(t(`Checked out. ${rupees(job.earn)} added to this week.`, `चेक-आउट हो गया। ${rupees(job.earn)} इस हफ़्ते में जुड़े।`));
-  };
   const selfie = !!st.selfieOut;
   return (
     <Page>
@@ -207,10 +222,12 @@ export function CheckOut() {
         </Grid>
         <CheckLine on={selfie} sel={!selfie} icon="user" title={t('Check-out selfie', 'चेक-आउट सेल्फ़ी')}
           sub={selfie ? t('Added', 'जुड़ गई') : t("At the customer's door", 'ग्राहक के दरवाज़े पर')} onPress={() => nav.push('selfie', { mode: 'out' })} />
+        <CheckLine sel={selfie} title={t('Finish code', 'फ़िनिश कोड')} sub={t('The customer gives one of two codes; it closes the job', 'ग्राहक दो में से एक कोड देगा; इससे काम बंद होगा')}
+          onPress={() => (selfie ? nav.push('finishCode') : nav.toast(t('Take the check-out selfie first', 'पहले चेक-आउट सेल्फ़ी लें')))} />
         <Spacer />
         <Row><T m>{t('You earn', 'आपकी कमाई')}</T><H>{rupees(job.earn)}</H></Row>
         {selfie
-          ? <Big onPress={finish}>{t('Check out', 'चेक-आउट करें')}</Big>
+          ? <Big onPress={() => nav.push('finishCode')}>{t('Ask for the finish code', 'फ़िनिश कोड पूछें')}</Big>
           : <Big disabled={photos.length === 0} onPress={() => nav.push('selfie', { mode: 'out' })}>{t('Take selfie and check out', 'सेल्फ़ी लें और चेक-आउट करें')}</Big>}
       </Screen>
     </Page>
