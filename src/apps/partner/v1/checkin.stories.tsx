@@ -11,7 +11,7 @@ export const DesignPage: S = {
   parameters: { layout: 'fullscreen' },
   render: () => (
     <PhoneRow>
-      <PartnerApp initial="checkIn" caption="17 · Check in" sub="Location, time, door code, then selfie" />
+      <PartnerApp initial="checkIn" caption="17 · Check in" sub="Location, time, start code, then selfie" />
       <PartnerApp initial="selfie" caption="18 · Selfie upload" sub="Guide oval, retake, upload progress" />
       <PartnerApp initial="live" caption="19 · Live on the job" sub="Location shared only while working" />
       <PartnerApp initial="checkOut" caption="20 · Check out" sub="Time worked, work photos, closing selfie" />

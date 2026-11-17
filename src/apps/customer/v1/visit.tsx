@@ -5,22 +5,25 @@ import {
   Avatar, Button, Card, CheckRow, Grid, H, H2, IconTile, Input, Lft, Link, MapMock, Pill, Ring, Row, Screen, Sheet, Spacer, Stars, T, Tag,
   palette, useNav, useT, useTheme,
 } from '@/native/ui';
-import { decisions, priceFor, rupees } from '@/data/decisions';
+import { codes, decisions, priceFor, rupees } from '@/data/decisions';
 import { CustomerTabs } from '../chrome';
+import { CodeCard } from './codes';
 import { clock, defaultUpcoming, dur, svc, svcName, taskName, useCountdown, useV1 } from './kit';
 
-/* 9 · Helper on the way */
-export function Tracking() {
+/* 9 · Helper on the way; 9b · Start code once she arrives (params: { arrived: true }) */
+export function Tracking({ params }: { params: { arrived?: boolean } }) {
   const nav = useNav();
   const t = useT();
   const { c, device } = useTheme();
+  const [, set] = useV1();
   const small = device === 'small';
-  const [eta, setEta] = useCountdown(12, true, 2000); // one "minute" every 2 s
+  const [eta, setEta] = useCountdown(params.arrived ? 0 : 12, true, 2000); // one "minute" every 2 s
   const [cancel, setCancel] = useState(false);
   const arrived = eta === 0;
   useEffect(() => {
-    if (!arrived) return;
-    const id = setTimeout(() => nav.replace('inProgress'), 2500);
+    if (!arrived || params.arrived) return; // opened straight on the start code: stay there
+    // the prototype plays the partner: she types the start code a few seconds after arriving
+    const id = setTimeout(() => { set({ startedByCode: true }); nav.replace('inProgress'); nav.toast(t('Sunita started the job with your code', 'सुनीता ने आपके कोड से काम शुरू किया')); }, 6000);
     return () => clearTimeout(id);
   }, [arrived]);
   const hx = 142; // design: home dot at left 142, helper starts at 42
@@ -57,13 +60,17 @@ export function Tracking() {
           <View style={{ flex: 1, height: 3, backgroundColor: arrived ? palette.green : c.line, borderRadius: 2 }} />
           {arrived ? <T s b color={c.accent}>{t('Arrived', 'पहुँचीं')}</T> : <T s m>{t('Arrived', 'पहुँचीं')}</T>}
         </Row>
-        <Card>
-          <T s m>{t('Share this code when the helper arrives: ', 'हेल्पर के आने पर यह कोड बताएँ: ')}<T b size={14} color={c.ink} style={{ letterSpacing: 2.8 }}>4 8 2 1</T></T>
-        </Card>
+        {arrived ? <>
+          <CodeCard sel title={t('Start code', 'शुरू करने का कोड')} code={codes.start}
+            note={t('Read it out to Sunita. She types it to start the job.', 'यह कोड सुनीता को बताएँ। वे इसे डालकर काम शुरू करेंगी।')} />
+          <Card><T s m>{t('Only give it once she is at your door. Her photo above should match the person you see.', 'कोड तभी दें जब वे दरवाज़े पर हों। ऊपर की फ़ोटो सामने वाले व्यक्ति से मिलनी चाहिए।')}</T></Card>
+        </> : (
+          <Card>
+            <T s m>{t('Start code, read it out when the helper arrives: ', 'शुरू करने का कोड, हेल्पर के आने पर बताएँ: ')}<T b size={14} color={c.ink} style={{ letterSpacing: 2.8 }}>{codes.start.split('').join(' ')}</T></T>
+          </Card>
+        )}
         <Spacer />
-        {arrived
-          ? <Button onPress={() => nav.replace('inProgress')}>{t('Start the visit', 'काम शुरू करें')}</Button>
-          : <Button variant="outline" danger onPress={() => setCancel(true)}>{t('Cancel booking', 'बुकिंग रद्द करें')}</Button>}
+        {!arrived && <Button variant="outline" danger onPress={() => setCancel(true)}>{t('Cancel booking', 'बुकिंग रद्द करें')}</Button>}
       </Screen>
       <Sheet visible={cancel} onClose={() => setCancel(false)}>
         <H>{t('Cancel this booking?', 'यह बुकिंग रद्द करें?')}</H>
@@ -92,10 +99,14 @@ export function InProgress() {
   const [done, setDone] = useState<string[]>(tasks.slice(0, Math.min(2, tasks.length - 1)));
   const allDone = tasks.every((x) => done.includes(x));
   const per30 = svc(st.service).per30;
-  useEffect(() => { if (left === 0) nav.replace('rate'); }, [left]);
+  useEffect(() => { if (left === 0) nav.replace('visit.finish'); }, [left]);
   return (
     <Screen>
       <Row><H2>{t('Job in progress', 'काम चल रहा है')}</H2><Tag>{t('Live', 'लाइव')}</Tag></Row>
+      <Card style={{ gap: 8 }}>
+        <CheckRow on label={t('Started with your code at 10:02', '10:02 पर आपके कोड से शुरू हुआ')} />
+        <CheckRow on label={t('Sunita checked in with a selfie', 'सुनीता ने सेल्फ़ी से चेक-इन किया')} />
+      </Card>
       <Ring pct={1 - left / total}>
         <View style={{ alignItems: 'center' }}>
           <H size={26}>{clock(left)}</H>
@@ -113,7 +124,7 @@ export function InProgress() {
         <IconTile name="call" onPress={() => nav.toast(t('Calling Sunita D.…', 'सुनीता डी. को कॉल हो रहा है…'))} />
       </Card>
       <Spacer />
-      {allDone && <Button onPress={() => nav.replace('rate')}>{t('All done · rate the visit', 'काम पूरा · रेटिंग दें')}</Button>}
+      {allDone && <Button onPress={() => nav.replace('visit.finish')}>{t('Sunita says it is done · see finish codes', 'सुनीता ने काम पूरा बताया · फ़िनिश कोड देखें')}</Button>}
       <Button variant="yellow" onPress={() => {
         set({ extraMinutes: extra + 30 });
         setLeft((x) => x + 30 * 60);

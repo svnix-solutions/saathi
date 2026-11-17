@@ -31,6 +31,7 @@ export const defaultUpcoming = { service: 'kitchenBath' as ServiceId, minutes: 1
 /** Service names as the v1 design writes them (Hindi from design page 18). */
 const svcHi: Record<ServiceId, string> = {
   general: 'सामान्य सफ़ाई', kitchenBath: 'रसोई और बाथरूम', dishes: 'बर्तन और तैयारी', laundry: 'कपड़े और अलमारी', custom: 'घंटे के हिसाब से मदद',
+  nurseVisit: 'नर्स विज़िट', patientCare: 'मरीज़ और बुज़ुर्ग देखभाल', electrician: 'इलेक्ट्रीशियन', plumber: 'प्लंबर', haircut: 'घर पर बाल कटिंग', kidsHaircut: 'बच्चों की कटिंग',
 };
 export const svc = (id: ServiceId) => services.find((s) => s.id === id) ?? services[0];
 export const svcName = (t: TFn, id: ServiceId) => t(svc(id).name, svcHi[id]);
@@ -42,6 +43,10 @@ export const taskHi: Record<string, string> = {
   'Clean bathroom tiles': 'बाथरूम टाइल साफ़ करना', 'Wipe mirrors': 'शीशे पोंछना', 'Wash dishes': 'बर्तन धोना', 'Chop vegetables': 'सब्ज़ी काटना',
   'Knead dough': 'आटा गूँथना', 'Wipe kitchen': 'किचन पोंछना', 'Load washing machine': 'वॉशिंग मशीन चलाना', 'Hang clothes to dry': 'कपड़े सुखाना',
   'Fold clothes': 'कपड़े तह करना', 'Organize wardrobe': 'अलमारी जमाना', 'You choose the chores': 'काम आप चुनें',
+  Injection: 'इंजेक्शन', 'Wound dressing': 'घाव की पट्टी', 'BP and sugar check': 'बीपी और शुगर जाँच', 'Medicines on time': 'समय पर दवा',
+  'Help to bathe and dress': 'नहाने और कपड़े पहनने में मदद', Feeding: 'खाना खिलाना', 'Help to walk': 'चलने में मदद',
+  'Switch or socket': 'स्विच या सॉकेट', Fan: 'पंखा', 'Light fitting': 'लाइट फ़िटिंग', 'Small wiring': 'छोटी वायरिंग',
+  Tap: 'नल', Leak: 'लीकेज', 'Blocked drain': 'जाम नाली', Fitting: 'फ़िटिंग', 'Hair cut': 'बाल कटिंग', 'Beard trim': 'दाढ़ी ट्रिम', Shave: 'शेव',
 };
 export const taskName = (t: TFn, task: string) => t(task, taskHi[task]);
 

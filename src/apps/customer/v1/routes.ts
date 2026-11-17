@@ -2,6 +2,7 @@ import type { RouteMap } from '@/native/nav';
 import { SigninAddress, SigninName, SigninOtp, SigninPhone } from './signin';
 import { Chores, Confirm, Home, Time } from './booking';
 import { Bookings, InProgress, Rate, Tracking } from './visit';
+import { FinishCodes, NotHappy } from './codes';
 import { Addresses, ChangeBooking, Help } from './manage';
 import { ErrNoHelper, ErrOffline, ErrOutsideArea, ErrPaymentFailed } from './errors';
 import { Account, AlertSettings, DeleteAccount, PaymentMethods } from './account';
@@ -18,6 +19,8 @@ export const routes: RouteMap = {
   confirm: Confirm,
   tracking: Tracking,
   inProgress: InProgress,
+  'visit.finish': FinishCodes,
+  'visit.notHappy': NotHappy,
   rate: Rate,
   bookings: Bookings,
   addresses: Addresses,

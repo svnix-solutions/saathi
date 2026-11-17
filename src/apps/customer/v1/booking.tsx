@@ -5,18 +5,32 @@ import {
   Avatar, BackHeader, Button, Card, CharacterTile, Check, CheckRow, Grid, H, H2, Hr, Icon, Input, Lft, Link, Pill, Row, Screen, Spacer, T,
   palette, useNav, useT, useTheme, type ScreenProps,
 } from '@/native/ui';
-import { decisions, rupees, services, type ServiceId } from '@/data/decisions';
+import { categories, decisions, rupees, services, type Category, type ServiceId } from '@/data/decisions';
 import { CustomerTabs } from '../chrome';
 import { dur, priceOf, shortName, svc, svcName, taskName, useV1 } from './kit';
 
-/* 5 · Home */
-export function Home() {
+/** Trust line under each kind of work (design page 04). */
+const trust: Partial<Record<Category, [string, string]>> = {
+  nursing: ['Every nurse has a checked nursing certificate, council registration and police verification.', 'हर नर्स का नर्सिंग सर्टिफ़िकेट, काउंसिल रजिस्ट्रेशन और पुलिस सत्यापन जाँचा गया है।'],
+  repair: ['Electricians hold a checked wireman licence.', 'इलेक्ट्रीशियन के पास जाँचा हुआ वायरमैन लाइसेंस है।'],
+  barber: ['Kids haircuts go only to barbers who finished child safety training.', 'बच्चों की कटिंग सिर्फ़ बाल सुरक्षा प्रशिक्षण वाले नाई करते हैं।'],
+};
+const note: Partial<Record<Category, [string, string]>> = {
+  nursing: ['Not for emergencies. In an emergency call 112.', 'इमरजेंसी के लिए नहीं। इमरजेंसी में 112 पर कॉल करें।'],
+  repair: ['Parts are extra. The partner shows the bill before buying anything.', 'पुर्ज़े अलग से। कुछ खरीदने से पहले पार्टनर बिल दिखाएगा।'],
+};
+
+/* 5 · Home, with the kinds of work on top; 5b–5d · Nursing, Repair, Barber (params: { category }) */
+export function Home({ params }: ScreenProps<{ category?: Category }>) {
   const nav = useNav();
   const t = useT();
   const { c } = useTheme();
   const [st] = useV1();
-  const grid = services.slice(0, 4);
-  const custom = services[4];
+  const [cat, setCat] = useState<Category>(params.category ?? 'cleaning');
+  const cleaning = services.filter((s) => s.category === 'cleaning');
+  const grid = cleaning.slice(0, 4);
+  const custom = cleaning[4];
+  const info = categories.find((x) => x.id === cat)!;
   return (
     <View style={{ flex: 1 }}>
       <Screen>
@@ -30,7 +44,7 @@ export function Home() {
           </Lft>
           <Pressable onPress={() => nav.reset('account')} accessibilityLabel="Account"><Avatar face="nk" size={32} /></Pressable>
         </Row>
-        <Card tone="yellow" onPress={() => nav.push('chores', { service: st.service })}>
+        {cat === 'cleaning' && <Card tone="yellow" onPress={() => nav.push('chores', { service: st.service })}>
           <Lft>
             <CharacterTile name="hero" />
             <View>
@@ -38,8 +52,14 @@ export function Home() {
               <T s color={palette.ink}>{t('Or schedule for later', 'या बाद का समय चुनें')}</T>
             </View>
           </Lft>
-        </Card>
-        <H size={16}>{t('What needs doing today?', 'आज क्या काम करवाना है?')}</H>
+        </Card>}
+        <Row gap={4}>
+          {categories.map((x) => (
+            <Pill key={x.id} s sel={cat === x.id} onPress={() => setCat(x.id)} style={{ flex: 1, paddingHorizontal: 2 }}>{t(x.name, x.nameHi)}</Pill>
+          ))}
+        </Row>
+        <H size={16}>{t(info.title, info.titleHi)}</H>
+        {cat === 'cleaning' ? <>
         <Grid cols={2}>
           {grid.map((s) => (
             <Card key={s.id} onPress={() => nav.push('chores', { service: s.id })}>
@@ -58,6 +78,32 @@ export function Home() {
             </View>
           </Lft>
         </Card>
+        </> : <>
+          {services.filter((s) => s.category === cat).map((s) => (
+            <Card key={s.id} row onPress={() => nav.push('chores', { service: s.id })}>
+              <Lft style={{ flex: 1 }}>
+                <CharacterTile name={s.character} />
+                <View style={{ flex: 1 }}>
+                  <H2>{svcName(t, s.id)}</H2>
+                  <T s m>{t(s.sub ?? '', s.subHi)}</T>
+                </View>
+              </Lft>
+              <View style={{ alignItems: 'flex-end' }}>
+                <T b>{rupees(s.per30)}</T>
+                <T s m size={11}>{t('per 30 min', 'प्रति 30 मिनट')}</T>
+              </View>
+            </Card>
+          ))}
+          {trust[cat] && (
+            <Card tone="mint">
+              <Lft style={{ alignItems: 'flex-start' }}>
+                <Icon name="shield" color={c.accent} />
+                <T s style={{ flex: 1 }}>{t(...trust[cat]!)}</T>
+              </Lft>
+            </Card>
+          )}
+          {note[cat] && <Card><T s m>{t(...note[cat]!)}</T></Card>}
+        </>}
       </Screen>
       <CustomerTabs active="home" />
     </View>

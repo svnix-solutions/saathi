@@ -20,7 +20,7 @@ function Crop({ src, w, h, size, x, y, bg, radius, style }: {
   );
 }
 
-/** Service characters (`.ch .c1`–`.c6`). Pos/size match the design CSS. */
+/** Service characters (`.ch .c1`–`.c9`). Pos/size match the design CSS. */
 const characters = {
   clean: { src: 'clean.png', x: 65, y: 13 },
   deep: { src: 'deep.png', x: 50, y: 9 },
@@ -28,6 +28,9 @@ const characters = {
   laundry: { src: 'laundry.png', x: 38, y: 4 },
   custom: { src: 'custom.png', x: 46, y: 15 },
   hero: { src: 'hero.png', x: 52, y: 4 },
+  nurse: { src: 'nurse.png', x: 50, y: 8 },
+  repair: { src: 'repair.png', x: 57, y: 4 },
+  barber: { src: 'barber.png', x: 50, y: 8 },
 } as const;
 export type Character = keyof typeof characters;
 

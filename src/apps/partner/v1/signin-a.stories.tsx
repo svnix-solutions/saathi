@@ -13,8 +13,8 @@ export const DesignPage: S = {
     <PhoneRow>
       <PartnerApp initial="signin.phone" state={{ approved: false }} caption="1 · Mobile number" sub="Same screen for sign in and sign up" />
       <PartnerApp initial="signin.otp" state={{ approved: false }} caption="2 · SMS code" sub="Known number opens Home, new number starts sign-up (code 4821)" />
-      <PartnerApp initial="signin.details" caption="3 · Name and email" sub="Step 1 of 4" />
-      <PartnerApp initial="signin.references" caption="4 · Two references" sub="Step 2 of 4. Each number must be different from yours" />
+      <PartnerApp initial="signin.details" caption="3 · Name and email" sub="Step 1 of 6" />
+      <PartnerApp initial="signin.references" caption="4 · Two references" sub="Step 3 of 6. Each number must be different from yours" />
     </PhoneRow>
   ),
 };

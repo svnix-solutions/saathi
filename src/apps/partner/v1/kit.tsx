@@ -87,16 +87,16 @@ export function Plain({ children, onPress }: { children: React.ReactNode; onPres
   return <Button variant="outline" onPress={onPress} style={{ borderColor: c.line }} textStyle={{ color: c.ink }}>{children}</Button>;
 }
 
-/** Sign-up step bar + "Sign-up · step n of 4". */
+/** Sign-up step bar + "Sign-up · step n of 6". */
 export function SignupSteps({ step, label = true }: { step: number; label?: boolean }) {
   const { c } = useTheme();
   const t = useTheme().locale === 'hi';
   return (
     <View style={{ gap: 11 }}>
       <View style={{ flexDirection: 'row', gap: 5 }}>
-        {[0, 1, 2, 3].map((i) => <View key={i} style={{ flex: 1, height: 5, borderRadius: 3, backgroundColor: i < step ? palette.green : c.line }} />)}
+        {[0, 1, 2, 3, 4, 5].map((i) => <View key={i} style={{ flex: 1, height: 5, borderRadius: 3, backgroundColor: i < step ? palette.green : c.line }} />)}
       </View>
-      {label && <T s m>{t ? `साइन-अप · चरण ${step} / 4` : `Sign-up · step ${step} of 4`}</T>}
+      {label && <T s m>{t ? `साइन-अप · चरण ${step} / 6` : `Sign-up · step ${step} of 6`}</T>}
     </View>
   );
 }

@@ -1,11 +1,11 @@
-/** Design page 26 · shift check, training, door code, early payout (screens 32–35). */
+/** Design page 26 · shift check, training, start code, early payout (screens 32–35). */
 import React, { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import {
   Button, Card, CharacterTile, CheckRow, Check, Col, H, H2, Hr, Icon, IconTile, Lft, OtpInput, Pill, Grid, Row, Screen,
   Sheet, Spacer, T, Tag, TopBar, palette, useAppState, useNav, useT, useTheme, type IconName,
 } from '@/native/ui';
-import { decisions, rupees } from '@/data/decisions';
+import { codes, decisions, rupees } from '@/data/decisions';
 import { PartnerTabs, initialPartnerState, type PartnerState } from '../chrome';
 import { Circle, Meter, Root, TopLabel, TopProgress, onGreen } from './kit';
 
@@ -185,14 +185,14 @@ export function TrainingScreen() {
   );
 }
 
-/* ---------- 34 · Start with door code ---------- */
+/* ---------- 34 · Start with start code ---------- */
 export function DoorCodeScreen({ params }: { params: { code?: string } }) {
   const nav = useNav();
   const t = useT();
   const { c } = useTheme();
   const [st, set] = useAppState<PartnerState>();
   const job = st.job ?? initialPartnerState.job;
-  const right = params.code ?? '4821';
+  const right = params.code ?? codes.start;
   const [code, setCode] = useState('');
   const [error, setError] = useState(false);
   const [away, setAway] = useState(false);
@@ -215,12 +215,12 @@ export function DoorCodeScreen({ params }: { params: { code?: string } }) {
           </Lft>
           <IconTile name="call" onPress={() => nav.toast(`Calling ${job.customer}…`)} />
         </Card>
-        <H style={{ marginTop: 8 }}>{t('Ask the customer for the code', 'ग्राहक से कोड पूछें')}</H>
+        <H style={{ marginTop: 8 }}>{t('Ask the customer for their start code', 'ग्राहक से स्टार्ट कोड पूछें')}</H>
         <OtpInput value={code} error={error} onChange={(v) => { setCode(v); setError(false); }} />
         {error
           ? <T s color={c.red}>{t('Code does not match. Ask the customer to read it again.', 'कोड मेल नहीं खाता। ग्राहक से दोबारा पूछें।')}</T>
           : <T s m>{t('The 1 hr clock starts when the code matches.', 'कोड मिलते ही 1 घंटे की घड़ी शुरू होगी।')}</T>}
-        <T s m>Prototype code: {right}</T>
+        <T s m>{t('Prototype start code', 'प्रोटोटाइप स्टार्ट कोड')}: {right}</T>
         <Spacer />
         <Button big disabled={code.length < 4} onPress={start}>{t('Start job', 'काम शुरू करें')}</Button>
         <Button variant="outline" style={{ borderColor: c.line }} textStyle={{ color: c.ink }} onPress={() => setAway(true)}>

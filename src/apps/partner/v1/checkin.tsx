@@ -5,7 +5,7 @@ import {
   Avatar, Card, Grid, H, H2, Hr, Icon, IconTile, Lft, MapMock, Row, Screen, Spacer, T, Tag, Toggle,
   palette, useAppState, useNav, useT, useTheme,
 } from '@/native/ui';
-import { rupees } from '@/data/decisions';
+import { codes, rupees } from '@/data/decisions';
 import { Big, Cb, Page, PhotoTile, TopBar, TopH2, TopT, defaultToday, leftLabel, useJobClock, type V1State } from './kit';
 import { serviceHi } from './jobs';
 
@@ -43,7 +43,7 @@ export function CheckIn() {
           sub={located ? t('You are 12 m from the door', 'आप दरवाज़े से 12 मीटर दूर हैं') : t('Stand near the door', 'दरवाज़े के पास खड़े हों')}
           onPress={() => !located && nav.push('err.locationOff')} />
         <CheckLine on icon="clock" title={t('Time 11:08 am', 'समय 11:08 am')} sub={t('On time · due by 11:10', 'समय पर · 11:10 तक पहुँचना था')} />
-        <CheckLine on title={t('Door code 4821', 'डोर कोड 4821')} sub={t('Given by the customer', 'ग्राहक ने दिया')} />
+        <CheckLine on title={t(`Start code ${codes.start}`, `स्टार्ट कोड ${codes.start}`)} sub={t('Given by the customer', 'ग्राहक ने दिया')} />
         <CheckLine on={selfie} sel={!selfie} icon="user" title={t('Selfie', 'सेल्फ़ी')}
           sub={selfie ? t('Added · clock started', 'जुड़ गई · समय शुरू') : t('Needed to start the clock', 'समय शुरू करने के लिए ज़रूरी')}
           onPress={() => nav.push('selfie', { mode: 'in' })} />

@@ -1,10 +1,12 @@
-/** Design pages 18–19 (sections 48, 49): sign in, sign up, references, Aadhaar, PAN, waiting. */
+/** Design pages 20–21 (sections 48, 49): sign in, sign up, references, Aadhaar, PAN, waiting. Work and certificates: ./work.tsx */
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import {
   BackHeader, Card, CheckRow, Grid, H, H2, Hr, Input, Lft, Mark, OtpInput, Pill, Row, Screen, Sheet, Spacer, T, Tag,
   useAppState, useNav, useT, useTheme, type Locale,
 } from '@/native/ui';
+import { profession } from '@/data/professions';
+import { needsCertificates } from './work';
 import { Big, Cb, GreenText, Page, Plain, PhotoTile, SignupSteps, TopBar, TopH, TopH2, TopT, mmss, useCountdown, type V1State } from './kit';
 
 const digits = (s: string) => s.replace(/\D/g, '');
@@ -63,7 +65,7 @@ export function SigninOtp() {
           : left > 0 ? <T s m>{t('Resend code in', 'कोड फिर से भेजें')} {mmss(left)}</T>
             : <GreenText onPress={() => { setLeft(22); nav.toast(t('New code sent', 'नया कोड भेजा')); }}>{t('Resend code', 'कोड फिर से भेजें')}</GreenText>}
         <Card sel={st.approved}><H2>{t('Already a partner?', 'पहले से पार्टनर हैं?')}</H2><T s m>{t('You go straight to Home and your jobs.', 'आप सीधे होम और अपने काम पर जाएँगे।')}</T></Card>
-        <Card sel={!st.approved}><H2>{t('New here?', 'नए हैं?')}</H2><T s m>{t('Next we ask for your details, two references and your Aadhaar and PAN. About 5 minutes.', 'आगे आपकी जानकारी, दो जान-पहचान वाले और आधार व पैन माँगेंगे। लगभग 5 मिनट।')}</T></Card>
+        <Card sel={!st.approved}><H2>{t('New here?', 'नए हैं?')}</H2><T s m>{t('Next we ask for your details, the work you do, two references, Aadhaar and PAN, and any certificate your work needs. About 7 minutes.', 'आगे आपकी जानकारी, आपका काम, दो जान-पहचान वाले, आधार और पैन, और आपके काम का कोई सर्टिफ़िकेट माँगेंगे। लगभग 7 मिनट।')}</T></Card>
         <T s m>{t('Prototype: the code is 4821', 'प्रोटोटाइप: कोड 4821 है')}</T>
         <Spacer />
         <Big disabled={code.length < 4} onPress={verify}>{t('Verify', 'जाँचें')}</Big>
@@ -84,7 +86,7 @@ export function SigninDetails() {
     if (name.trim().length < 3) return nav.toast(t('Please write your full name', 'कृपया पूरा नाम लिखें'));
     if (!/^\S+@\S+\.\S+$/.test(email)) return nav.toast(t('Please check the email', 'कृपया ईमेल जाँचें'));
     set({ name: name.trim().split(' ')[0], fullName: name.trim(), email, area });
-    nav.push('signin.references');
+    nav.push('signin.work');
   };
   return (
     <Page>
@@ -127,7 +129,7 @@ export function SigninReferences() {
   return (
     <Page>
       <Screen>
-        <SignupSteps step={2} />
+        <SignupSteps step={3} />
         <H size={21}>{t('Two people who know you', 'दो लोग जो आपको जानते हैं')}</H>
         <T s m>{t('We send each of them a code on their own phone. Ask them for it to confirm.', 'हम दोनों के फ़ोन पर एक कोड भेजते हैं। पुष्टि के लिए उनसे कोड पूछें।')}</T>
         <Card sel>
@@ -171,7 +173,7 @@ export function SigninRefCode() {
   return (
     <Page>
       <Screen>
-        <SignupSteps step={2} label={false} />
+        <SignupSteps step={3} label={false} />
         <BackHeader title={`${t('Reference 2', 'पहचान 2')} · ${ref.name}`} onBack={nav.back} />
         <H size={21}>{t(`Ask ${first} for the code`, `${first} से कोड पूछें`)}</H>
         <T m>{t(`We sent it by SMS to +91 ${ref.phone}, with your name in the message.`, `हमने +91 ${ref.phone} पर SMS भेजा है, उसमें आपका नाम है।`)}</T>
@@ -210,7 +212,7 @@ export function SigninAadhaar() {
   return (
     <Page>
       <Screen>
-        <SignupSteps step={3} />
+        <SignupSteps step={4} />
         <H size={21}>{t('Aadhaar card', 'आधार कार्ड')}</H>
         <Grid cols={2}>
           <PhotoTile added={front} icon={front ? 'check' : 'cam'} label={front ? t('Front added', 'आगे का हिस्सा जुड़ा') : t('Add front side', 'आगे का हिस्सा जोड़ें')}
@@ -244,10 +246,11 @@ export function SigninPan() {
   const [noPan, setNoPan] = useState(false);
   const valid = /^[A-Z]{5}\d{4}[A-Z]$/.test(pan);
   const fullName = (st.fullName as string | undefined) ?? 'Sunita Devi';
+  const next = needsCertificates(st) ? 'signin.documents' : 'signin.waiting';
   return (
     <Page>
       <Screen>
-        <SignupSteps step={4} />
+        <SignupSteps step={5} />
         <H size={21}>{t('PAN card', 'पैन कार्ड')}</H>
         <PhotoTile added={photo} icon={photo ? 'check' : 'cam'} label={photo ? t('PAN photo added', 'पैन की फ़ोटो जुड़ी') : t('Add PAN photo', 'पैन की फ़ोटो जोड़ें')} onPress={() => setPhoto(!photo)} />
         <H2>{t('PAN number', 'पैन नंबर')}</H2>
@@ -260,12 +263,12 @@ export function SigninPan() {
         <T s m>{t('PAN is needed so your earnings and tax are recorded correctly.', 'पैन ज़रूरी है ताकि आपकी कमाई और टैक्स सही दर्ज हों।')}</T>
         <GreenText onPress={() => setNoPan(true)}>{t('I do not have a PAN card', 'मेरे पास पैन कार्ड नहीं है')}</GreenText>
         <Spacer />
-        <Big disabled={!photo || !valid} onPress={() => { set({ pan }); nav.push('signin.waiting'); }}>{t('Submit for checking', 'जाँच के लिए भेजें')}</Big>
+        <Big disabled={!photo || !valid} onPress={() => { set({ pan }); nav.push(next); }}>{next === 'signin.waiting' ? t('Submit for checking', 'जाँच के लिए भेजें') : t('Continue', 'आगे बढ़ें')}</Big>
       </Screen>
       <Sheet visible={noPan} onClose={() => setNoPan(false)}>
         <H2>{t('No PAN card?', 'पैन कार्ड नहीं है?')}</H2>
         <T s m>{t('You can apply for one free online in about 10 days. Until then our team fills Form 60 with you on a short call, and you can start work.', 'आप लगभग 10 दिन में ऑनलाइन मुफ़्त बनवा सकते हैं। तब तक हमारी टीम फ़ोन पर फ़ॉर्म 60 भरवाएगी और आप काम शुरू कर सकते हैं।')}</T>
-        <Big onPress={() => { setNoPan(false); set({ pan: 'Form 60' }); nav.push('signin.waiting'); nav.toast(t('The team will call you about Form 60', 'टीम फ़ॉर्म 60 के लिए कॉल करेगी')); }}>{t('Continue without PAN', 'बिना पैन आगे बढ़ें')}</Big>
+        <Big onPress={() => { setNoPan(false); set({ pan: 'Form 60' }); nav.push(next); nav.toast(t('The team will call you about Form 60', 'टीम फ़ॉर्म 60 के लिए कॉल करेगी')); }}>{t('Continue without PAN', 'बिना पैन आगे बढ़ें')}</Big>
         <Plain onPress={() => setNoPan(false)}>{t('I will add it', 'मैं जोड़ूँगी')}</Plain>
       </Sheet>
     </Page>
@@ -280,6 +283,7 @@ export function SigninWaiting() {
   const [checks, setChecks] = useState(0);
   const aadhaarOk = checks >= 1 || st.approved;
   const panOk = checks >= 2 || st.approved;
+  const work = profession(st.profession ?? 'house_help');
   const check = () => {
     const n = checks + 1;
     setChecks(n);
@@ -293,9 +297,11 @@ export function SigninWaiting() {
   const rows: [string, string, React.ReactNode][] = [
     ['Mobile number', 'मोबाइल नंबर', <Tag tone="n">{t('Verified', 'सत्यापित')}</Tag>],
     ['Name and email', 'नाम और ईमेल', <Tag tone="n">{t('Done', 'हो गया')}</Tag>],
+    [`Your work · ${work.name}`, `आपका काम · ${work.nameHi}`, <Tag tone="n">{t('Done', 'हो गया')}</Tag>],
     ['2 references', '2 पहचान वाले', <Tag tone="n">{t('Both confirmed', 'दोनों की पुष्टि')}</Tag>],
     ['Aadhaar card', 'आधार कार्ड', aadhaarOk ? <Tag tone="g">{t('Approved', 'मंज़ूर')}</Tag> : <Tag>{t('Checking', 'जाँच जारी')}</Tag>],
     ['PAN card', 'पैन कार्ड', panOk ? <Tag tone="g">{t('Approved', 'मंज़ूर')}</Tag> : <Tag>{t('Checking', 'जाँच जारी')}</Tag>],
+    ...(needsCertificates(st) ? [['Work certificates', 'काम के सर्टिफ़िकेट', panOk ? <Tag tone="g">{t('Approved', 'मंज़ूर')}</Tag> : <Tag>{t('Checking', 'जाँच जारी')}</Tag>]] as [string, string, React.ReactNode][] : []),
   ];
   return (
     <Page>

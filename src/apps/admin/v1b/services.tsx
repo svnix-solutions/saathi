@@ -1,37 +1,39 @@
 /** 90 Services and prices */
 import React, { useState } from 'react';
 import { Modal, Toggle, useAdmin } from '../shell';
-import { decisions, services as svc0, type ServiceId } from '../../../data/decisions';
+import { decisions, services as svc0, type Category, type ServiceId } from '../../../data/decisions';
 import { inr } from './data';
 
 type Task = { name: string; time: string; on: boolean };
-type Svc = { id: string; name: string; per30: number; training: boolean; live: boolean; blurb: string; tasks: Task[] | null; trained: number };
+type Svc = { id: string; name: string; category: Category; per30: number; needs: string | null; live: boolean; blurb: string; tasks: Task[] | null; trained: number };
 
 const designNames: Partial<Record<ServiceId, string>> = { kitchenBath: 'Kitchen & bathroom scrub' };
 const kitchenTasks: Task[] = [
   { name: 'Bathrooms', time: '45 min each', on: true }, { name: 'Kitchen with cabinets', time: '1 hr', on: true },
   { name: 'Fridge inside', time: '30 min', on: true }, { name: 'Ceiling fans', time: '15 min each', on: true }, { name: 'Kitchen slab', time: '30 min', on: true },
 ];
-const order: ServiceId[] = ['general', 'kitchenBath', 'dishes', 'laundry', 'custom'];
-const services0: Svc[] = order.map((id) => {
-  const s = svc0.find((x) => x.id === id)!;
+const work: Record<Category, string> = { cleaning: 'House help', nursing: 'Nurse', repair: 'Home service', barber: 'Barber' };
+/** Specialisation a partner needs before being sent (see the professions page). */
+const needs: Partial<Record<ServiceId, string>> = { kitchenBath: 'Deep cleaning', electrician: 'Electrician', plumber: 'Plumber', kidsHaircut: 'Kids' };
+const services0: Svc[] = svc0.map((s) => {
+  const id = s.id;
   const tasks = id === 'custom' ? null : id === 'kitchenBath' ? kitchenTasks : s.tasks.map((t) => ({ name: t, time: '30 min', on: true }));
   return {
-    id, name: designNames[id] ?? s.name, per30: s.per30, training: id === 'kitchenBath', live: id !== 'custom',
-    blurb: id === 'kitchenBath' ? 'Bathrooms, slabs, cabinets, fridge, fans' : id === 'custom' ? 'You choose the chores' : s.tasks.join(', '),
+    id, name: designNames[id] ?? s.name, category: s.category, per30: s.per30, needs: needs[id] ?? null, live: id !== 'custom',
+    blurb: id === 'kitchenBath' ? 'Bathrooms, slabs, cabinets, fridge, fans' : id === 'custom' ? 'You choose the chores' : s.sub ?? s.tasks.join(', '),
     tasks, trained: id === 'kitchenBath' ? 31 : 0,
   };
 });
 
 export function Services(_: { params: Record<string, any> }) {
-  const { toast, roles } = useAdmin();
+  const { toast, roles, go } = useAdmin();
   const canPrice = roles.includes('Owner');
   const [list, setList] = useState(services0);
   const [edit, setEdit] = useState<Record<string, string>>({});
   const [selId, setSelId] = useState('kitchenBath');
   const [newTask, setNewTask] = useState<{ name: string; time: string } | null>(null);
   const [addSvc, setAddSvc] = useState(false);
-  const [ns, setNs] = useState({ name: '', per30: '99', training: false });
+  const [ns, setNs] = useState<{ name: string; per30: string; category: Category; needs: string }>({ name: '', per30: '99', category: 'cleaning', needs: '' });
   const [rulesOpen, setRulesOpen] = useState(false);
   const [rules, setRules] = useState({
     'Shortest visit': '30 min', 'Longest visit': '3 hr', 'Booked in blocks of': '30 min',
@@ -58,18 +60,19 @@ export function Services(_: { params: Record<string, any> }) {
   };
 
   return <>
-    <div className="row"><div><div className="h" style={{ fontSize: 22 }}>Services and prices</div><div className="m">{list.length} services · prices are per 30 minutes</div></div>
-      <div className="lft"><button className="btn o" style={{ padding: '9px 16px' }} onClick={() => { setRulesDraft(rules); setRulesOpen(true); }}>Booking rules</button><button className="btn" style={{ padding: '10px 16px' }} onClick={() => setAddSvc(true)}>Add service</button></div></div>
+    <div className="row"><div><div className="h" style={{ fontSize: 22 }}>Services and prices</div><div className="m">{list.length} services in {new Set(list.map((s) => s.category)).size} kinds of work · prices are per 30 minutes</div></div>
+      <div className="lft"><button className="btn o" style={{ padding: '9px 16px' }} onClick={() => go('professions')}>Professions & documents</button><button className="btn o" style={{ padding: '9px 16px' }} onClick={() => { setRulesDraft(rules); setRulesOpen(true); }}>Booking rules</button><button className="btn" style={{ padding: '10px 16px' }} onClick={() => setAddSvc(true)}>Add service</button></div></div>
     <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 14, flex: 1, minHeight: 0 }}>
       <div className="card" style={{ padding: '14px 8px 4px' }}>
         <table><tbody>
-          <tr><th>Service</th><th>₹ / 30 min</th><th>1 hour</th><th>Needs training</th><th>Tasks</th><th>Live</th></tr>
+          <tr><th>Service</th><th>Work</th><th>₹ / 30 min</th><th>1 hour</th><th>Needs</th><th>Tasks</th><th>Live</th></tr>
           {list.map((s) => {
             const shownPrice = edit[s.id] ?? String(s.per30);
             const hour = (Number(shownPrice) || s.per30) * 2;
             return (
               <tr key={s.id} className="clk" style={s.id === sel.id ? { background: 'var(--mint)' } : undefined} onClick={() => setSelId(s.id)}>
                 <td><b>{s.name}</b></td>
+                <td className="m">{work[s.category]}</td>
                 <td onClick={(e) => e.stopPropagation()}>
                   <input className="inp" style={{ fontSize: 13, padding: '8px 11px', width: 70, fontWeight: 600 }} inputMode="numeric" aria-label={`${s.name} price per 30 minutes`}
                     value={shownPrice} readOnly={!canPrice}
@@ -78,7 +81,7 @@ export function Services(_: { params: Record<string, any> }) {
                     onFocus={() => !canPrice && toast('Only an Owner can change service prices')} />
                 </td>
                 <td>{inr(hour)}</td>
-                <td>{s.training ? <span className="tag">Yes</span> : 'No'}</td>
+                <td>{s.needs ? <span className="tag clk" title="Specialisations live on Professions & documents" onClick={(e) => { e.stopPropagation(); go('professions'); }}>{s.needs}</span> : 'No'}</td>
                 <td>{s.tasks ? s.tasks.filter((t) => t.on).length : 'Customer decides'}</td>
                 <td onClick={(e) => e.stopPropagation()}><Toggle on={s.live} onChange={(v) => { upd(s.id, { live: v }); toast(v ? `${s.name} is live in the app` : `${s.name} is hidden from the app`); }} /></td>
               </tr>);
@@ -108,7 +111,7 @@ export function Services(_: { params: Record<string, any> }) {
               </div>
             ) : <div className="s clk" style={{ color: 'var(--green)', fontWeight: 700 }} onClick={() => setNewTask({ name: '', time: '30 min' })}>Add a task</div>}
           </> : <div className="s m">The customer writes their own list of chores. No fixed tasks.</div>}
-          <div className="s m">{sel.training ? `${sel.trained} partners are trained for this service.` : 'Every approved partner can be sent for this service.'}</div>
+          <div className="s m">{sel.needs ? (sel.trained ? `${sel.trained} partners are trained for this service.` : `Only partners with the ${sel.needs} specialisation are sent.`) : `Every approved ${work[sel.category].toLowerCase()} partner can be sent for this service.`}</div>
         </div>
         <div className="card clk" style={{ flex: 1 }} onClick={() => { setRulesDraft(rules); setRulesOpen(true); }}>
           <div className="h2" style={{ fontSize: 15, marginBottom: 8 }}>Booking rules</div>
@@ -127,12 +130,13 @@ export function Services(_: { params: Record<string, any> }) {
       actions={<><button className="btn o sm" onClick={() => setAddSvc(false)}>Cancel</button><button className="btn sm" onClick={() => {
         if (!ns.name.trim()) { toast('Name the service'); return; }
         const id = 'svc' + Date.now();
-        setList((l) => [...l, { id, name: ns.name.trim(), per30: Number(ns.per30) || 99, training: ns.training, live: false, blurb: '—', tasks: [], trained: 0 }]);
-        setSelId(id); setAddSvc(false); setNs({ name: '', per30: '99', training: false }); toast(`${ns.name.trim()} added · hidden until you switch it on`);
+        setList((l) => [...l, { id, name: ns.name.trim(), category: ns.category, per30: Number(ns.per30) || 99, needs: ns.needs.trim() || null, live: false, blurb: '—', tasks: [], trained: 0 }]);
+        setSelId(id); setAddSvc(false); setNs({ name: '', per30: '99', category: 'cleaning', needs: '' }); toast(`${ns.name.trim()} added · hidden until you switch it on`);
       }}>Add service</button></>}>
       <input className="inp" placeholder="Service name, e.g. Festival deep clean" value={ns.name} onChange={(e) => setNs({ ...ns, name: e.target.value })} />
       <div className="row" style={{ gap: 10 }}><span className="s m" style={{ flex: 1 }}>₹ per 30 min</span><input className="inp" style={{ width: 100 }} inputMode="numeric" value={ns.per30} onChange={(e) => setNs({ ...ns, per30: e.target.value.replace(/\D/g, '') })} /></div>
-      <div className="row"><span className="s">Needs training</span><Toggle on={ns.training} onChange={(v) => setNs({ ...ns, training: v })} /></div>
+      <div className="row" style={{ gap: 10 }}><span className="s m" style={{ flex: 1 }}>Work</span><select className="inp" style={{ width: 160 }} value={ns.category} onChange={(e) => setNs({ ...ns, category: e.target.value as Category })}>{(Object.keys(work) as Category[]).map((c) => <option key={c} value={c}>{work[c]}</option>)}</select></div>
+      <div className="row" style={{ gap: 10 }}><span className="s m" style={{ flex: 1 }}>Needs a specialisation</span><input className="inp" style={{ width: 160 }} placeholder="None" value={ns.needs} onChange={(e) => setNs({ ...ns, needs: e.target.value })} /></div>
       <div className="s m">New services start hidden. Add tasks, then switch Live on.</div>
     </Modal>
   </>;

@@ -4,6 +4,7 @@ import { Signups } from './signups';
 import { Safety } from './safety';
 import { Services } from './services';
 import { PartnerDetail } from './partnerDetail';
+import { Professions } from './professions';
 
 /** Admin pages owned by this area. Keys are the shared page names listed in ../PAGES.md. */
 export const pages: PageMap = {
@@ -14,4 +15,5 @@ export const pages: PageMap = {
   safety: { section: 'safety', title: 'Safety', component: Safety },
   services: { section: 'pricing', title: 'Pricing & zones / Services', component: Services },
   partnerDetail: { section: 'partners', title: 'Partners / Sunita D.', component: PartnerDetail },
+  professions: { section: 'pricing', title: 'Pricing & zones / Professions & documents', component: Professions },
 };

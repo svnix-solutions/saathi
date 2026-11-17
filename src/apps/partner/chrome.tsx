@@ -1,5 +1,6 @@
 import React from 'react';
 import { TabBar, useNav, useT } from '@/native/ui';
+import type { DocId, ProfessionId } from '@/data/professions';
 
 /** Prototype-wide partner state (read/write with useAppState<PartnerState>()). Areas may add optional fields. */
 export type PartnerState = {
@@ -9,6 +10,13 @@ export type PartnerState = {
   approved: boolean;
   /** set when the partner picks a language in the app; overrides the toolbar locale */
   locale?: 'en' | 'hi' | 'pa';
+  /** sign-up choices (design page 22) */
+  profession?: ProfessionId;
+  specs?: string[];
+  skills?: string[];
+  docsAdded?: DocId[];
+  /** wrong finish codes typed on the current job (design page 30) */
+  finishTries?: number;
   /** current job */
   job: { id: string; service: string; minutes: number; earn: number; address: string; customer: string; note: string; tasks: string[]; done: string[] };
   [k: string]: unknown;

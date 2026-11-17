@@ -25,6 +25,7 @@ const shapes = {
   bell: [<Path key="a" d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21a2 2 0 0 0 4 0" />],
   find: [<Circle key="a" cx="11" cy="11" r="6" />, <Path key="b" d="M20 20l-4.5-4.5" />],
   key: [<Circle key="a" cx="8" cy="15" r="4" />, <Path key="b" d="M11 12l8-8M16 7l3 3" />],
+  alert: [<Circle key="a" cx="12" cy="12" r="9" />, <Path key="b" d="M12 7v6M12 16.5v.5" />],
   // extras used by the prototype chrome
   close: [<Path key="a" d="M6 6l12 12M18 6L6 18" />],
   chevron: [<Path key="a" d="M9 5l7 7-7 7" />],

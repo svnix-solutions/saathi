@@ -153,12 +153,12 @@ export function FinishButton({ label, labelHi, pad = 16, size = 15 }: { label: s
   const missing = st.job.tasks.filter((x) => !st.job.done.includes(x));
   return (
     <>
-      <Big pad={pad} size={size} onPress={() => (missing.length ? setAsk(true) : nav.push('checkOut'))}>{t(label, labelHi)}</Big>
+      <Big pad={pad} size={size} onPress={() => (missing.length ? setAsk(true) : nav.push('finishCode'))}>{t(label, labelHi)}</Big>
       <Sheet visible={ask} onClose={() => setAsk(false)}>
         <H2>{t(`${missing.length} task not ticked`, `${missing.length} काम पर टिक नहीं`)}</H2>
         <T s m>{missing.map((x) => t(x, taskHi[x])).join(', ')}. {t('Tick it if it is done, or tell the customer why.', 'हो गया हो तो टिक करें, नहीं तो ग्राहक को कारण बताएँ।')}</T>
         <Big onPress={() => setAsk(false)}>{t('Keep working', 'काम जारी रखें')}</Big>
-        <Plain onPress={() => { setAsk(false); nav.push('checkOut'); }}>{t('Finish anyway', 'फिर भी खत्म करें')}</Plain>
+        <Plain onPress={() => { setAsk(false); nav.push('finishCode'); }}>{t('Finish anyway', 'फिर भी खत्म करें')}</Plain>
       </Sheet>
     </>
   );
