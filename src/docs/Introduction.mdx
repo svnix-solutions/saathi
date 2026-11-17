@@ -1,0 +1,30 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Saathi/Introduction" />
+
+# Saathi prototype
+
+House help at your door in 15 minutes. This Storybook is the working prototype for the three Saathi products,
+built from the design in `docs/design/`.
+
+| Product | Built with | Where |
+|---|---|---|
+| **Saathi** customer app | React Native (rendered on the web with react-native-web) | `src/apps/customer` |
+| **Saathi Partner** helper app | React Native | `src/apps/partner` |
+| **Saathi Admin** operations panel | React (DOM) | `src/apps/admin` |
+
+## How to use it
+
+- **Prototype** stories under each product are the complete clickable app. Start at sign-in. In both apps the SMS code is **4821**.
+- **V1 · Launch / V2 / V3** groups follow the design's release plan. Each section opens with a **Design page** story that lays its screens side by side as the design does. Every phone on that page is live.
+- The toolbar switches the four launch conditions the design requires, for every phone at once: **dark mode**, **large text**, **Hindi**, and **small phone**.
+
+## Code map
+
+- `src/tokens`: colours, type and radii, shared by web and native.
+- `src/native/ui`: React Native primitives that mirror the design's CSS classes (`Card`, `Button`, `Pill`, `Avatar`, `CharacterTile`, …), plus the phone frame.
+- `src/native/nav.tsx`: a small stack navigator. Its route names are listed in each app's `ROUTES.md` and can move to React Navigation unchanged.
+- `src/data/decisions.ts`: launch prices and rules. Every price in the apps comes from here.
+- `src/apps/admin/shell.tsx`: the admin sidebar, top bar, router and role-based menus.
+
+Run `npm run storybook` to work on it locally and `npm run build-storybook` to produce a static site.
