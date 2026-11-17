@@ -79,7 +79,7 @@ export function SigninSpecializations() {
         <T s m>{t('Pick all that apply. You are sent jobs that match.', 'जो भी लागू हों सब चुनें। आपको उन्हीं से मिलते काम भेजे जाएँगे।')}</T>
         {specsOf(p.id).map((s) => (
           <Card key={s.id} row sel={picked.includes(s.id)} onPress={() => toggle(s.id)}>
-            <View style={{ flex: 1 }}><H2>{t(s.name, s.nameHi)}</H2><T s m>{s.sub}</T></View>
+            <View style={{ flex: 1 }}><H2>{t(s.name, s.nameHi)}</H2><T s m>{t(s.sub, s.subHi)}</T></View>
             <Check on={picked.includes(s.id)} size={22} />
           </Card>
         ))}

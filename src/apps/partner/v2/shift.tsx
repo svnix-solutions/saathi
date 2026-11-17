@@ -196,9 +196,12 @@ export function DoorCodeScreen({ params }: { params: { code?: string } }) {
   const [code, setCode] = useState('');
   const [error, setError] = useState(false);
   const [away, setAway] = useState(false);
+  const tries = st.startTries ?? 0;
+  const left = codes.maxTries - tries;
+  const locked = left <= 0;
   const start = () => {
-    if (code !== right) { setError(true); return; }
-    set({ jobStarted: true });
+    if (code !== right) { set({ startTries: tries + 1 }); setError(true); setCode(''); return; }
+    set({ jobStarted: true, startTries: 0 });
     nav.toast(t(`Code matches. ${job.minutes / 60 >= 1 ? job.minutes / 60 + ' hr' : job.minutes + ' min'} clock started.`, 'कोड सही है। घड़ी शुरू।'));
     nav.replace('onJob');
   };
@@ -215,17 +218,25 @@ export function DoorCodeScreen({ params }: { params: { code?: string } }) {
           </Lft>
           <IconTile name="call" onPress={() => nav.toast(`Calling ${job.customer}…`)} />
         </Card>
+        {locked ? <>
+          <H style={{ marginTop: 8 }}>{t('Only support can start this job now', 'अब यह काम सिर्फ़ सपोर्ट शुरू कर सकता है')}</H>
+          <T m>{t(`${codes.maxTries} wrong start codes were typed. Support will call ${job.customer} and start the job with you.`, `${codes.maxTries} बार गलत स्टार्ट कोड डाला गया। सपोर्ट ${job.customer} को कॉल करके आपके साथ काम शुरू करेगा।`)}</T>
+          <Spacer />
+          <Button big icon="call" onPress={() => nav.toast(t('Calling Saathi support…', 'साथी सपोर्ट को कॉल हो रहा है…'))}>{t('Call support', 'सपोर्ट को कॉल करें')}</Button>
+        </> : <>
         <H style={{ marginTop: 8 }}>{t('Ask the customer for their start code', 'ग्राहक से स्टार्ट कोड पूछें')}</H>
         <OtpInput value={code} error={error} onChange={(v) => { setCode(v); setError(false); }} />
         {error
-          ? <T s color={c.red}>{t('Code does not match. Ask the customer to read it again.', 'कोड मेल नहीं खाता। ग्राहक से दोबारा पूछें।')}</T>
+          ? <T s color={c.red}>{t(`Code does not match. ${left} ${left === 1 ? 'try' : 'tries'} left.`, `कोड मेल नहीं खाता। ${left} कोशिश बाकी।`)}</T>
           : <T s m>{t('The 1 hr clock starts when the code matches.', 'कोड मिलते ही 1 घंटे की घड़ी शुरू होगी।')}</T>}
+        <T s m>{t(`After ${codes.maxTries} wrong codes only support can start the job.`, `${codes.maxTries} गलत कोड के बाद काम सिर्फ़ सपोर्ट शुरू कर सकता है।`)}</T>
         <T s m>{t('Prototype start code', 'प्रोटोटाइप स्टार्ट कोड')}: {right}</T>
         <Spacer />
         <Button big disabled={code.length < 4} onPress={start}>{t('Start job', 'काम शुरू करें')}</Button>
         <Button variant="outline" style={{ borderColor: c.line }} textStyle={{ color: c.ink }} onPress={() => setAway(true)}>
           {t('Customer is not at home', 'ग्राहक घर पर नहीं हैं')}
         </Button>
+        </>}
       </Screen>
       <Sheet visible={away} onClose={() => setAway(false)}>
         <H2>{t('Customer is not at home', 'ग्राहक घर पर नहीं हैं')}</H2>

@@ -5,7 +5,7 @@ import { CustomerApp } from '../App';
 
 /** The same four conditions as the home screen, applied across the rest of the booking flow, one per screen. */
 const meta: Meta = {
-  title: 'Customer app/V1 · Launch/08 The booking flow in dark mode, large text, Hindi and on a small phone',
+  title: 'Customer app/V1 · Launch/10 The booking flow in dark mode, large text, Hindi and on a small phone',
   parameters: { layout: 'centered' },
 };
 export default meta;

@@ -18,19 +18,19 @@ export const professions: Profession[] = [
   { id: 'barber', name: 'Barber', nameHi: 'नाई', sub: "Haircuts at the customer's home", subHi: 'ग्राहक के घर पर बाल कटिंग', character: 'barber', partners: 6, live: true },
 ];
 
-export type Specialization = { id: string; profession: ProfessionId; name: string; nameHi: string; sub: string };
+export type Specialization = { id: string; profession: ProfessionId; name: string; nameHi: string; sub: string; subHi: string };
 export const specializations: Specialization[] = [
-  { id: 'deep_clean', profession: 'house_help', name: 'Deep cleaning', nameHi: 'गहरी सफ़ाई', sub: 'Kitchens and bathrooms' },
-  { id: 'cooking', profession: 'house_help', name: 'Cooking', nameHi: 'खाना बनाना', sub: 'Daily meals' },
-  { id: 'elderly', profession: 'nurse', name: 'Elderly care', nameHi: 'बुज़ुर्गों की देखभाल', sub: 'Older patients at home' },
-  { id: 'post_surgery', profession: 'nurse', name: 'After surgery care', nameHi: 'ऑपरेशन के बाद देखभाल', sub: 'Dressing, medicines, recovery' },
-  { id: 'baby', profession: 'nurse', name: 'Mother and baby care', nameHi: 'माँ और शिशु देखभाल', sub: 'After delivery' },
-  { id: 'electrician', profession: 'home_service', name: 'Electrician', nameHi: 'इलेक्ट्रीशियन', sub: 'Switches, fans, wiring' },
-  { id: 'plumber', profession: 'home_service', name: 'Plumber', nameHi: 'प्लंबर', sub: 'Taps, leaks, drains' },
-  { id: 'carpenter', profession: 'home_service', name: 'Carpenter', nameHi: 'बढ़ई', sub: 'Furniture and doors' },
-  { id: 'men', profession: 'barber', name: 'Men', nameHi: 'पुरुष', sub: 'Cuts, beard, shave' },
-  { id: 'kids', profession: 'barber', name: 'Kids', nameHi: 'बच्चे', sub: 'Needs child safety training' },
-  { id: 'women', profession: 'barber', name: 'Women', nameHi: 'महिलाएँ', sub: 'Cuts and trims' },
+  { id: 'deep_clean', profession: 'house_help', name: 'Deep cleaning', nameHi: 'गहरी सफ़ाई', sub: 'Kitchens and bathrooms', subHi: 'किचन और बाथरूम' },
+  { id: 'cooking', profession: 'house_help', name: 'Cooking', nameHi: 'खाना बनाना', sub: 'Daily meals', subHi: 'रोज़ का खाना' },
+  { id: 'elderly', profession: 'nurse', name: 'Elderly care', nameHi: 'बुज़ुर्गों की देखभाल', sub: 'Older patients at home', subHi: 'घर पर बुज़ुर्ग मरीज़' },
+  { id: 'post_surgery', profession: 'nurse', name: 'After surgery care', nameHi: 'ऑपरेशन के बाद देखभाल', sub: 'Dressing, medicines, recovery', subHi: 'पट्टी, दवा, रिकवरी' },
+  { id: 'baby', profession: 'nurse', name: 'Mother and baby care', nameHi: 'माँ और शिशु देखभाल', sub: 'After delivery', subHi: 'डिलीवरी के बाद' },
+  { id: 'electrician', profession: 'home_service', name: 'Electrician', nameHi: 'इलेक्ट्रीशियन', sub: 'Switches, fans, wiring', subHi: 'स्विच, पंखे, वायरिंग' },
+  { id: 'plumber', profession: 'home_service', name: 'Plumber', nameHi: 'प्लंबर', sub: 'Taps, leaks, drains', subHi: 'नल, लीकेज, नाली' },
+  { id: 'carpenter', profession: 'home_service', name: 'Carpenter', nameHi: 'बढ़ई', sub: 'Furniture and doors', subHi: 'फ़र्नीचर और दरवाज़े' },
+  { id: 'men', profession: 'barber', name: 'Men', nameHi: 'पुरुष', sub: 'Cuts, beard, shave', subHi: 'कटिंग, दाढ़ी, शेव' },
+  { id: 'kids', profession: 'barber', name: 'Kids', nameHi: 'बच्चे', sub: 'Needs child safety training', subHi: 'बाल सुरक्षा प्रशिक्षण ज़रूरी' },
+  { id: 'women', profession: 'barber', name: 'Women', nameHi: 'महिलाएँ', sub: 'Cuts and trims', subHi: 'कटिंग और ट्रिम' },
 ];
 
 export type Skill = { id: string; profession: ProfessionId; name: string; nameHi: string };

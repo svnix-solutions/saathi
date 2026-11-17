@@ -5,7 +5,7 @@ import { CustomerApp } from '../App';
 
 /** Live arrival, a running clock while work happens, then rating and re-booking. */
 const meta: Meta = {
-  title: 'Customer app/V1 · Launch/04 During and after the visit',
+  title: 'Customer app/V1 · Launch/05 During and after the visit',
   parameters: { layout: 'centered' },
 };
 export default meta;

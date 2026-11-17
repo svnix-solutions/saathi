@@ -5,7 +5,7 @@ import { CustomerApp } from '../App';
 
 /** Own details, how they pay, which messages they get, and how they delete their account. */
 const meta: Meta = {
-  title: 'Customer app/V1 · Launch/09 My account, payments, alerts and leaving',
+  title: 'Customer app/V1 · Launch/11 My account, payments, alerts and leaving',
   parameters: { layout: 'centered' },
 };
 export default meta;

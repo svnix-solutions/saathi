@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { PhoneRow } from '@/native/ui';
 import { PartnerApp } from '../App';
 
-const meta: Meta<typeof PartnerApp> = { title: 'Partner app/V2/26 Shift check, training and early payout', component: PartnerApp, parameters: { layout: 'centered' } };
+const meta: Meta<typeof PartnerApp> = { title: 'Partner app/V2/29 Shift check, training and early payout', component: PartnerApp, parameters: { layout: 'centered' } };
 export default meta;
 type S = StoryObj<typeof PartnerApp>;
 
@@ -22,3 +22,5 @@ export const Training: S = { name: '33 · Training lessons', args: { initial: 't
 export const DoorCode: S = { name: '34 · Start with start code', args: { initial: 'doorCode' } };
 export const PayoutEarly: S = { name: '35 · Take out earnings', args: { initial: 'payoutEarly' } };
 export const DoorCodeHindi: S = { name: '34 · Start with start code · Hindi', args: { initial: 'doorCode', locale: 'hi' } };
+export const DoorCodeWrongTwice: S = { name: '34 · Start code · 3 tries left', args: { initial: 'doorCode', state: { startTries: 2 } } };
+export const DoorCodeLocked: S = { name: '34 · Start code · locked after 5 wrong', args: { initial: 'doorCode', state: { startTries: 5 } } };

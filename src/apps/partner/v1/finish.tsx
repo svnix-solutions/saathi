@@ -72,7 +72,7 @@ export function FinishCode({ params }: { params: { code?: string } }) {
         <OtpInput value={code} error={err} onChange={(v) => { setCode(v); setErr(false); }} />
         {err ? <>
           <Card style={{ borderColor: c.red }}><T s color={c.red}>{t(`That code does not match. ${left} ${left === 1 ? 'try' : 'tries'} left.`, `यह कोड मेल नहीं खाता। ${left} कोशिश बाकी।`)}</T></Card>
-          <T s m>{t(`After ${codes.maxTries} wrong codes the job can only be finished by support. Wrong start codes count the same way.`, `${codes.maxTries} गलत कोड के बाद काम सिर्फ़ सपोर्ट खत्म कर सकता है। गलत स्टार्ट कोड भी ऐसे ही गिने जाते हैं।`)}</T>
+          <T s m>{t(`After ${codes.maxTries} wrong codes the job can only be finished by support. Start codes have their own 5 tries.`, `${codes.maxTries} गलत कोड के बाद काम सिर्फ़ सपोर्ट खत्म कर सकता है। स्टार्ट कोड की अपनी 5 कोशिशें हैं।`)}</T>
         </> : <T s m>{t('The customer has two codes in their app. Type the one they give you.', 'ग्राहक के ऐप में दो कोड हैं। जो कोड वे दें, वही डालें।')}</T>}
         <Spacer />
         <Big disabled={code.length < 4 || err} onPress={check}>{t('Finish job', 'काम खत्म करें')}</Big>

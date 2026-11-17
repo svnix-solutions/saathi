@@ -3,7 +3,7 @@ import React from 'react';
 import { PhoneRow } from '@/native/ui';
 import { CustomerApp } from '../App';
 
-const meta: Meta = { title: 'Customer app/V3/16 Voice, photo estimate and smart booking', parameters: { layout: 'centered' } };
+const meta: Meta = { title: 'Customer app/V3/18 Voice, photo estimate and smart booking', parameters: { layout: 'centered' } };
 export default meta;
 type S = StoryObj;
 

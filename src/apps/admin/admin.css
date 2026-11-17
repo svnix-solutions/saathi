@@ -169,3 +169,7 @@
 .sa .modal { background:#fff; border-radius:18px; padding:22px; width:440px; max-width:calc(100vw - 32px); display:grid; gap:12px; box-shadow:0 30px 60px -20px rgba(7,63,51,.5); }
 .sa .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:11px 18px; border-radius:12px; font-weight:600; z-index:60; }
 .sa .side.mini { width:64px; } .sa .side.mini .lbl, .sa .side.mini .sg, .sa .side.mini .nb { display:none; }
+
+/* sub-pages listed under an open sidebar item (Pricing & zones → Services, Professions, Zones) */
+.sa .side .nav.sub {padding:5px 10px 5px 40px; font-size:12px; font-weight:500; opacity:.85;}
+.sa .side .nav.sub.on {background:none; box-shadow:none; color:#fff; font-weight:700; opacity:1;}

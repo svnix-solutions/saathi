@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { PhoneRow } from '@/native/ui';
 import { PartnerApp } from '../App';
 
-const meta: Meta<typeof PartnerApp> = { title: 'Partner app/V3/31 Benefits, advance, kit and community', component: PartnerApp, parameters: { layout: 'centered' } };
+const meta: Meta<typeof PartnerApp> = { title: 'Partner app/V3/35 Benefits, advance, kit and community', component: PartnerApp, parameters: { layout: 'centered' } };
 export default meta;
 type S = StoryObj<typeof PartnerApp>;
 

@@ -4,7 +4,7 @@ import { PhoneRow } from '@/native/ui';
 import { PartnerApp } from '../App';
 
 /** Variants are the same live screens rendered with theme props, not new screens. */
-const meta: Meta = { title: 'Partner app/V1 · Launch/25 Hindi, large text, small phone and dark mode', parameters: { layout: 'centered' } };
+const meta: Meta = { title: 'Partner app/V1 · Launch/28 Hindi, large text, small phone and dark mode', parameters: { layout: 'centered' } };
 export default meta;
 type S = StoryObj;
 

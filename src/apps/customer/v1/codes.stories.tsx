@@ -5,7 +5,7 @@ import { CustomerApp } from '../App';
 
 /** Three one-time codes per booking, shown only in the customer's app: a start code, then a happy and a not-happy finish code. */
 const meta: Meta = {
-  title: 'Customer app/V1 · Launch/04b Start code and finish codes',
+  title: 'Customer app/V1 · Launch/06 Start code and finish codes',
   parameters: { layout: 'centered' },
 };
 export default meta;

@@ -17,6 +17,8 @@ export type PartnerState = {
   docsAdded?: DocId[];
   /** wrong finish codes typed on the current job (design page 30) */
   finishTries?: number;
+  /** wrong start codes typed on the current job; at codes.maxTries only support can start it */
+  startTries?: number;
   /** current job */
   job: { id: string; service: string; minutes: number; earn: number; address: string; customer: string; note: string; tasks: string[]; done: string[] };
   [k: string]: unknown;

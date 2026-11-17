@@ -5,7 +5,7 @@ import { CustomerApp } from '../App';
 
 /** The kinds of work on Home come from the database, and so do the services and prices under each. Booking works the same as cleaning. */
 const meta: Meta = {
-  title: 'Customer app/V1 · Launch/03b Nursing, home repair and barber',
+  title: 'Customer app/V1 · Launch/04 Nursing, home repair and barber',
   parameters: { layout: 'centered' },
 };
 export default meta;
