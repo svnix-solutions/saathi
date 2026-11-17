@@ -3,11 +3,10 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Card, H, H2, Icon, Input, Lft, OtpInput, Row, Screen, Spacer, T, Tag, palette, useAppState, useNav, useT, useTheme } from '@/native/ui';
 import { codes, rupees } from '@/data/decisions';
-import { Badge, Big, Page, Plain, TopBar, TopH2, defaultToday, type V1State } from './kit';
+import { Badge, Big, Page, Plain, TopBar, TopH2, defaultToday, jobReset, type V1State } from './kit';
 import { serviceHi } from './jobs';
 
-/** The design's sample earning for this job (page 30). */
-/** what this job pays the partner (₹258 in the design's 2-hour sample) */
+/** What this job pays the partner (₹258 in the design's 2-hour sample). */
 const earnOf = (st: V1State) => st.job?.earn ?? 258;
 const firstName = (st: V1State) => st.job.customer.split(' ')[0];
 
@@ -28,11 +27,11 @@ export function FinishCode({ params }: { params: { code?: string } }) {
       const happy = code === codes.finishHappy;
       const today = st.today ?? defaultToday;
       set({
-        finishTries: 0, startTries: 0, startVerified: false, selfieIn: false, selfieOut: false, jobEndsAt: undefined, photos: undefined, familyLive: false,
+        ...jobReset,
         ...(happy ? {
           earnedToday: (st.earnedToday ?? 412) + earnOf(st), jobsToday: (st.jobsToday ?? 3) + 1,
           week: (st.week ?? 2846) + earnOf(st), weekJobs: (st.weekJobs ?? 19) + 1,
-          today: [{ title: job.service, titleHi: serviceHi[job.service] ?? job.service, sub: '11:00 am · 1 hr', amt: earnOf(st) }, ...today],
+          today: [{ title: job.service, titleHi: serviceHi[job.service] ?? job.service, sub: `11:00 am · ${job.minutes >= 60 ? job.minutes / 60 + ' hr' : job.minutes + ' min'}`, amt: earnOf(st) }, ...today],
         } : {}),
       });
       nav.reset(happy ? 'finish.happy' : 'finish.notHappy');

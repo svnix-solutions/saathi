@@ -6,7 +6,7 @@ import {
   palette, useAppState, useNav, useT, useTheme,
 } from '@/native/ui';
 import { codes, rupees } from '@/data/decisions';
-import { Big, Cb, Page, PhotoTile, TopBar, TopH2, TopT, defaultToday, leftLabel, useJobClock, type V1State } from './kit';
+import { Big, Cb, Page, PhotoTile, TopBar, TopH2, TopT, leftLabel, useJobClock, useStartCode, type V1State } from './kit';
 import { serviceHi } from './jobs';
 
 function CheckLine({ on, title, sub, icon, sel, onPress, busy }: { on?: boolean; title: string; sub: string; icon?: 'pin' | 'clock' | 'user'; sel?: boolean; onPress?: () => void; busy?: boolean }) {
@@ -27,21 +27,13 @@ export function CheckIn() {
   const t = useT();
   const nav = useNav();
   const { c } = useTheme();
-  const [st, set] = useAppState<V1State>();
+  const [st] = useAppState<V1State>();
   const [located, setLocated] = useState(false);
   useEffect(() => { const id = setTimeout(() => setLocated(true), 1200); return () => clearTimeout(id); }, []);
   const job = st.job;
   const selfie = !!st.selfieIn;
-  // start code: typed by the partner, read out by the customer; 5 wrong tries, then support (shared with the start-code screen)
-  const verified = !!st.startVerified;
-  const tries = st.startTries ?? 0;
-  const left = codes.maxTries - tries;
-  const [code, setCode] = useState('');
-  const [wrong, setWrong] = useState(false);
-  const verify = () => {
-    if (code === codes.start) { set({ startVerified: true, startTries: 0 }); nav.toast(t('Start code matches', 'स्टार्ट कोड सही है')); return; }
-    set({ startTries: tries + 1 }); setWrong(true); setCode('');
-  };
+  // start code: typed by the partner, read out by the customer (same rule and tries as the start-code screen)
+  const { code, type, wrong, left, locked, verified, verify } = useStartCode();
   return (
     <Page>
       <TopBar>
@@ -56,7 +48,7 @@ export function CheckIn() {
         <CheckLine on icon="clock" title={t('Time 11:08 am', 'समय 11:08 am')} sub={t('On time · due by 11:10', 'समय पर · 11:10 तक पहुँचना था')} />
         {verified
           ? <CheckLine on title={t('Start code matched', 'स्टार्ट कोड मिल गया')} sub={t('Read out by the customer', 'ग्राहक ने बताया')} />
-          : left <= 0
+          : locked
             ? <Card tone="red" style={{ gap: 8 }}>
                 <H2>{t('Only support can start this job now', 'अब यह काम सिर्फ़ सपोर्ट शुरू कर सकता है')}</H2>
                 <T s m>{t(`${codes.maxTries} wrong start codes were typed.`, `${codes.maxTries} बार गलत स्टार्ट कोड डाला गया।`)}</T>
@@ -64,11 +56,11 @@ export function CheckIn() {
               </Card>
             : <Card sel style={{ gap: 9 }}>
                 <H2>{t('Ask the customer for the start code', 'ग्राहक से स्टार्ट कोड पूछें')}</H2>
-                <OtpInput value={code} error={wrong} onChange={(v) => { setCode(v); setWrong(false); }} />
+                <OtpInput value={code} error={wrong} onChange={type} />
                 {wrong
                   ? <T s color={c.red}>{t(`That code does not match. ${left} ${left === 1 ? 'try' : 'tries'} left.`, `कोड मेल नहीं खाता। ${left} कोशिश बाकी।`)}</T>
                   : <T s m>{t(`It is in the customer's app. Prototype code: ${codes.start}`, `यह ग्राहक के ऐप में है। प्रोटोटाइप कोड: ${codes.start}`)}</T>}
-                <Button disabled={code.length < 4} onPress={verify}>{t('Verify code', 'कोड जाँचें')}</Button>
+                <Button disabled={code.length < 4} onPress={() => verify() && nav.toast(t('Start code matches', 'स्टार्ट कोड सही है'))}>{t('Verify code', 'कोड जाँचें')}</Button>
               </Card>}
         <CheckLine on={selfie} sel={verified && !selfie} icon="user" title={t('Selfie', 'सेल्फ़ी')}
           sub={selfie ? t('Added · clock started', 'जुड़ गई · समय शुरू') : verified ? t('Needed to start the clock', 'समय शुरू करने के लिए ज़रूरी') : t('After the start code', 'स्टार्ट कोड के बाद')}

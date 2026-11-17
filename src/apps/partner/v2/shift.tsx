@@ -8,6 +8,7 @@ import {
 import { codes, decisions, rupees } from '@/data/decisions';
 import { PartnerTabs, initialPartnerState, type PartnerState } from '../chrome';
 import { Circle, Meter, Root, TopLabel, TopProgress, onGreen } from './kit';
+import { useStartCode } from '../v1/kit';
 
 /* ---------- 32 · Shift check-in ---------- */
 export function ShiftCheckScreen() {
@@ -192,16 +193,13 @@ export function DoorCodeScreen({ params }: { params: { code?: string } }) {
   const { c } = useTheme();
   const [st, set] = useAppState<PartnerState>();
   const job = st.job ?? initialPartnerState.job;
-  const right = params.code ?? codes.start;
-  const [code, setCode] = useState('');
-  const [error, setError] = useState(false);
   const [away, setAway] = useState(false);
-  const tries = st.startTries ?? 0;
-  const left = codes.maxTries - tries;
-  const locked = left <= 0;
+  const right = params.code ?? codes.start;
+  // same rule and tries as check-in
+  const { code, type, wrong: error, left, locked, verify } = useStartCode(right);
   const start = () => {
-    if (code !== right) { set({ startTries: tries + 1 }); setError(true); setCode(''); return; }
-    set({ jobStarted: true, startTries: 0, startVerified: true });
+    if (!verify()) return;
+    set({ jobStarted: true });
     nav.toast(t(`Code matches. ${job.minutes / 60 >= 1 ? job.minutes / 60 + ' hr' : job.minutes + ' min'} clock started.`, 'कोड सही है। घड़ी शुरू।'));
     nav.replace('onJob');
   };
@@ -225,7 +223,7 @@ export function DoorCodeScreen({ params }: { params: { code?: string } }) {
           <Button big icon="call" onPress={() => nav.toast(t('Calling Saathi support…', 'साथी सपोर्ट को कॉल हो रहा है…'))}>{t('Call support', 'सपोर्ट को कॉल करें')}</Button>
         </> : <>
         <H style={{ marginTop: 8 }}>{t('Ask the customer for their start code', 'ग्राहक से स्टार्ट कोड पूछें')}</H>
-        <OtpInput value={code} error={error} onChange={(v) => { setCode(v); setError(false); }} />
+        <OtpInput value={code} error={error} onChange={type} />
         {error
           ? <T s color={c.red}>{t(`Code does not match. ${left} ${left === 1 ? 'try' : 'tries'} left.`, `कोड मेल नहीं खाता। ${left} कोशिश बाकी।`)}</T>
           : <T s m>{t('The 1 hr clock starts when the code matches.', 'कोड मिलते ही 1 घंटे की घड़ी शुरू होगी।')}</T>}

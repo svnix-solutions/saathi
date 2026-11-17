@@ -7,7 +7,7 @@ import {
 } from '@/native/ui';
 import { decisions, rupees } from '@/data/decisions';
 import { PartnerTabs } from '../chrome';
-import { Big, Page, Plain, TopBar, TopH, TopH2, TopT, defaultToday, leftLabel, mmss, useCountdown, useJobClock, type V1State } from './kit';
+import { Big, Page, Plain, TopBar, TopH, TopH2, TopT, defaultToday, leftLabel, mmss, useCountdown, useJobClock, jobReset, type V1State } from './kit';
 
 /** The job that rings on Home (design screen 10). */
 export const newJob = {
@@ -104,7 +104,7 @@ export function JobRequest() {
     nav.toast(t('Missed: the job went to another partner', 'छूट गया: काम दूसरे पार्टनर को गया'));
   }, [left]);
   const accept = () => {
-    set({ job: { ...job, done: [] }, offer: undefined, offerShown: true, selfieIn: false, selfieOut: false, jobEndsAt: undefined, photos: undefined });
+    set({ ...jobReset, job: { ...job, done: [] }, offer: undefined, offerShown: true });
     nav.replace('checkIn');
     nav.toast(t('Job accepted. Head to Block C.', 'काम मंज़ूर। ब्लॉक सी जाएँ।'));
   };

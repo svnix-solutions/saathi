@@ -6,7 +6,7 @@ Check:  python3 test_server.py
 Standard library only, nothing to install."""
 # ponytail: one SQLite file so it runs with no setup, and no rate limiting. Before real customers use it, move to the
 # PostgreSQL design in db/schema.sql and add SMS sign-in, the payment gateway and dispatch to partners.
-import base64, hashlib, hmac, html, json, os, re, secrets, sqlite3, time
+import base64, hashlib, hmac, html, json, os, re, secrets, sqlite3, threading, time
 from urllib.parse import parse_qs
 from datetime import datetime
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -24,15 +24,23 @@ OTP_TTL, OTP_RESEND, OTP_TRIES, SESSION_TTL = 300, 30, 5, 30 * 86400   # seconds
 DEV_OTP = os.environ.get("SAATHI_DEV_OTP") == "1"
 ADMIN_SESSION = 8 * 3600                 # admin sign-in lasts 8 hours
 ADMIN_LOCK = {"fails": 0, "until": 0}   # ponytail: one shared counter, fine for one shared admin password; per-account counts come with per-person accounts
+ADMIN_GUARD = threading.Lock()           # password checks run one at a time, so parallel guesses cannot all slip in before the lock
 # Only these paths are served as files. Everything else (this script, the database, db/, build scripts) is a 404.
 PUBLIC = re.compile(r"/(index\.html)?|/site/([\w.-]+\.(html|css|pdf))?|/design/img/(cut|trim)/[\w.-]+\.png")
 STAMPS = "created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, last_modified TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, is_active INTEGER NOT NULL DEFAULT 1"
 
 
 def db():
-    DB.parent.mkdir(parents=True, exist_ok=True)
-    con = sqlite3.connect(DB)
+    """A connection for one request. The tables are made once, by setup_db()."""
+    con = sqlite3.connect(DB, timeout=10)
     con.row_factory = sqlite3.Row
+    return con
+
+
+def setup_db():
+    """Create the tables, add new columns and add new services from the seed file. Run once when the server starts."""
+    DB.parent.mkdir(parents=True, exist_ok=True)
+    con = db()
     con.executescript(f"""
         CREATE TABLE IF NOT EXISTS bookings (id INTEGER PRIMARY KEY, service TEXT NOT NULL, minutes INTEGER NOT NULL,
             scheduled_for TEXT, address TEXT NOT NULL, notes TEXT NOT NULL DEFAULT '', amount INTEGER NOT NULL,
@@ -58,7 +66,8 @@ def db():
         if column not in [r["name"] for r in con.execute(f"PRAGMA table_info({table})")]:
             con.execute(f"ALTER TABLE {table} ADD COLUMN {column} {kind}")
     con.executescript(SEED.read_text())   # adds services that are new since last start; never overwrites a changed price
-    return con
+    con.commit()
+    con.close()
 
 
 def pricing(con):
@@ -106,13 +115,19 @@ def verify_otp(con, d):
     """Right code -> the customer (created on first sign-in) and a new session token."""
     mobile, code = str(d.get("mobile", "")), str(d.get("code", ""))
     row = con.execute("SELECT * FROM otp_requests WHERE mobile = ? AND NOT used ORDER BY id DESC LIMIT 1", (mobile,)).fetchone()
-    if not row or row["expires_at"] < time.time() or row["attempts"] >= OTP_TRIES:
-        raise ValueError("That code has expired. Ask for a new one.")
+    expired = ValueError("That code has expired. Ask for a new one.")
+    if not row or row["expires_at"] < time.time():
+        raise expired
+    # Take one of the 5 tries before comparing, in a single UPDATE. SQLite runs writes one at a time, so parallel
+    # guesses cannot all read "attempts < 5" first: the 6th and later find no row to update and are refused.
+    if not con.execute("UPDATE otp_requests SET attempts = attempts + 1 WHERE id = ? AND attempts < ? AND NOT used", (row["id"], OTP_TRIES)).rowcount:
+        con.commit()
+        raise expired
+    con.commit()   # keep the count even if this request fails
     if not hmac.compare_digest(row["code_hash"], digest(mobile, code)):
-        con.execute("UPDATE otp_requests SET attempts = attempts + 1 WHERE id = ?", (row["id"],))
-        con.commit()   # keep the count even though this request fails
         raise ValueError("That code is not right.")
-    con.execute("UPDATE otp_requests SET used = 1 WHERE id = ?", (row["id"],))
+    if not con.execute("UPDATE otp_requests SET used = 1 WHERE id = ? AND NOT used", (row["id"],)).rowcount:
+        raise expired   # the same right code sent twice at once: only the first signs in
     con.execute("INSERT OR IGNORE INTO customers (mobile) VALUES (?)", (mobile,))
     customer = con.execute("SELECT * FROM customers WHERE mobile = ?", (mobile,)).fetchone()
     token = secrets.token_urlsafe(32)
@@ -233,8 +248,22 @@ main>*{min-width:0;max-width:100%}
 """
 
 
+def check_admin_password(password):
+    """'ok', 'wrong' or 'locked'. Every admin password check goes through here (sign-in form and Basic auth), one at
+    a time, and 5 wrong ones lock both for 15 minutes."""
+    with ADMIN_GUARD:
+        if ADMIN_LOCK["until"] > time.time():
+            return "locked"
+        if ADMIN_PASSWORD and hmac.compare_digest(password.encode(), ADMIN_PASSWORD.encode()):
+            ADMIN_LOCK["fails"] = 0
+            return "ok"
+        ADMIN_LOCK["fails"] += 1
+        if ADMIN_LOCK["fails"] >= 5:
+            ADMIN_LOCK.update(fails=0, until=time.time() + 900)
+        return "wrong"
+
+
 def admin_shell(body, title="Dashboard"):
-    nav = [("Dashboard", "#top", ""), ("Bookings", "#bookings", ""), ("Reviews", "#reviews", "{pending}"), ("Partners", "#partners", ""), ("Pricing", "#pricing", "")]
     return ("<!doctype html><html lang='en'><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'>"
             f"<title>Saathi admin · {title}</title><style>{ADMIN_CSS}</style><div class='app'>" + body + "</div></html>")
 
@@ -313,11 +342,14 @@ class Handler(SimpleHTTPRequestHandler):
             with db() as con:
                 if con.execute("SELECT 1 FROM admin_sessions WHERE token_hash = ? AND expires_at > ?", (digest(m[1]), int(time.time()))).fetchone():
                     return True
+        auth = self.headers.get("Authorization", "")
+        if not auth.startswith("Basic "):
+            return False
         try:
-            user, _, password = base64.b64decode(self.headers.get("Authorization", "")[6:]).decode().partition(":")
+            user, _, password = base64.b64decode(auth[6:]).decode().partition(":")
         except Exception:
             return False
-        return user == "admin" and hmac.compare_digest(password.encode(), ADMIN_PASSWORD.encode())
+        return check_admin_password(password if user == "admin" else "") == "ok"   # counted towards the lockout like the form
 
     def token(self):
         m = re.search(r"(?:^|;\s*)kk_session=([\w-]+)", self.headers.get("Cookie", ""))
@@ -334,6 +366,12 @@ class Handler(SimpleHTTPRequestHandler):
         return super().send_head()
 
     def do_GET(self):
+        try:
+            self.get()
+        except sqlite3.OperationalError:   # database busy or locked
+            self.reply(503, {"error": "Saathi is busy. Try again in a moment."})
+
+    def get(self):
         path = self.route()
         if path == "/api/reviews":
             with db() as con:
@@ -371,14 +409,11 @@ class Handler(SimpleHTTPRequestHandler):
             if path == "/admin/login":
                 if not ADMIN_PASSWORD or not same_site:
                     return self.reply(403, admin_login_page("Sign-in is not available."), "text/html")
-                if ADMIN_LOCK["until"] > time.time():
+                result = check_admin_password(parse_qs(raw.decode()).get("password", [""])[0])
+                if result == "locked":
                     return self.reply(429, admin_login_page("Too many wrong tries. Sign-in is locked for 15 minutes."), "text/html")
-                if not hmac.compare_digest(parse_qs(raw.decode()).get("password", [""])[0].encode(), ADMIN_PASSWORD.encode()):
-                    ADMIN_LOCK["fails"] += 1
-                    if ADMIN_LOCK["fails"] >= 5:
-                        ADMIN_LOCK.update(fails=0, until=time.time() + 900)
+                if result == "wrong":
                     return self.reply(401, admin_login_page("That password is not right."), "text/html")
-                ADMIN_LOCK["fails"] = 0
                 token = secrets.token_urlsafe(32)
                 with db() as con:
                     con.execute("INSERT INTO admin_sessions (token_hash, expires_at) VALUES (?,?)", (digest(token), int(time.time()) + ADMIN_SESSION))
@@ -435,11 +470,14 @@ class Handler(SimpleHTTPRequestHandler):
                 if path == "/api/reviews":
                     return self.reply(201, new_review(con, d))
             self.reply(404, {"error": "Not found."})
+        except sqlite3.OperationalError:   # database busy or locked
+            self.reply(503, {"error": "Saathi is busy. Try again in a moment."})
         except (ValueError, KeyError, TypeError) as err:   # JSONDecodeError is a ValueError
             self.reply(400, {"error": str(err) if isinstance(err, ValueError) and not isinstance(err, json.JSONDecodeError) else "Check the details."})
 
 
 def make_server(port):
+    setup_db()
     return ThreadingHTTPServer(("127.0.0.1", port), Handler)
 
 

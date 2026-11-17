@@ -110,6 +110,26 @@ assert call("/api/reviews") == (200, [{"name": "Farah", "stars": 5, "quote": "Gr
 call("/admin/reviews/1/reject", {}, {**AUTH, "Origin": BASE})
 assert call("/api/reviews") == (200, [])
 
+# parallel wrong guesses cannot get past the 5-try limit
+from concurrent.futures import ThreadPoolExecutor
+real = call("/api/auth/otp", {"mobile": "9000000002"})[1]["dev_code"]
+wrongs = [f"{n:04d}" for n in range(10000) if f"{n:04d}" != real][:40]
+with ThreadPoolExecutor(40) as pool:
+    answers = list(pool.map(lambda g: call("/api/auth/verify", {"mobile": "9000000002", "code": g}, who=browser())[1], wrongs))
+assert sum("not right" in a for a in answers) <= 5, answers               # at most 5 guesses were compared
+assert call("/api/auth/verify", {"mobile": "9000000002", "code": real})[0] == 400   # and the code is now dead
+
+# Basic-auth guesses count towards the admin lockout too, and lock it for the form and Basic auth alike
+server.ADMIN_LOCK.update(fails=0, until=0)
+BAD = {"Authorization": "Basic " + base64.b64encode(b"admin:guess").decode()}
+with ThreadPoolExecutor(20) as pool:
+    list(pool.map(lambda _: call("/admin", headers=BAD), range(20)))
+assert server.ADMIN_LOCK["until"] > 0                                      # locked
+assert call("/admin", headers=AUTH)[0] == 401                               # even the right password waits out the lock
+assert call("/admin/login", {"password": "test-password"}, {"Origin": BASE}, form=True)[0] == 429
+server.ADMIN_LOCK.update(fails=0, until=0)
+assert call("/admin", headers=AUTH)[0] == 200
+
 # files: pages are served, everything private is not
 for path, want in [("/", 200), ("/site/index.html", 200), ("/site/pages.css", 200), ("/design/img/cut/hero.png", 200),
                    ("/server.py", 404), ("/data/saathi.sqlite", 404), ("/db/schema.sql", 404), ("/design/build.py", 404), ("/site/../server.py", 404)]:

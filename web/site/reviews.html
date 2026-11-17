@@ -58,11 +58,17 @@ f.addEventListener("submit", e => {
   err.textContent = bad ? MSG[bad.name] : "";
   if (bad) { bad.focus(); return; }
   const r = Object.fromEntries(new FormData(f));
+  const done = text => { ok.textContent = text; ok.hidden = false; f.reset(); };
+  ok.hidden = true;
   fetch("/api/reviews", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...r, stars: +r.stars, consent: true }) })
-    .then(v => { if (!v.ok) throw 0; })
-    .catch(() => { try { localStorage.setItem("reviewSubmissions", JSON.stringify([...(JSON.parse(localStorage.getItem("reviewSubmissions")) || []), r])); } catch {} });
-  ok.textContent = "Thank you, " + r.name.trim() + ". Your review is waiting for approval and is not public yet. We usually decide within a day.";
-  ok.hidden = false; f.reset();
+    .then(async v => {
+      if (v.ok) return done("Thank you, " + r.name.trim() + ". Your review is waiting for approval and is not public yet. We usually decide within a day.");
+      err.textContent = (await v.json().catch(() => ({}))).error || "We could not send this. Please try again.";
+    })
+    .catch(() => {
+      try { localStorage.setItem("reviewSubmissions", JSON.stringify([...(JSON.parse(localStorage.getItem("reviewSubmissions")) || []), r])); } catch {}
+      done("Saved on this device only: Saathi could not be reached, so it has not been sent yet.");
+    });
 });
 </script>
 </body>
