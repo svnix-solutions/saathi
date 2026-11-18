@@ -4,11 +4,11 @@ export type ServiceId = 'general' | 'kitchenBath' | 'dishes' | 'laundry' | 'cust
 
 /** The kinds of work on customer Home (design page 04). In the real app they come from the professions table. */
 export type Category = 'cleaning' | 'nursing' | 'repair' | 'barber';
-export const categories: { id: Category; name: string; nameHi: string; title: string; titleHi: string }[] = [
-  { id: 'cleaning', name: 'Cleaning', nameHi: 'सफ़ाई', title: 'What needs doing today?', titleHi: 'आज क्या काम करवाना है?' },
-  { id: 'nursing', name: 'Nursing', nameHi: 'नर्सिंग', title: 'Care at home', titleHi: 'घर पर देखभाल' },
-  { id: 'repair', name: 'Repair', nameHi: 'मरम्मत', title: 'Fix something', titleHi: 'कुछ ठीक करवाएँ' },
-  { id: 'barber', name: 'Barber', nameHi: 'नाई', title: 'Haircut at home', titleHi: 'घर पर बाल कटवाएँ' },
+export const categories: { id: Category; name: string; nameHi: string; namePa: string; title: string; titleHi: string; titlePa: string }[] = [
+  { id: 'cleaning', name: 'Cleaning', nameHi: 'सफ़ाई', namePa: 'ਸਫ਼ਾਈ', title: 'What needs doing today?', titleHi: 'आज क्या काम करवाना है?', titlePa: 'ਅੱਜ ਕੀ ਕੰਮ ਕਰਵਾਉਣਾ ਹੈ?' },
+  { id: 'nursing', name: 'Nursing', nameHi: 'नर्सिंग', namePa: 'ਨਰਸਿੰਗ', title: 'Care at home', titleHi: 'घर पर देखभाल', titlePa: 'ਘਰ ਤੇ ਦੇਖਭਾਲ' },
+  { id: 'repair', name: 'Repair', nameHi: 'मरम्मत', namePa: 'ਮੁਰੰਮਤ', title: 'Fix something', titleHi: 'कुछ ठीक करवाएँ', titlePa: 'ਕੁਝ ਠੀਕ ਕਰਵਾਓ' },
+  { id: 'barber', name: 'Barber', nameHi: 'नाई', namePa: 'ਨਾਈ', title: 'Haircut at home', titleHi: 'घर पर बाल कटवाएँ', titlePa: 'ਘਰ ਤੇ ਵਾਲ ਕਟਵਾਓ' },
 ];
 
 export const services: { id: ServiceId; name: string; nameHi: string; per30: number; character: CharacterId; tasks: string[]; category: Category; sub?: string; subHi?: string }[] = [

@@ -111,8 +111,8 @@ export function AssignPage({ params }: { params: PageParams }) {
               onClick={() => !n.blocked && setPick(n.id)}>
               <div className="lft"><Av sm face={n.face} /><div><b>{n.name}</b><div className="s m">{n.info}</div></div></div>
               {n.blocked ? <Tag tone={n.blocked === 'Declined' ? 'x' : 'r'}>{n.blocked}</Tag>
-                : <button type="button" className={`btn ops-assign-btn ${pick === n.id ? '' : 'o'}`}
-                  onClick={(e) => { e.stopPropagation(); assign(n); }}>Assign</button>}
+                : <Button size="lg" variant={pick === n.id ? 'primary' : 'outline'} className="ops-assign-btn"
+                  onClick={(e) => { e.stopPropagation(); assign(n); }}>Assign</Button>}
             </div>
           )) : (
             <div className="card sel ops-assigned">

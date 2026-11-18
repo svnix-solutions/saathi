@@ -1,12 +1,8 @@
-import puppeteer from 'puppeteer-core';
-const b = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
-const p = await b.newPage();
-await p.goto('http://localhost:6008/iframe.html', { waitUntil: 'networkidle0' });
-const keys = await p.evaluate(async () => {
-  const c = await import('/src/apps/customer/routes.ts');
-  const pa = await import('/src/apps/partner/routes.ts');
-  const a = await import('/src/apps/admin/routes.ts');
-  return { customer: Object.keys(c.customerRoutes), partner: Object.keys(pa.partnerRoutes), admin: Object.keys(a.adminPages) };
-});
-console.log(JSON.stringify(keys));
-await b.close();
+// Writes keys.json: every route of every app, read from the route tables (no server needed).
+import fs from 'node:fs';
+const root = new URL('../../src/apps/', import.meta.url);
+const read = (app) => Object.keys(Object.fromEntries(
+  [...fs.readFileSync(new URL(`${app}/navigation/routeTable.ts`, root), 'utf8').matchAll(/^\s+"([^"]+)": \{ release/gm)].map((m) => [m[1], 1])));
+const keys = { customer: read('customer'), partner: read('partner'), admin: read('admin') };
+fs.writeFileSync(new URL('./keys.json', import.meta.url), JSON.stringify(keys));
+console.log(Object.fromEntries(Object.entries(keys).map(([k, v]) => [k, v.length])));

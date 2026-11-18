@@ -5,7 +5,6 @@ import { HelperReviewsScreen } from './screens/HelperReviewsScreen';
 import { ChatScreen } from './screens/ChatScreen';
 
 export { FavouritesScreen, HelperProfileScreen, HelperReviewsScreen, ChatScreen };
-export { useHelperState, type HelperState } from './state';
 
 /**
  * Helpers feature — public API of this folder. Other features import only from here.

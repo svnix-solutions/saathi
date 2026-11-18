@@ -35,7 +35,7 @@ function PhoneInner({ children, caption, sub, bg, style }: { children: React.Rea
   const nav = useNav();
   return (
     <View style={{ width: small ? 236 : 280 }}>
-      <View style={[{
+      <View testID="phone-screen" style={[{
         width: small ? 236 : 280, height: small ? 500 : 600, borderWidth: 8, borderColor: palette.ink, borderRadius: radius.phone,
         backgroundColor: bg ?? c.surface, overflow: 'hidden',
         boxShadow: elevation.phone,

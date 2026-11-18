@@ -5,13 +5,13 @@ import { CustomerTabs } from '../../../navigation/CustomerTabs';
 import { BlockedHelpersSheet } from '../components/BlockedHelpersSheet';
 import { HelperCard } from '../components/HelperCard';
 import { defaultBlocked, defaultFavourites, myHelpers } from '../data';
-import { useHelperState } from '../state';
+import { useCustomerState } from '../../../state';
 
 /** Design page 10 · screen 33, favourite helpers. */
 export function FavouritesScreen() {
   const nav = useNav();
   const t = useT();
-  const [st, set] = useHelperState();
+  const [st, set] = useCustomerState();
   const favs = st.favourites ?? defaultFavourites;
   const blocked = st.blocked ?? defaultBlocked;
   const [prefer, setPrefer] = useState(true);

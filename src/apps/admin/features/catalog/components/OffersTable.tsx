@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableCard, Toggle, type TableColumn } from '../../../ui';
+import { Pager, Table, TableCard, Toggle, type TableColumn } from '../../../ui';
 import { inr } from '../../../fixtures';
 import type { OfferCode } from '../data';
 import { offerText } from '../offerText';
@@ -24,7 +24,7 @@ export function OffersTable({ codes, selected, onPick, onLiveChange }: OffersTab
   ];
   return (
     // one page only, so the footer has no page arrows (not `Pager`)
-    <TableCard footer={<div className="pg"><span>Page 1 of 1 · {codes.length} rows per page</span><span><b>1</b></span></div>}>
+    <TableCard footer={<Pager pages={1} text={`Page 1 of 1 · ${codes.length} rows per page`} />}>
       <Table columns={columns} rows={codes} rowKey={(c) => c.code} onRowClick={onPick} selected={(c) => c.code === selected} />
     </TableCard>
   );

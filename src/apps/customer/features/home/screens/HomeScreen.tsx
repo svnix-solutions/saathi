@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import {
-  Avatar, Card, CharacterTile, Grid, H, H2, Icon, Lft, Pill, Row, Screen, T, palette, useNav, useT, useTheme, type ScreenProps,
+  Avatar, Card, CharacterTile, Grid, H, H2, Icon, Lft, Row, Screen, T, palette, useNav, useT, useTheme, type ScreenProps, ChipGroup,
 } from '@/native/ui';
 import { categories, rupees, serviceName, servicesIn, type Category } from '@/domain';
 import { useCustomerState } from '../../../state';
@@ -39,12 +39,9 @@ export function HomeScreen({ params }: ScreenProps<{ category?: Category }>) {
             </View>
           </Lft>
         </Card>}
-        <Row gap={4}>
-          {categories.map((x) => (
-            <Pill key={x.id} s sel={cat === x.id} onPress={() => setCat(x.id)} style={{ flex: 1, paddingHorizontal: 2 }}>{t(x.name, x.nameHi)}</Pill>
-          ))}
-        </Row>
-        <H size={16}>{t(info.title, info.titleHi)}</H>
+        <ChipGroup accessibilityLabel={t('Kind of work', 'काम का प्रकार', 'ਕੰਮ ਦੀ ਕਿਸਮ')} value={cat} onChange={setCat}
+          items={categories.map((x) => ({ key: x.id, label: t(x.name, x.nameHi, x.namePa) }))} />
+        <H size={16}>{t(info.title, info.titleHi, info.titlePa)}</H>
         {cat === 'cleaning' ? <>
           <Grid cols={2}>
             {grid.map((s) => (

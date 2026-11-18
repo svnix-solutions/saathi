@@ -12,7 +12,7 @@ const appImports = ['@/apps/*', '@/apps/**'];
 const restrict = (...groups) => ['error', { patterns: groups.map(([group, message]) => ({ group, message })) }];
 
 export default tseslint.config(
-  { ignores: ['node_modules', 'storybook-static', 'web', 'deploy', 'public', '**/*.d.ts'] },
+  { ignores: ['node_modules', 'storybook-static', 'web', 'deploy', 'public', '**/*.d.ts', 'scripts/visual/.out', 'scripts/visual/.baseline', 'scripts/visual/.worktree'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {

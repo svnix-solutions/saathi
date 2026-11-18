@@ -9,9 +9,9 @@ export function PartnerTabs({ active }: { active: PartnerTab }) {
   const t = useT();
   return (
     <TabBar active={active} onChange={(k) => nav.reset(k)} tabs={[
-      { key: 'home', label: t('Home', 'होम'), icon: 'home' },
-      { key: 'jobs', label: t('Jobs', 'काम'), icon: 'list' },
-      { key: 'earnings', label: t('Earnings', 'कमाई'), icon: 'wallet' },
+      { key: 'home', label: t('Home', 'होम', 'ਹੋਮ'), icon: 'home' },
+      { key: 'jobs', label: t('Jobs', 'काम', 'ਕੰਮ'), icon: 'list' },
+      { key: 'earnings', label: t('Earnings', 'कमाई', 'ਕਮਾਈ'), icon: 'wallet' },
     ]} />
   );
 }

@@ -31,7 +31,7 @@ export function TicketFixes({ facts, used, closed, onFix, amount, onAmountChange
         <form className="lft sup-amount-form" onSubmit={(e) => { e.preventDefault(); onRefundAmount(); }}>
           <div className="inp row sup-amount"><span className="m">₹</span>
             <input className="sup-amount-input" value={amount} onChange={(e) => onAmountChange(e.target.value)} placeholder="Other amount" inputMode="numeric" /></div>
-          <button type="submit" className="btn o sm">Refund</button>
+          <Button type="submit" variant="outline" size="sm">Refund</Button>
         </form>
       )}
       <div className="s m end">Your role can refund up to {inr(ROLE_LIMIT)}. Larger refunds go to the ops lead.</div>

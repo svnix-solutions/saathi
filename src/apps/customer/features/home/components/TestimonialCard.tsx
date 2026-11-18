@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Avatar, Card, Lft, Stars, T, useTheme } from '@/native/ui';
-import type { Quote } from '../data';
+import type { Quote } from '../../community';
 
 /** One neighbour's quote with stars, face, name and plan. Tap to show the next one. */
 export function TestimonialCard({ quote, onPress }: { quote: Quote; onPress?: () => void }) {

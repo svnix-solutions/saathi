@@ -3,13 +3,13 @@ import { StyleSheet, View } from 'react-native';
 import { Avatar, BackHeader, Button, Card, Grid, H, H2, Hr, Lft, Link, Pill, Screen, Spacer, T, Tag, useNav, useT } from '@/native/ui';
 import { StatCard } from '../components/StatCard';
 import { defaultFavourites, profileBadges, profileHelper, profileSkills } from '../data';
-import { useHelperState } from '../state';
+import { useCustomerState } from '../../../state';
 
 /** Design page 12 · screen 40, helper profile. */
 export function HelperProfileScreen() {
   const nav = useNav();
   const t = useT();
-  const [st, set] = useHelperState();
+  const [st, set] = useCustomerState();
   const favs = st.favourites ?? defaultFavourites;
   const fav = favs.includes(profileHelper);
   const toggle = () => {

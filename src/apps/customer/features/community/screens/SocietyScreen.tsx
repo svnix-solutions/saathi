@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Button, Card, Check, H, H2, Icon, Lft, Row, Screen, T, Tag, useNav, useT, useTheme } from '@/native/ui';
-import { useCommunityState } from '../state';
 import { NeighbourHelpers } from '../components/NeighbourHelpers';
+import { useCustomerState } from '../../../state';
 
 /** Design page 14 (CUSTOMER J) · Language, gifting, support and society — screen 51 · My society. */
 export function SocietyScreen() {
   const t = useT();
   const nav = useNav();
-  const [, set] = useCommunityState();
+  const [, set] = useCustomerState();
   const { c } = useTheme();
   const [joined, setJoined] = useState(false);
   const [slot, setSlot] = useState(false);

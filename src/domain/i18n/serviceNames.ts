@@ -20,9 +20,21 @@ export const serviceNamesHiByTitle: Record<string, string> = {
   'General cleaning': 'सामान्य सफ़ाई', 'Kitchen & bath scrub': 'रसोई और बाथरूम', 'Dishes & meal prep': 'बर्तन और खाना तैयारी', Dishes: 'बर्तन',
 };
 
-/** Service name in the current language, page-18 wording. Was `svcName(t, id)` in customer/v1/kit. */
-export const serviceName = (t: TFn, id: ServiceId, hi: Record<ServiceId, string> = serviceNamesHiPage18) => t(serviceById(id).name, hi[id]);
+/** Punjabi (Gurmukhi) service names. */
+export const serviceNamesPa: Record<ServiceId, string> = {
+  general: 'ਆਮ ਸਫ਼ਾਈ', kitchenBath: 'ਰਸੋਈ ਅਤੇ ਬਾਥਰੂਮ', dishes: 'ਭਾਂਡੇ ਅਤੇ ਤਿਆਰੀ', laundry: 'ਕੱਪੜੇ ਅਤੇ ਅਲਮਾਰੀ', custom: 'ਘੰਟੇ ਦੇ ਹਿਸਾਬ ਨਾਲ ਮਦਦ',
+  nurseVisit: 'ਨਰਸ ਵਿਜ਼ਿਟ', patientCare: 'ਮਰੀਜ਼ ਅਤੇ ਬਜ਼ੁਰਗ ਦੇਖਭਾਲ', electrician: 'ਇਲੈਕਟ੍ਰੀਸ਼ੀਅਨ', plumber: 'ਪਲੰਬਰ', haircut: 'ਘਰ ਤੇ ਵਾਲ ਕਟਾਈ', kidsHaircut: 'ਬੱਚਿਆਂ ਦੀ ਕਟਾਈ',
+};
 
-/** First word of the service name ("General", "सामान्य"). Was `shortName(t, id)` in customer/v1/kit. */
+/** Punjabi names keyed by the English title (the partner screens' list). */
+export const serviceNamesPaByTitle: Record<string, string> = {
+  'General cleaning': 'ਆਮ ਸਫ਼ਾਈ', 'Kitchen & bath scrub': 'ਰਸੋਈ ਅਤੇ ਬਾਥਰੂਮ', 'Dishes & meal prep': 'ਭਾਂਡੇ ਅਤੇ ਖਾਣੇ ਦੀ ਤਿਆਰੀ', Dishes: 'ਭਾਂਡੇ',
+};
+
+/** Service name in the current language, page-18 wording. Was `svcName(t, id)` in customer/v1/kit. */
+export const serviceName = (t: TFn, id: ServiceId, hi: Record<ServiceId, string> = serviceNamesHiPage18) =>
+  t(serviceById(id).name, hi[id], serviceNamesPa[id]);
+
+/** First word of the service name ("General", "सामान्य", "ਆਮ"). Was `shortName(t, id)` in customer/v1/kit. */
 export const serviceShortName = (t: TFn, id: ServiceId, hi: Record<ServiceId, string> = serviceNamesHiPage18) =>
-  t(serviceById(id).name.split(' ')[0], hi[id].split(' ')[0]);
+  t(serviceById(id).name.split(' ')[0], hi[id].split(' ')[0], serviceNamesPa[id].split(' ')[0]);

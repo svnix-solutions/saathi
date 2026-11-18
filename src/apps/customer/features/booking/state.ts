@@ -12,8 +12,6 @@ export type BookingState = CustomerState & {
   deepClean?: DeepCleanPlan;
   /** slot picked by voice or the one-tap repeat, e.g. "Tomorrow, 9:00 am" */
   slot?: string;
-  /** helper picked by the one-tap repeat */
-  helper?: string;
   /** not-at-home entry method and the proof photos asked for (screen 63) */
   entry?: string;
   entryProofs?: string[];

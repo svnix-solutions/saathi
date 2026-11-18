@@ -1,5 +1,5 @@
 import React from 'react';
-import { Toggle } from '../../../ui';
+import { Tag, Toggle } from '../../../ui';
 import { inr } from '../../../fixtures';
 import { WORK } from '../data';
 import type { useServices } from '../hooks/useServices';
@@ -31,7 +31,7 @@ export function ServicesTable({ model: m, onOpenProfessions }: ServicesTableProp
             </td>
             <td>{inr(hour)}</td>
             {/* `Tag` takes no click handler, so the specialisation keeps the raw `.tag` markup */}
-            <td>{s.needs ? <span className="tag clk" title="Specialisations live on Professions & documents" onClick={(e) => { e.stopPropagation(); onOpenProfessions(); }}>{s.needs}</span> : 'No'}</td>
+            <td>{s.needs ? <Tag title="Specialisations live on Professions & documents" onClick={(e) => { e.stopPropagation(); onOpenProfessions(); }}>{s.needs}</Tag> : 'No'}</td>
             <td>{s.tasks ? s.tasks.filter((t) => t.on).length : 'Customer decides'}</td>
             <td onClick={(e) => e.stopPropagation()}><Toggle on={s.live} onChange={(v) => m.setLive(s, v)} /></td>
           </tr>);

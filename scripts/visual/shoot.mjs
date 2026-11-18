@@ -1,5 +1,6 @@
 /* global document */
-// usage: node shoot.mjs <port> <outDir>  — screenshots every route of every app via the Prototype stories
+// usage: node shoot.mjs <port> <outDir> — screenshots every route of every app through the hidden
+// Testing/Route harness story, served from a static Storybook build on localhost:<port>. ONLY=app__route,… limits it.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 const [port, out] = process.argv.slice(2);
@@ -14,7 +15,7 @@ const jobs = [
 // ONLY=app__route,app__route limits the run to those shots
 const only = process.env.ONLY ? new Set(process.env.ONLY.split(',')) : null;
 if (only) jobs.splice(0, jobs.length, ...jobs.filter(([a, r]) => only.has(`${a}__${r}`)));
-const b = await puppeteer.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
+const b = await puppeteer.launch({ executablePath: process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
 const errs = {};
 async function one(job, attempt = 1) {
   const [app, route, id] = job;

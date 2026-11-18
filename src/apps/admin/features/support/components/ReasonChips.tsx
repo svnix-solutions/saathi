@@ -1,5 +1,6 @@
 import React from 'react';
 import '../support.css';
+import { Tag } from '../../../ui';
 
 export type ReasonChipsProps = {
   /** Ready-made reasons; clicking one fills the reason field. */
@@ -12,7 +13,7 @@ export function ReasonChips({ reasons, onPick }: ReasonChipsProps) {
   return (
     <div className="lft sup-chips">
       {/* `Tag` takes no click handler, so the chip keeps the raw `.tag x` markup */}
-      {reasons.map((r) => <span key={r} className="tag x clk" role="button" tabIndex={0} onClick={() => onPick(r)} onKeyDown={(e) => e.key === 'Enter' && onPick(r)}>{r}</span>)}
+      {reasons.map((r) => <Tag key={r} tone="x" onClick={() => onPick(r)}>{r}</Tag>)}
     </div>
   );
 }

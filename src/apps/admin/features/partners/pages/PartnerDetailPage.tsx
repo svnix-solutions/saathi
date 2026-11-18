@@ -1,11 +1,10 @@
 /** Screen 91 · One partner. */
 import React, { useState } from 'react';
-import { Av, Button, I, Kpi, KpiGrid, Modal, Table, TableCard, Tag, TogRow, type TableColumn } from '../../../ui';
+import { Av, Button, I, Kpi, KpiGrid, Modal, Pager, Table, TableCard, Tag, TogRow, type TableColumn } from '../../../ui';
 import { useAdmin } from '../../../session';
 import type { PageParams } from '../../../navigation';
 import { decisions } from '@/domain';
 import { olderJobs, partnerDocs, pauseReasons, recentJobs, type JobRow, type PartnerDoc } from '../data';
-import { JobsPager } from '../components/JobsPager';
 import '../partners.css';
 
 const jobColumns: TableColumn<JobRow>[] = [
@@ -79,7 +78,7 @@ export function PartnerDetailPage({ params }: { params: PageParams }) {
       </div>
 
       <TableCard title="Recent jobs" right={<span className="s m">142 in total</span>}
-        footer={<JobsPager page={page} onPage={setPage} onUnavailable={() => toast('Older jobs are not in this prototype')} />}>
+        footer={<Pager text={`Page ${page} of 24 · 6 rows per page`} page={page} onPage={(n) => (n <= 2 ? setPage(n) : toast('Older jobs are not in this prototype'))} />}>
         <Table columns={jobColumns} rows={rows} rowKey={(r) => r[0]} onRowClick={(r) => go('assign', { id: r[0].slice(1) })} />
       </TableCard>
 

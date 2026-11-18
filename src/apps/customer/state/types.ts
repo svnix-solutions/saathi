@@ -49,6 +49,8 @@ export type CustomerState = {
   upcoming?: UpcomingBooking | null;
 
   /* ---- helpers ---- */
+  /** name of the helper the customer picked (favourites, society, plan) */
+  helper?: string;
   favourites?: string[];
   blocked?: string[];
 

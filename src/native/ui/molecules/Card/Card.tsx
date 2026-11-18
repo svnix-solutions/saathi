@@ -1,3 +1,4 @@
+import { shrinkable } from '../../layout/Lft/Lft';
 import React from 'react';
 import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import { palette, radius, space } from '@/tokens';
@@ -40,11 +41,11 @@ export function Card({ children, sel, selected, tone, style, onPress, pad = true
   if (onPress) {
     return (
       <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={accessibilityLabel} style={({ pressed }) => [base, rowStyle, style as ViewStyle, pressed && styles.pressed]}>
-        {children}
+        {row ? shrinkable(children) : children}
       </Pressable>
     );
   }
-  return <View style={[base, rowStyle, style]}>{children}</View>;
+  return <View style={[base, rowStyle, style]}>{row ? shrinkable(children) : children}</View>;
 }
 
 const styles = StyleSheet.create({

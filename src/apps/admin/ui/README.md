@@ -21,12 +21,12 @@ import { useStore, patchBooking, inr, type Booking } from '../fixtures';
 | `Sprite` | Icon | — | hidden `<svg>` with every `<symbol>`; `AdminApp` renders it |
 | `Mark` | Icon | `size?` (28) | Saathi logo |
 | `Av` (alias `Avatar`) | Avatar | `face?: AvatarFace`, `initials?`, `sm?`, `size?`, `style` | |
-| `Tag` | Tag | `tone?: 'y' \| 'g' \| 'n' \| 'x' \| 'r'` | yellow / green / mint / grey / red outline |
+| `Tag` | Tag | `tone?: 'y' \| 'g' \| 'n' \| 'x' \| 'r'`, `onClick?(e)` (makes it a keyboard-usable chip), `className?`, `title?` | yellow / green / mint / grey / red outline |
 | `StatusTag` | StatusTag | `kind: 'booking' \| 'partner' \| 'payout'`, `status`, booking: `waitMin`, `when`, `refunded`, `list` | wording and tone in one place; also exports `BookingStatus`, `PartnerStatus`, `PayoutStatus` |
 | `Toggle` | Toggle | `on`, `onChange?` | `role="switch"`, Space/Enter |
 | `TogRow` | Toggle | `label`, `on`, `onChange` | label left, toggle right |
 | `Check` | Check | `on`, `onChange?` | |
-| `Button` | Button | `variant?: 'primary' \| 'outline' \| 'accent' \| 'danger' \| 'danger-outline'`, `size?: 'xs' \| 'sm' \| 'compact' \| 'md' \| 'lg'` (default `md`), `disabled?`, `onClick?`, `className?`, `style?`, `title?` | see size table below |
+| `Button` | Button | `variant?: 'primary' \| 'outline' \| 'accent' \| 'danger' \| 'danger-outline'`, `size?: 'xs' \| 'sm' \| 'compact' \| 'md' \| 'lg'` (default `md`), `disabled?`, `onClick?(e)`, `type?: 'button' \| 'submit'`, `className?`, `style?`, `title?` | see size table below |
 | `TextLink` | TextLink | `children`, `onClick?`, `style?` | green bold small text action |
 | `Kpi` | Kpi | `label`, `value`, `sub?`, `tone?: 'default' \| 'alert'` (or legacy `red`), `spark?: number[]`, `onClick?` | |
 | `KpiGrid` / `KPI_GRID` | Kpi | `children`, `style?` | 4 columns, gap 14 |
@@ -34,7 +34,7 @@ import { useStore, patchBooking, inr, type Booking } from '../fixtures';
 | `CardHead` | CardHead | `title`, `right?`, `pad?` (true) | card title row; `pad` = `0 10px 8px` |
 | `Tabs` | Tabs | `items: {key,label}[]`, `value`, `onChange` | filter tabs in a card header |
 | `TagFilter` | Tabs | `items: {key,label,red?}[]`, `value`, `onChange` | tag chips; renders a fragment |
-| `Pager` | Pager | `text?` | static table footer |
+| `Pager` | Pager | `text?`, `page?` (1), `pages?` (3; `1` = lone page, no arrows), `onPage?(n)` (makes it clickable) | table footer |
 | `Bar` | Bar | `pct`, `tone?: 'default' \| 'alert'` (or legacy `red`) | 7 px progress bar |
 | `BarRow` | Bar | `label`, `value`, `pct`, `tone?` | label + value over a `Bar` |
 | `Columns` | Columns | `bars: {h,color?,title?}[]`, `height?`, `gap?` (12), `onPick?`, `picked?`, `flex?` | vertical bar chart |

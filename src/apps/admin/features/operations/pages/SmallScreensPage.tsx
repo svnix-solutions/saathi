@@ -129,8 +129,8 @@ export function SmallScreensPage() {
             <div key={p.id} className={`card row clk ops-item ${pickPartner === p.id ? 'sel' : ''}`} onClick={() => setPickPartner(p.id)}>
               <div className="lft"><Av sm face={p.id} /><div><b>{p.name}</b><div className="s m">{assigned ? 'On the way · 10 min' : p.sub}</div></div></div>
               {assigned ? <Tag tone="g">Assigned</Tag> : cancelled ? null :
-                <button type="button" className={`btn ops-phone-assign ${pickPartner === p.id ? '' : 'o'}`}
-                  onClick={(e) => { e.stopPropagation(); setAssigned(p.name); setPickPartner(p.id); toast(`${p.name} assigned to #2042`); }}>Assign</button>}
+                <Button size="lg" variant={pickPartner === p.id ? 'primary' : 'outline'} className="ops-phone-assign"
+                  onClick={(e) => { e.stopPropagation(); setAssigned(p.name); setPickPartner(p.id); toast(`${p.name} assigned to #2042`); }}>Assign</Button>}
             </div>
           ))}
           <div className="g2 end">

@@ -1,11 +1,10 @@
 /** Screen 85 · Team. */
 import React, { useState } from 'react';
-import { Av, Button, I, Modal, PageHead, Table, TableCard, Tag, type TableColumn } from '../../../ui';
+import { Av, Button, I, Modal, PageHead, Pager, Table, TableCard, Tag, type TableColumn } from '../../../ui';
 import { useAdmin } from '../../../session';
 import { inr, rolesSummary, useMatrix } from '../../../fixtures';
 import { ALL_ZONES, initialTeam, initials, roleOrder, untilLabel, untilOptions, zoneOptions, type Grant, type TeamMember } from '../data';
 import { RoleTags } from '../components/RoleTags';
-import { SinglePagePager } from '../components/SinglePagePager';
 import '../team.css';
 
 const avatarInitials = (p: TeamMember) => (p.face ? p.face.toUpperCase() : initials(p.name));
@@ -66,7 +65,7 @@ export function TeamPage() {
     <PageHead title="Team" sub={<>{people.filter((p) => p.status !== 'Removed').length} people · {nRoles} roles</>}
       actions={<><Button variant="outline" onClick={() => go('permissions')}>Roles and permissions</Button><Button onClick={() => isOwner ? setInvite(true) : toast('Only an Owner can invite people')}>Invite person</Button></>} />
     <div className="team-body team-body-team">
-      <TableCard footer={<SinglePagePager rows={people.length} />}>
+      <TableCard footer={<Pager pages={1} text={`Page 1 of 1 · ${people.length} rows per page`} />}>
         <Table columns={columns} rows={people} rowKey={(p) => p.id} onRowClick={pick} selected={(p) => p.id === sel.id} />
       </TableCard>
       <div className="team-side">
@@ -82,7 +81,7 @@ export function TeamPage() {
                 <div className="lft clk" onClick={() => toggleRole(r)}><span className={`cb ${on ? 'on' : ''}${r === 'Owner' && !isOwner ? ' team-locked' : ''}`}>{on && <I n="check" />}</span>{r}</div>
                 {r === 'Owner' && !on ? <span className="s m">Only an Owner can give this</span>
                   : on ? (draft[r].until
-                    ? <span className="tag clk" role="button" onClick={() => setGrantEdit(r)}>Cover till {draft[r].until}</span>
+                    ? <Tag onClick={() => setGrantEdit(r)}>Cover till {draft[r].until}</Tag>
                     : <span className="s m clk team-dotted" role="button" onClick={() => setGrantEdit(r)}>{draft[r].zones}</span>)
                   : r === 'Operations' ? <span className="s m">Choose zones</span> : null}
               </div>);

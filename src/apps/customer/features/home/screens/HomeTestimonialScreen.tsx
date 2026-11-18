@@ -7,7 +7,8 @@ import {
 import { useCustomerState } from '../../../state';
 import { CustomerTabs } from '../../../navigation/CustomerTabs';
 import { TestimonialCard } from '../components/TestimonialCard';
-import { NEIGHBOUR_STATS, QUOTES, QUOTE_INTERVAL_MS } from '../data';
+import { quotes } from '../../community';
+import { NEIGHBOUR_STATS, QUOTE_INTERVAL_MS } from '../data';
 
 export function HomeTestimonialScreen() {
   const t = useT();
@@ -15,7 +16,7 @@ export function HomeTestimonialScreen() {
   const [st, set] = useCustomerState();
   const { c } = useTheme();
   const [i, setI] = useState(0);
-  useInterval(() => setI((n) => (n + 1) % QUOTES.length), QUOTE_INTERVAL_MS);
+  useInterval(() => setI((n) => (n + 1) % quotes.length), QUOTE_INTERVAL_MS);
   const book = () => { set({ service: 'general', when: 'now' }); nav.push('chores', { service: 'general' }); };
   return (
     <View style={styles.page}>
@@ -38,8 +39,8 @@ export function HomeTestimonialScreen() {
           <H2 style={styles.section}>{t('Loved by your neighbours', 'पड़ोसियों की पसंद')}</H2>
           <Link onPress={() => nav.push('testimonials')}>{t('See all', 'सभी देखें')}</Link>
         </Row>
-        <TestimonialCard quote={QUOTES[i]} onPress={() => setI((i + 1) % QUOTES.length)} />
-        <Dots count={QUOTES.length} active={i} onPress={setI} />
+        <TestimonialCard quote={quotes[i]} onPress={() => setI((i + 1) % quotes.length)} />
+        <Dots count={quotes.length} active={i} onPress={setI} />
         <Grid cols={3}>
           {NEIGHBOUR_STATS.map(([v, l, hi]) => (
             <Card key={l} style={{ paddingVertical: 9, paddingHorizontal: 4, alignItems: 'center' }} onPress={() => nav.push('testimonials')}>

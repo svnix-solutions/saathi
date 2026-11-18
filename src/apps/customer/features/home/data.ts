@@ -1,6 +1,5 @@
 /** Sample data and constants for the home screens (design pages 03, 15, 16). */
 import type { Category } from '@/domain';
-import type { Face } from '@/native/ui';
 
 /** Trust line under each kind of work (design page 04). */
 export const TRUST: Partial<Record<Category, [string, string]>> = {
@@ -15,12 +14,6 @@ export const CATEGORY_NOTE: Partial<Record<Category, [string, string]>> = {
 };
 
 /* ---- 52 · Home with testimonial ---- */
-export type Quote = { face: Face; name: string; place: string; stars: number; text: string; plan?: string };
-export const QUOTES: Quote[] = [
-  { face: 'fa', name: 'Farah', place: 'Sector 18', plan: 'monthly plan', stars: 5, text: 'I booked at 8 and by 8:15 Sunita was mopping. My mornings are calm now.' },
-  { face: 'pn', name: 'Priya', place: 'Sector 21', plan: 'daily help', stars: 4, text: 'The same helper every day. My mother trusts her now.' },
-  { face: 'rg', name: 'Rohan', place: 'Block D', plan: 'deep clean', stars: 5, text: 'Kitchen deep clean before guests came. Worth every rupee.' },
-];
 /** The carousel moves on by itself this often. */
 export const QUOTE_INTERVAL_MS = 5000;
 /** [value, English label, Hindi label] */

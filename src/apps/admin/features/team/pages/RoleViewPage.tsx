@@ -1,12 +1,11 @@
 /** Screen 87 · What a Support person sees. */
 import React, { useState } from 'react';
-import { Button, I, TableCard, Tag, TextLink } from '../../../ui';
+import { Button, I, Pager, TableCard, Tag, TextLink } from '../../../ui';
 import { roleSections, useAdmin } from '../../../session';
 import { menu } from '../../../navigation';
 import { inr, rolesSummary, useMatrix } from '../../../fixtures';
 import { supportTickets, type SupportTicket } from '../data';
 import { useRoleViewSession } from '../hooks/useRoleViewSession';
-import { SinglePagePager } from '../components/SinglePagePager';
 import '../team.css';
 
 const ticketTag = (x: SupportTicket) =>
@@ -48,7 +47,7 @@ export function RoleViewPage() {
     <div className="row"><div><div className="h team-page-title">Support</div><div className="m">Signed in as {asSupport ? 'Support 1' : 'Admin'} · role: {roles.join(', ')} · zones: {zones.join(', ')}</div></div>
       <Tag tone="n">{menus} of {allItems.length} menus · {perms.count} of {perms.total} permissions</Tag></div>
     <div className="team-body team-body-roleview">
-      <TableCard title="Open tickets in your zones" right={<span className="s m">Tickets from other zones are not listed</span>} footer={<SinglePagePager rows={tickets.length} />}>
+      <TableCard title="Open tickets in your zones" right={<span className="s m">Tickets from other zones are not listed</span>} footer={<Pager pages={1} text={`Page 1 of 1 · ${tickets.length} rows per page`} />}>
         <table><tbody>
           <tr><th>Ticket</th><th>From</th><th>Zone</th><th>Waiting</th><th>Status</th></tr>
           {tickets.map((x) => (

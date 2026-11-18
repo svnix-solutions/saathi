@@ -9,9 +9,9 @@ export function CustomerTabs({ active }: { active: CustomerTab }) {
   const t = useT();
   return (
     <TabBar active={active} onChange={(k) => nav.reset(k)} tabs={[
-      { key: 'home', label: t('Home', 'होम'), icon: 'home' },
-      { key: 'bookings', label: t('Bookings', 'बुकिंग'), icon: 'list' },
-      { key: 'account', label: t('Account', 'खाता'), icon: 'user' },
+      { key: 'home', label: t('Home', 'होम', 'ਹੋਮ'), icon: 'home' },
+      { key: 'bookings', label: t('Bookings', 'बुकिंग', 'ਬੁਕਿੰਗ'), icon: 'list' },
+      { key: 'account', label: t('Account', 'खाता', 'ਖਾਤਾ'), icon: 'user' },
     ]} />
   );
 }

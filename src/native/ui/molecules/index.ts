@@ -10,6 +10,7 @@ export * from './MenuRow';
 export * from './OtpInput';
 export * from './PhotoTile';
 export * from './Pill';
+export * from './ChipGroup';
 export * from './Ring';
 export * from './Rows';
 export * from './Stepper';
