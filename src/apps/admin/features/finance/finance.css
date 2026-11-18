@@ -1,0 +1,30 @@
+/* Finance feature (payouts, advances). Every selector is scoped under .sa and prefixed `fin-`.
+   A rule that overrides a property of a design class (card, row, lft, h2…) repeats that class so it wins
+   regardless of stylesheet order. */
+
+/* page grids */
+.sa .fin-payouts-grid { display:grid; grid-template-columns:1.7fr 1fr; gap:14px; flex:1; min-height:0; }
+.sa .fin-advances-grid { display:grid; grid-template-columns:1.5fr 1fr; gap:14px; flex:1; min-height:0; }
+.sa .fin-stack { display:flex; flex-direction:column; gap:14px; }
+
+/* cards */
+.sa .card.fin-fill { flex:1; }
+.sa .card.fin-review { display:flex; flex-direction:column; gap:9px; }
+.sa .card.fin-tight { padding:9px 11px; }
+.sa .card.fin-warn { padding:9px 11px; background:var(--yellow); border:0; }
+.sa .row.fin-card-head { margin-bottom:8px; }
+.sa .row.fin-table-head { padding:0 10px 6px; }
+.sa .h2.fin-title { font-size:15px; }
+.sa .fin-facts { display:grid; gap:7px; }
+.sa .fin-list { display:grid; gap:9px; }
+.sa .fin-alert { color:var(--red); }
+
+/* payouts table */
+.sa .card.fin-bulk-bar { margin:0 4px 8px; padding:8px 11px; }
+.sa .lft.fin-bulk-actions { gap:6px; }
+.sa th.fin-check-col { width:30px; }
+.sa tr.fin-picked { background:var(--mint); }
+
+/* the two decision buttons at the foot of a review card */
+.sa .btn.fin-decide { padding:10px; }
+.sa .btn.fin-decide-alt { padding:9px; }

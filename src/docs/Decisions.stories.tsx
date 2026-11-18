@@ -3,7 +3,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { H, T } from '@/native/ui';
 import { palette } from '@/tokens';
-import { decisions as d, rupees as r } from '@/data/decisions';
+import { decisions as d, rupees as r } from '@/domain';
 
 const meta: Meta = { title: 'Saathi/Decisions', parameters: { layout: 'fullscreen', backgrounds: { value: 'page' } } };
 export default meta;
@@ -43,7 +43,7 @@ export const Decisions: StoryObj = {
     <View style={{ padding: 48, gap: 28, maxWidth: 1344 }}>
       <View>
         <H size={34}>Working values for launch</H>
-        <T m size={15} style={{ maxWidth: 900 }}>Every screen in this prototype reads these from src/data/decisions.ts. They began as samples and are the launch defaults until the founders change them.</T>
+        <T m size={15} style={{ maxWidth: 900 }}>Every screen in this prototype reads these from src/data/launchValues.ts. They began as samples and are the launch defaults until the founders change them.</T>
       </View>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 20 }}>
         {tables.map(([title, col, rows]) => (

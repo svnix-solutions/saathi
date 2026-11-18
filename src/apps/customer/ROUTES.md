@@ -1,47 +1,64 @@
-# Saathi customer app — route names
+# Saathi customer — routes
 
-Every screen registers under one of these names in its area's `routes.ts`. Use them with
-`nav.push(name, params)` / `nav.reset(name)` to link across areas. Pushing a name that does
-not exist yet shows a "not in this prototype yet" toast instead of crashing.
+Generated from `navigation/routeTable.ts`. Route names are a fixed contract: links, stories and the
+visual-regression harness use them. Use them with `nav.push(name, params)` / `nav.reset(name)`.
 
-Tabs (reset the stack): `home`, `bookings`, `account`
-
-## v1 — launch (area `v1/`)
-| route | design screen |
-|---|---|
-| signin.phone | 1 Mobile number |
-| signin.otp | 2 SMS code (correct code in the prototype: 4821, anything else shows the error) |
-| signin.name | 3 New customer: name |
-| signin.address | 4 New customer: address |
-| home | 5 Home, with Cleaning / Nursing / Repair / Barber on top (params: { category }) |
-| chores | 6 Choose chores (params: { service }) |
-| time | 7 Duration and time |
-| confirm | 8 Confirm and pay |
-| tracking | 9 Helper on the way |
-| tracking (params: { arrived: true }) | 9b Start code at the door |
-| inProgress | 10 Job in progress |
-| visit.finish | 9d Two finish codes (happy 3907 / not happy 6154) |
-| visit.notHappy | 9e After the not-happy code |
-| rate | 11 Rate and tip |
-| bookings | 12 My bookings |
-| addresses | 13 Addresses and home details |
-| changeBooking | 14 Change or cancel |
-| help | 15 Help and safety |
-| err.noHelper / err.offline / err.paymentFailed / err.outsideArea | 20–23 |
-| account | 28 My account |
-| paymentMethods | 29 Payment methods |
-| alertSettings | 30 Alert settings |
-| deleteAccount | 31 Delete my account |
-
-## v2 (area `v2a/`)
-plan (32), favourites (33), supplies (34), receipt (35), wallet (36), refer (37), chat (38), alerts (39),
-helperProfile (40), visitReport (41), bookForFamily (42), deepClean (43),
-ratingDetailed (44), ratingLow (45), helperReviews (46), rewards (47)
-
-## v2 (area `v2b/`)
-language (48), gift (49), supportChat (50), society (51),
-homeTestimonial (52 — the home screen with the testimonial card), testimonials (53), testimonialConsent (54), myTestimonial (55)
-
-## v3 (area `v3/`)
-voiceBooking (56), photoEstimate (57), smartHome (58), lockScreen (59),
-plus (60), damageClaim (61), sharedHome (62), notHome (63)
+| route | release | design | feature | screen |
+|---|---|---|---|---|
+| `signin.address` | v1 | 2 | auth | New customer: address |
+| `signin.name` | v1 | 2 | auth | New customer: name |
+| `signin.otp` | v1 | 2 | auth | SMS code |
+| `signin.phone` | v1 | 2 | auth | Mobile number |
+| `chores` | v1 | 3 | booking | Choose chores |
+| `confirm` | v1 | 3 | booking | Confirm and pay |
+| `home` | v1 | 3 | home | Home |
+| `time` | v1 | 3 | booking | Duration and time |
+| `bookings` | v1 | 5 | bookings | My bookings |
+| `inProgress` | v1 | 5 | visit | Job in progress |
+| `rate` | v1 | 5 | visit | Rate and tip |
+| `tracking` | v1 | 5 | visit | Helper on the way |
+| `visit.finish` | v1 | 6 | visit | Two finish codes |
+| `visit.notHappy` | v1 | 6 | visit | After the not-happy code |
+| `addresses` | v1 | 7 | account | Addresses and home details |
+| `changeBooking` | v1 | 7 | bookings | Change or cancel |
+| `help` | v1 | 7 | support | Help and safety |
+| `err.noHelper` | v1 | 9 | status | No helper free |
+| `err.offline` | v1 | 9 | status | No internet |
+| `err.outsideArea` | v1 | 9 | status | Outside the service area |
+| `err.paymentFailed` | v1 | 9 | status | Payment failed |
+| `account` | v1 | 11 | account | My account |
+| `alertSettings` | v1 | 11 | account | Alert settings |
+| `deleteAccount` | v1 | 11 | account | Delete my account |
+| `paymentMethods` | v1 | 11 | account | Payment methods |
+| `favourites` | v2 | 12 | helpers | Favourite helpers |
+| `plan` | v2 | 12 | membership | Monthly plan |
+| `receipt` | v2 | 12 | bookings | Receipt |
+| `supplies` | v2 | 12 | booking | Supplies with the visit |
+| `alerts` | v2 | 13 | account | Alerts |
+| `chat` | v2 | 13 | helpers | Chat with helper |
+| `refer` | v2 | 13 | wallet | Refer a friend |
+| `wallet` | v2 | 13 | wallet | Wallet |
+| `bookForFamily` | v2 | 14 | booking | Book for family |
+| `deepClean` | v2 | 14 | booking | Deep clean builder |
+| `helperProfile` | v2 | 14 | helpers | Helper profile |
+| `visitReport` | v2 | 14 | visit | Visit report |
+| `helperReviews` | v2 | 15 | helpers | Helper reviews |
+| `ratingDetailed` | v2 | 15 | ratings | Detailed rating |
+| `ratingLow` | v2 | 15 | ratings | When the rating is low |
+| `rewards` | v2 | 15 | wallet | Rewards |
+| `gift` | v2 | 16 | wallet | Gift a visit |
+| `language` | v2 | 16 | account | Language and display |
+| `society` | v2 | 16 | community | My society |
+| `supportChat` | v2 | 16 | support | Support chat |
+| `homeTestimonial` | v2 | 17 | home | Testimonial on home |
+| `myTestimonial` | v2 | 17 | community | My testimonial |
+| `testimonialConsent` | v2 | 17 | community | Permission to share |
+| `testimonials` | v2 | 17 | community | All testimonials |
+| `lockScreen` | v3 | 18 | visit | Lock screen and WhatsApp |
+| `photoEstimate` | v3 | 18 | booking | Photo estimate |
+| `smartHome` | v3 | 18 | home | Smart home screen |
+| `voiceBooking` | v3 | 18 | booking | Voice booking |
+| `damageClaim` | v3 | 19 | membership | Damage claim |
+| `notHome` | v3 | 19 | booking | Not-at-home visit |
+| `plus` | v3 | 19 | membership | Plus membership |
+| `sharedHome` | v3 | 19 | membership | Shared home |

@@ -1,9 +1,7 @@
 import React from 'react';
 import { NavProvider, Phone, ThemeProvider, useAppState, useNav, type ThemeState } from '@/native/ui';
-import { customerRoutes } from './routes';
-import { initialCustomerState, type CustomerState } from './chrome';
-
-export * from './chrome';
+import { customerRoutes } from './navigation/routes';
+import { initialCustomerState, type CustomerState } from './state';
 
 /** The whole customer app inside a phone frame, starting at `initial`. */
 export function CustomerApp({ initial = 'signin.phone', params, state, caption, sub, ...theme }: Partial<ThemeState> & {

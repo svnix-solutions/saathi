@@ -1,0 +1,72 @@
+/* Partners feature (partners list, one partner, sign-ups, professions). Every selector is scoped under .sa and
+   prefixed prt-. Where a rule overrides a property the design classes set (.card padding, .h2 size, .inp padding…),
+   it repeats that class so it wins regardless of stylesheet order. */
+
+/* page body: the columns under the title row */
+.sa .prt-body { display:grid; gap:14px; flex:1; min-height:0; }
+.sa .prt-body-partners { grid-template-columns:1.7fr 1fr; }
+.sa .prt-body-detail { grid-template-columns:.95fr 1.4fr .95fr; }
+.sa .prt-body-signups { grid-template-columns:.85fr 1.5fr 1fr; }
+.sa .prt-body-professions { grid-template-columns:1fr 1.25fr; }
+/* right-hand column of stacked cards */
+.sa .prt-side { display:flex; flex-direction:column; gap:14px; }
+/* a card whose children stack */
+.sa .prt-panel { display:flex; flex-direction:column; gap:8px; }
+.sa .prt-panel-loose { display:flex; flex-direction:column; gap:9px; }
+.sa .prt-fill { flex:1; }
+
+/* titles */
+.sa .h.prt-page-title { font-size:22px; }
+.sa .h2.prt-title { font-size:15px; }
+.sa .h2.prt-name { font-size:16px; }
+.sa .h2.prt-title-gap { margin-bottom:8px; }
+.sa .h2.prt-title-top { margin-top:6px; }
+.sa .lft.prt-ident { gap:12px; }
+
+/* table card headers */
+.sa .prt-head { padding:0 10px 8px; }
+.sa .prt-head-tight { padding:0 10px 6px; }
+.sa .prt-chev-cell { width:24px; }
+.sa svg.i.prt-chev { width:14px; height:14px; }
+
+/* lists */
+.sa .prt-list { display:grid; gap:7px; }
+.sa .prt-list-8 { display:grid; gap:8px; }
+.sa .prt-list-9 { display:grid; gap:9px; }
+.sa .hr.prt-rule { margin:10px 0; }
+.sa .g2.prt-actions { margin-top:12px; }
+.sa .prt-dotted { text-decoration:underline dotted; }
+
+/* small cards and notes */
+.sa .card.prt-compact { padding:9px 11px; }
+.sa .card.prt-callout { background:var(--yellow); border:0; }
+.sa .card.prt-inset { margin:12px 10px; }
+.sa .card.prt-paused { padding:9px 12px; border-color:var(--red); background:#fdf1ef; }
+.sa .prt-paused b { color:var(--red); }
+.sa .lft.prt-note-row { gap:6px; }
+.sa input.inp.prt-note-input { padding:7px 10px; }
+
+/* document photo previews */
+.sa .prt-preview { border-radius:14px; background:var(--mint); display:grid; place-items:center; color:var(--green); text-align:center; }
+.sa .prt-preview-doc { height:170px; }
+.sa .prt-preview-photo { height:220px; }
+.sa .prt-preview-caption { margin-top:6px; }
+.sa svg.i.prt-doc-icon { width:30px; height:30px; }
+.sa svg.i.prt-preview-icon-lg { width:34px; height:34px; }
+
+/* sign-ups: uploaded photos, card numbers, checks, reasons */
+.sa .prt-photos { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+.sa .prt-doc-tile { border-radius:11px; background:var(--mint); border:0; display:grid; place-items:center; color:var(--green); text-align:center; }
+.sa .prt-doc-tile.prt-doc-missing { background:var(--white); border:1.5px dashed var(--line); color:var(--mut); }
+.sa .prt-pair { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.sa .prt-digits { letter-spacing:.1em; }
+.sa .prt-checks { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+.sa .lft.prt-chips { flex-wrap:wrap; gap:6px; }
+.sa .pill.prt-reason { padding:6px 10px; }
+.sa .pill.prt-reason.sel { border-color:var(--green); background:var(--mint); color:var(--green); }
+
+/* professions: chips and the add-a-rule row */
+.sa .pill.prt-chip { padding:5px 10px; display:inline-flex; gap:6px; align-items:center; }
+.sa input.inp.prt-chip-input { font-size:12.5px; padding:5px 9px; width:160px; }
+.sa select.inp.prt-select { font-size:12.5px; padding:7px 10px; width:auto; }
+.sa .lft.prt-rule-form { flex-wrap:wrap; }

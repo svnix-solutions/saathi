@@ -20,3 +20,7 @@ web/db/er-diagram.html
 # deploy/: built demo and Netlify link state
 deploy/site/
 deploy/.netlify/
+scripts/visual/.baseline/
+scripts/visual/.out/
+scripts/visual/.worktree/
+scripts/visual/keys.json

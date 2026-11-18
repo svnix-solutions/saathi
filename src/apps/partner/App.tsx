@@ -1,9 +1,7 @@
 import React from 'react';
 import { NavProvider, Phone, ThemeProvider, useAppState, useNav, type ThemeState } from '@/native/ui';
-import { partnerRoutes } from './routes';
-import { initialPartnerState, type PartnerState } from './chrome';
-
-export * from './chrome';
+import { partnerRoutes } from './navigation/routes';
+import { initialPartnerState, type PartnerState } from './state';
 
 /** The whole partner app inside a phone frame. Hindi is the partners' starting language. */
 export function PartnerApp({ initial = 'signin.phone', params, state, caption, sub, ...theme }: Partial<ThemeState> & {

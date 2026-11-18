@@ -1,0 +1,25 @@
+/* Quality feature (ratings, testimonials). Every selector is scoped under .sa and prefixed qua-. Rules that override
+   a design class (.h2 size, .bub width…) repeat that class so they win regardless of stylesheet order. */
+
+.sa .qua-body { display:grid; gap:14px; flex:1; min-height:0; }
+.sa .qua-body-ratings { grid-template-columns:1.8fr 1fr; }
+.sa .qua-body-testimonials { grid-template-columns:1.6fr 1fr; }
+.sa .qua-side { display:flex; flex-direction:column; gap:14px; }
+.sa .qua-panel { display:flex; flex-direction:column; gap:9px; }
+.sa .qua-fill { flex:1; }
+
+.sa .h2.qua-title { font-size:15px; }
+.sa .h2.qua-title-gap { margin-bottom:8px; }
+.sa .h2.qua-title-gap10 { margin-bottom:10px; }
+.sa .lft.qua-head-actions { gap:12px; }
+.sa .qua-head { padding:0 10px 8px; }
+
+.sa .qua-list-9 { display:grid; gap:9px; }
+.sa .qua-foot { margin-top:8px; }
+.sa .qua-facts { display:grid; gap:6px; }
+
+/* testimonial preview */
+.sa .bub.qua-quote { margin-top:10px; max-width:100%; font-size:14px; }
+.sa .qua-checks { display:grid; gap:7px; margin-top:10px; }
+.sa .g2.qua-actions { margin-top:12px; }
+.sa .qua-center { align-self:center; }

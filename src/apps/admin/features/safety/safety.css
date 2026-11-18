@@ -1,0 +1,40 @@
+/* Safety feature styles (safety alerts). Scoped under .sa; selectors compound the design class they refine. */
+.sa .h.saf-title { font-size:22px; }
+.sa .lft.saf-title-group { gap:12px; }
+.sa .h2.saf-heading { font-size:15px; }
+.sa .saf-alert-text { color:var(--red); }
+.sa .card.saf-ringing { padding:9px 12px; border-color:var(--red); background:#fdf1ef; }
+
+.sa .saf-grid { display:grid; grid-template-columns:.9fr 1.3fr 1fr; gap:14px; flex:1; min-height:0; }
+.sa .saf-stack { display:flex; flex-direction:column; gap:14px; }
+.sa .card.saf-col { display:flex; flex-direction:column; gap:8px; }
+.sa .card.saf-fill { flex:1; }
+
+/* alert list */
+.sa .card.saf-item { padding:9px 11px; }
+.sa .card.saf-item-open { border-color:var(--red); background:#fdf1ef; }
+.sa .card.saf-item-closed { opacity:.7; }
+.sa .card.saf-item-current { border-color:var(--green); background:var(--mint); }
+.sa .card.saf-item-selected { box-shadow:0 0 0 2px var(--green) inset; }
+
+/* map */
+.sa .card.saf-map-card { padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.sa .map.saf-map { flex:1; height:auto; min-height:220px; }
+.sa .map .saf-road-a { left:0; right:0; top:38%; height:14px; }
+.sa .map .saf-road-b { top:0; bottom:0; left:44%; width:14px; }
+.sa .map .saf-road-c { left:0; right:0; top:74%; height:10px; }
+.sa .saf-pulse { position:absolute; left:calc(44% - 52px); top:calc(38% - 52px); width:118px; height:118px; border-radius:50%; background:rgba(179,38,30,.2); }
+.sa .dot.saf-dot-home { left:calc(44% - 8px); top:calc(38% - 8px); background:var(--green); }
+.sa .dot.saf-dot-home.saf-dot-alert { background:var(--red); }
+.sa .dot.saf-dot-partner { left:calc(44% + 30px); top:calc(38% + 10px); background:var(--yellow); color:var(--ink); }
+.sa .card.saf-map-label { position:absolute; left:14px; top:14px; padding:6px 9px; }
+.sa .saf-facts { padding:12px 14px; display:grid; gap:7px; }
+
+/* actions and record */
+.sa .btn.saf-action { padding:9px; }
+.sa .btn.saf-action-main { padding:10px; }
+.sa .btn.saf-call { padding:11px; }
+.sa .inp.saf-note { padding:9px 11px; resize:vertical; }
+.sa .card.saf-msg { padding:9px 11px; }
+.sa .lft.saf-quick-list { flex-wrap:wrap; gap:6px; }
+.sa .pill.saf-quick { padding:6px 10px; }

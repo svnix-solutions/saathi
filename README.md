@@ -10,12 +10,13 @@ House help at your door in 15 minutes. This repo holds the design (`web/design/`
 npm install
 npm run storybook        # http://localhost:6006
 npm run build-storybook  # static site in storybook-static/
-npm run typecheck
+npm run check            # typecheck + lint + build, as CI does
 ```
 
 In both apps, sign in with any number. The SMS code is `4821`. The toolbar switches every phone between dark mode, large text, Hindi and small phone.
 
-How the prototype is built (components, routes, file layout) is described in [docs/PROTOTYPE_GUIDE.md](docs/PROTOTYPE_GUIDE.md).
+How the code is organised: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). How to add a screen or a page:
+[docs/PROTOTYPE_GUIDE.md](docs/PROTOTYPE_GUIDE.md). Pixel-diff checks for refactors: [scripts/visual/README.md](scripts/visual/README.md).
 
 ## Design, database and starter server (`web/`)
 
