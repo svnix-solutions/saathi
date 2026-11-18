@@ -1,0 +1,24 @@
+/* Customers feature (customers list, one customer). Every selector is scoped under .sa and prefixed cus-. Rules
+   that override a design class (.h2 size, .srch width…) repeat that class so they win regardless of stylesheet order. */
+
+.sa .cus-body { display:grid; gap:14px; flex:1; min-height:0; }
+.sa .cus-body-list { grid-template-columns:1.7fr 1fr; }
+.sa .cus-body-detail { grid-template-columns:.9fr 1.5fr .9fr; }
+.sa .cus-side { display:flex; flex-direction:column; gap:14px; }
+.sa .cus-panel { display:flex; flex-direction:column; gap:8px; }
+.sa .cus-fill { flex:1; }
+
+.sa .h.cus-page-title { font-size:22px; }
+.sa .h2.cus-title { font-size:15px; }
+.sa .h2.cus-title-gap { margin-bottom:8px; }
+.sa .h2.cus-title-gap10 { margin-bottom:10px; }
+.sa .lft.cus-ident { gap:12px; }
+
+.sa .cus-head { padding:0 10px 8px; }
+.sa .cus-days { margin-top:6px; padding:0 8px; }
+.sa .cus-list-8 { display:grid; gap:8px; }
+.sa .cus-list-9 { display:grid; gap:9px; }
+
+.sa .cus-notes { display:grid; gap:6px; }
+.sa .lft.cus-note-row { gap:6px; }
+.sa .srch.cus-note-input { flex:1; width:auto; }

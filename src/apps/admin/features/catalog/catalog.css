@@ -1,0 +1,48 @@
+/* Catalog feature (services, zones, offers). Every selector is scoped under .sa and prefixed `cat-`.
+   A rule that overrides a property of a design class (card, row, lft, h2, inp, lnk…) repeats that class so it wins
+   regardless of stylesheet order. */
+
+/* page grids */
+.sa .cat-services-grid, .sa .cat-offers-grid { display:grid; grid-template-columns:1.5fr 1fr; gap:14px; flex:1; min-height:0; }
+.sa .cat-zones-grid { display:grid; grid-template-columns:1.6fr 1fr; gap:14px; flex:1; min-height:0; }
+.sa .cat-stack { display:flex; flex-direction:column; gap:14px; }
+
+/* cards */
+.sa .card.cat-panel { display:flex; flex-direction:column; gap:8px; }
+.sa .card.cat-fill { flex:1; }
+.sa .card.cat-tight { padding:9px 11px; }
+.sa .card.cat-warn-inset { margin:12px 10px; background:var(--yellow); border:0; }
+.sa .card.cat-inset { margin:0 10px 12px; }
+.sa .row.cat-table-head { padding:0 10px 6px; }
+.sa .h2.cat-title { font-size:15px; }
+.sa .h2.cat-title-gap { font-size:15px; margin-bottom:8px; }
+.sa .cat-facts { display:grid; gap:7px; }
+.sa .cat-log { display:grid; gap:8px; }
+
+/* form fields */
+.sa .row.cat-field-row { gap:10px; }
+.sa .cat-field-label { flex:1; }
+.sa .inp.cat-field { font-size:13px; padding:8px 11px; }
+.sa .inp.cat-rule-input { width:140px; padding:7px 10px; }
+.sa .inp.cat-w100 { width:100px; }
+.sa .inp.cat-w160 { width:160px; }
+.sa .inp.cat-amount-box { font-size:13px; padding:8px 11px; gap:4px; }
+.sa .cat-amount-input { border:0; outline:none; font:inherit; flex:1; background:transparent; }
+
+/* services */
+.sa .inp.cat-price { font-size:13px; padding:8px 11px; width:70px; font-weight:600; }
+.sa tr.cat-selected { background:var(--mint); }
+.sa .cat-tasks { display:grid; gap:6px; }
+.sa .cat-task-off { opacity:.5; text-decoration:line-through; }
+.sa .lft.cat-new-task { gap:6px; }
+.sa .inp.cat-task-name { padding:7px 10px; }
+.sa .inp.cat-task-time { padding:7px 8px; width:110px; }
+
+/* zones */
+.sa .lft.cat-notice-actions { margin-top:8px; }
+.sa .lnk.cat-ink-link { color:var(--ink); }
+.sa .cat-checklist { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+
+/* the two decision buttons at the foot of the offer editor */
+.sa .btn.cat-decide { padding:10px; }
+.sa .btn.cat-decide-alt { padding:9px; }

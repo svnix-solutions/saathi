@@ -1,0 +1,29 @@
+/* Auth feature styles (sign-in page). Scoped under .sa; compound selectors so they win over styles/admin.css. */
+.sa .win.auth-screen { margin:0; height:100vh; min-height:640px; border-radius:0; border:0; box-shadow:none; background:var(--bg); }
+.sa .auth-brand { width:330px; background:var(--green-d); color:var(--white); padding:34px 30px; display:flex; flex-direction:column; flex:none; }
+.sa .logo.auth-logo { font-size:24px; color:var(--white); }
+.sa .auth-brand-title { font-size:26px; font-weight:700; letter-spacing:-.02em; line-height:1.15; margin-top:34px; }
+.sa .auth-brand-sub { color:#cfe5dd; margin-top:8px; font-size:14px; }
+.sa .ch.auth-hero { width:200px; height:230px; background-color:transparent; background-size:200%; background-position:50% 12%; margin:auto auto 0; animation:none; }
+.sa .s.auth-brand-note { color:#8fbfb1; }
+
+.sa .auth-steps { flex:1; padding:30px; display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-content:center; }
+.sa .card.auth-card { padding:22px; display:flex; flex-direction:column; gap:10px; }
+.sa .s.auth-step { font-weight:700; color:var(--green); }
+.sa .s.auth-step-alert { font-weight:700; color:var(--red); }
+.sa .h.auth-title { font-size:22px; }
+.sa .inp.auth-input { font-size:14px; }
+.sa .inp.auth-pw { font-size:14px; padding:0 12px; }
+.sa .auth-pw input { border:0; outline:none; font:inherit; font-size:14px; padding:12px 0; flex:1; min-width:0; background:transparent; }
+.sa .auth-otp { display:grid; grid-template-columns:repeat(6,1fr); gap:7px; }
+.sa .inp.otp.auth-otp-box { min-height:44px; font-size:18px; padding:8px 0; font-weight:600; }
+.sa .btn.auth-submit { margin-top:6px; }
+.sa .s.auth-link { text-align:center; color:var(--green); font-weight:700; }
+.sa .s.auth-center { text-align:center; }
+.sa .auth-unlock { text-decoration:underline; }
+
+/* message boxes */
+.sa .card.auth-msg { padding:9px 11px; }
+.sa .card.auth-msg-error { border-color:var(--red); color:var(--red); }
+.sa .card.auth-msg-warn { background:var(--yellow); border:0; }
+.sa .card.auth-msg-demo { border-style:dashed; }

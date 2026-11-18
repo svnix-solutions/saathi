@@ -14,11 +14,12 @@ native/ui        React Native design system (atoms → molecules → organisms)
 admin/ui         React DOM design system for the admin panel
   ↓
 domain/          business rules and catalogues: services, prices, codes, formatting, i18n word lists
+data/            launch values the founders change (launchValues.ts), professions catalogue
 tokens/          colours, type scale, spacing, radii, elevation. No React.
 ```
 
 - `tokens/` has no imports from the project.
-- `domain/` may import `tokens/` only. It has no React and no UI.
+- `domain/` may import `tokens/` and `data/` only. It has no React and no UI.
 - `native/ui/` may import `tokens/` and `domain/` formatting helpers. It never imports from `apps/`.
 - A feature may import the design system, `domain/`, its own app's `state/` and `navigation/`, and **only the public
   `index.ts` of another feature** (never its inner files).
@@ -29,7 +30,7 @@ tokens/          colours, type scale, spacing, radii, elevation. No React.
 src/
   tokens/                       colors.ts typography.ts spacing.ts radii.ts elevation.ts index.ts
   domain/                       services.ts pricing.ts codes.ts format.ts i18n/ (service & task names)
-  data/decisions.ts             launch values the founders change (re-exported by domain/)
+  data/launchValues.ts          launch values the founders change (`decisions`), re-exported by domain/
   native/
     theme/                      ThemeProvider, useTheme, useT, locales
     navigation/                 NavProvider, useNav, useAppState
@@ -51,9 +52,10 @@ src/
       features/<feature>/
         screens/<Name>Screen.tsx   one screen per file, default export + named export
         components/             pieces used only by this feature
-        <feature>.stories.tsx   one story per screen
+        hooks/  data.ts         feature logic and sample data
         index.ts                public API: screens + route entries
-      design-pages/NN-<slug>.stories.tsx   the design pages, phones side by side (design review)
+      design-pages/NN-<slug>.stories.tsx   every screen, grouped as the design pages draw them (design review);
+                                tagged v1/v2/v3 — this is where screen stories live
     partner/                    same shape as customer
     admin/
       App.tsx                   AdminApp
@@ -75,6 +77,8 @@ src/
   Prefer a `variant` union over several booleans. Every prop that can change the look has a story control.
 - Styles use `StyleSheet.create` at the bottom of the file, with values from `tokens/` (spacing, radii, type) and
   colours from `useTheme().c`. Inline `style={{…}}` only for a value computed at render time.
+  react-native-web caveat: a longhand (`paddingVertical`) only beats a shorthand (`padding`) when both are inline, so
+  padding/margin/border values passed through a component's `style` prop stay inline.
 - No hard-coded hex colours in `apps/`. Brand colours come from `palette`, theme colours from `useTheme().c`.
 - Screens are **composition only**: layout plus design-system components plus feature components. Logic that is
   not about rendering (pricing, validation, formatting, timers) lives in `domain/`, a hook, or `state/` selectors.
@@ -102,4 +106,5 @@ Testing/           hidden harness used by visual-regression shots
 ## Quality gates
 
 `npm run typecheck`, `npm run lint`, and `npm run build-storybook` must pass, and so must the visual-regression shots
-(every route rendered through `Testing/Route harness`). CI runs the first three on every pull request.
+(every route rendered through `Testing/Route harness`, see `scripts/visual/`). CI runs the first three on every pull
+request.

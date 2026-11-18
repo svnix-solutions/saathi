@@ -1,0 +1,90 @@
+/* Operations feature styles (dashboard, bookings, assign, live, small screens).
+   Scoped under .sa; selectors compound the design class they refine (.card, .h, .btn…) so they win over
+   styles/admin.css whatever order the stylesheets load in. */
+
+/* ---- shared ---- */
+.sa .h.ops-title { font-size:22px; }
+.sa .lft.ops-title-group { gap:12px; }
+.sa .h2.ops-heading { font-size:15px; }
+.sa .h2.ops-heading-spaced { margin-bottom:8px; }
+.sa .h2.ops-heading-loose { margin-bottom:10px; }
+.sa .h2.ops-subhead { margin-top:6px; }
+.sa .ops-alert-text { color:var(--red); }
+.sa .ops-stack { display:flex; flex-direction:column; gap:14px; }
+.sa .card.ops-fill { flex:1; }
+.sa .card.ops-item { padding:9px 11px; }
+
+/* ---- dashboard ---- */
+.sa .ops-dash-grid { display:grid; grid-template-columns:1.9fr 1fr; gap:14px; flex:1; min-height:0; }
+.sa .ops-attention { display:grid; gap:7px; }
+.sa .ops-area-bars { display:grid; gap:9px; }
+
+/* ---- bookings ---- */
+.sa .lft.ops-filters { gap:8px; }
+.sa .ops-push-right { margin-left:auto; }
+.sa .card.ops-list-card { padding:10px 8px 4px; flex:1; }
+.sa .lft.ops-search-row { padding:0 6px 10px; gap:8px; }
+.sa .tbs.ops-search { width:320px; background:var(--bg); }
+.sa .ops-search input { border:0; outline:none; background:transparent; font:inherit; color:var(--ink); flex:1; min-width:0; }
+.sa tr.ops-row-waiting { background:#fdf1ef; }
+
+/* ---- assign ---- */
+.sa .ops-assign-grid { display:grid; grid-template-columns:.9fr 1.2fr 1.3fr; gap:14px; flex:1; min-height:0; }
+.sa .card.ops-queue { display:flex; flex-direction:column; gap:8px; }
+.sa .card.ops-detail { display:flex; flex-direction:column; gap:10px; }
+.sa .card.ops-nearby { display:flex; flex-direction:column; gap:9px; }
+.sa .ops-amount { font-size:16px; }
+.sa .ops-timeline { display:grid; gap:9px; }
+.sa .ops-history { display:grid; gap:6px; }
+.sa .lft.ops-step { align-items:flex-start; }
+.sa .cb.ops-mark-bad { border-color:var(--red); }
+.sa .cb.ops-mark-wait { border-color:var(--yellow); background:var(--yellow); }
+.sa .card.ops-partner { padding:10px 11px; }
+.sa .card.ops-partner-blocked { opacity:.6; }
+.sa .btn.ops-assign-btn { padding:7px 14px; font-size:12px; }
+.sa .btn.o.ops-assign-btn { padding:6px 14px; }
+.sa .card.ops-assigned { padding:12px 11px; display:grid; gap:6px; }
+.sa .lft.ops-actions { gap:6px; }
+
+/* ---- live map ---- */
+.sa .ops-live-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:14px; flex:1; min-height:0; }
+.sa .card.ops-map-card { padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.sa .map.ops-map { flex:1; height:auto; min-height:300px; }
+.sa .map .ops-road-a { left:0; right:0; top:34%; height:14px; }
+.sa .map .ops-road-b { left:0; right:0; top:72%; height:10px; }
+.sa .map .ops-road-c { top:0; bottom:0; left:30%; width:12px; }
+.sa .map .ops-road-d { top:0; bottom:0; left:68%; width:14px; }
+.sa .dot.ops-dot-travel { background:var(--yellow); color:var(--ink); }
+.sa .dot.ops-dot-look { background:var(--red); }
+.sa .dot.ops-dot-focus { box-shadow:0 0 0 3px var(--green-d); }
+.sa .card.ops-map-popup { position:absolute; padding:6px 9px; max-width:60%; white-space:nowrap; }
+.sa .lft.ops-legend { padding:10px 14px; gap:14px; }
+.sa .lft.ops-legend-item { gap:5px; }
+.sa .ops-legend-dot { width:10px; height:10px; border-radius:50%; background:var(--green); }
+.sa .ops-legend-dot.ops-dot-travel { background:var(--yellow); }
+.sa .ops-legend-dot.ops-dot-look { background:var(--red); }
+.sa tr.ops-row-focus { background:var(--mint); }
+
+/* ---- small screens (tablet and phone mocks) ---- */
+.sa .ops-tablet { width:610px; height:600px; border:8px solid var(--ink); border-radius:26px; background:var(--bg); overflow:hidden; display:flex; box-shadow:0 34px 60px -28px rgba(7,63,51,.45); }
+.sa .ops-rail { width:58px; background:var(--green-d); color:#cfe5dd; padding:14px 9px; display:flex; flex-direction:column; gap:4px; flex:none; }
+.sa .ops-rail-mark { margin:0 auto 10px; }
+.sa .ops-rail-item { display:grid; place-items:center; height:38px; border-radius:10px; }
+.sa .ops-rail-item.ops-rail-on { background:#0f6b57; color:var(--white); }
+.sa .ops-tablet-body { flex:1; padding:16px; display:flex; flex-direction:column; gap:11px; min-width:0; overflow:auto; }
+.sa .ops-mini-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; }
+.sa .card.ops-mini-kpi { padding:9px; }
+.sa .card.ops-alert-card { border-color:var(--red); }
+.sa .ops-mini-kpi b { font-size:19px; }
+.sa .card.ops-live-list { display:grid; gap:7px; }
+.sa .card.ops-tablet-note { padding:16px; }
+.sa .ops-spaced { margin-top:10px; }
+.sa .ops-spaced-sm { margin-top:8px; }
+.sa .s.ops-dim { opacity:.8; }
+.sa .scr.ops-phone-scr { gap:9px; }
+.sa .btn.ops-mini-btn { padding:6px 11px; font-size:12px; }
+.sa .btn.ops-phone-assign { padding:7px 12px; font-size:12px; }
+.sa .btn.o.ops-phone-assign { padding:6px 12px; }
+.sa .btn.ops-phone-action { padding:10px; }
+.sa .btn.o.ops-phone-cancel { color:var(--red); border-color:var(--red); }
+.sa td.ops-empty { text-align:center; padding:24px; }

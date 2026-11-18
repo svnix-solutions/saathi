@@ -1,0 +1,18 @@
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Row, palette, useTheme } from '@/native/ui';
+
+/** Sent → Approved → Live progress for a testimonial. `step` is 1, 2 or 3. */
+export function ApprovalSteps({ step }: { step: number }) {
+  const { c } = useTheme();
+  const label = (text: string, n: number) => (
+    <Text style={[styles.label, { fontWeight: step >= n ? '700' : '400', color: step >= n ? c.accent : c.mut }]}>{text}</Text>
+  );
+  const bar = (on: boolean) => <View style={[styles.bar, { backgroundColor: on ? palette.green : c.line }]} />;
+  return <Row gap={4}>{label('Sent', 1)}{bar(step >= 2)}{label('Approved', 2)}{bar(step >= 3)}{label('Live', 3)}</Row>;
+}
+
+const styles = StyleSheet.create({
+  label: { fontSize: 11 },
+  bar: { flex: 1, height: 3, borderRadius: 2 },
+});

@@ -1,0 +1,50 @@
+/* Support feature (support, ticket, claims). Every selector is scoped under .sa and prefixed `sup-`.
+   A rule that overrides a property of a design class (card, h2, inp, bub, photo…) repeats that class so it wins
+   regardless of stylesheet order. Declaration order inside a rule matches the old inline styles (`font` resets). */
+
+/* page grids */
+.sa .sup-ticket-grid { display:grid; grid-template-columns:.85fr 1.35fr 1fr; gap:14px; flex:1; min-height:0; }
+.sa .sup-claims-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:14px; flex:1; min-height:0; }
+.sa .sup-stack { display:flex; flex-direction:column; gap:14px; }
+
+/* cards */
+.sa .card.sup-panel { display:flex; flex-direction:column; gap:8px; }
+.sa .card.sup-chat-card { display:flex; flex-direction:column; gap:9px; min-height:0; }
+.sa .card.sup-fill { flex:1; }
+.sa .card.sup-tight { padding:9px 11px; }
+.sa .card.sup-warn { padding:9px 11px; background:var(--yellow); border:0; }
+.sa .h2.sup-title { font-size:15px; }
+.sa .h2.sup-title-gap { font-size:15px; margin-bottom:8px; }
+.sa .h2.sup-subhead { margin-top:4px; }
+.sa .sup-facts { display:grid; gap:7px; }
+.sa .sup-alert { color:var(--red); }
+.sa .sup-good { color:var(--green); }
+.sa .sup-center { text-align:center; }
+
+/* ticket header */
+.sa .lft.sup-head-left { gap:12px; }
+.sa .h.sup-page-title { font-size:22px; }
+
+/* conversation */
+.sa .sup-chat { display:flex; flex-direction:column; gap:9px; overflow:auto; max-height:300px; }
+.sa .bub.sup-bubble { max-width:88%; }
+.sa input.inp.sup-note-input { padding:7px 10px; font-size:12px; }
+.sa .inp.sup-reply { padding:4px 12px; font-size:13px; font-weight:400; }
+.sa .sup-reply-input { border:0; outline:none; background:transparent; font:inherit; color:var(--ink); flex:1; padding:6px 0; min-width:0; }
+.sa .sup-send { color:var(--green); font-weight:700; border:0; background:none; font:inherit; font-size:11px; }
+
+/* refund by amount */
+.sa .lft.sup-amount-form { gap:6px; }
+.sa .inp.sup-amount { padding:0 10px; flex:1; }
+.sa .sup-amount-input { border:0; outline:none; background:transparent; font:inherit; font-size:13px; padding:8px 4px; flex:1; min-width:0; }
+
+/* claims */
+.sa .inp.sup-pay-box { font-size:13px; padding:8px 11px; gap:4px; }
+.sa .inp.sup-pay-box.sup-over { border-color:var(--red); }
+.sa .sup-pay-input { border:0; outline:none; font:inherit; flex:1; background:transparent; }
+.sa .photo.sup-photo-large { height:260px; cursor:default; }
+.sa .lft.sup-chips { flex-wrap:wrap; gap:6px; }
+
+/* the two decision buttons at the foot of a review card */
+.sa .btn.sup-decide { padding:10px; }
+.sa .btn.sup-decide-alt { padding:9px; }

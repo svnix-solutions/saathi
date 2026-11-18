@@ -1,0 +1,31 @@
+/* Team feature (team, roles and permissions, role view). Every selector is scoped under .sa and prefixed team-.
+   Rules that override a design class (.card padding, .h2 size, th alignment…) repeat that class so they win
+   regardless of stylesheet order. */
+
+.sa .team-body { display:grid; gap:14px; flex:1; min-height:0; }
+.sa .team-body-team { grid-template-columns:1.6fr 1fr; }
+.sa .team-body-roleview { grid-template-columns:1.5fr 1fr; }
+.sa .team-side { display:flex; flex-direction:column; gap:14px; }
+.sa .team-panel { display:flex; flex-direction:column; gap:8px; }
+.sa .team-fill { flex:1; }
+
+.sa .h2.team-title { font-size:15px; }
+.sa .card.team-compact { padding:9px 11px; }
+.sa .card.team-callout { background:var(--yellow); border:0; }
+.sa .team-dotted { text-decoration:underline dotted; }
+.sa .cb.team-locked { opacity:.4; }
+
+/* roles and permissions matrix */
+.sa .lft.team-perm-head { gap:14px; }
+.sa .h.team-perm-title { font-size:20px; }
+.sa .card.team-matrix { padding:6px 8px 2px; flex:1; }
+.sa th.team-center, .sa td.team-center { text-align:center; }
+.sa .cb.team-cell-cb { margin:auto; }
+.sa .cb.team-cell-off { opacity:.5; }
+
+/* role view */
+.sa .card.team-banner { padding:9px 12px; background:var(--mint); border:0; }
+.sa input.inp.team-amount { padding:8px 11px; }
+.sa .card.team-denied { border-color:var(--red); }
+.sa svg.i.team-key { color:var(--red); }
+.sa .h.team-page-title { font-size:22px; }
