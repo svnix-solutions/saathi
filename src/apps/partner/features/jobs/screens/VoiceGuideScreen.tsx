@@ -2,8 +2,9 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Bubble, Button, Card, H2, Icon, IconTile, Lft, ProgressBar, Row, Screen, Spacer, T, Tag, palette, useT, useTheme } from '@/native/ui';
-import { jobColors, voiceScript, voiceScriptEn, voiceTicks } from '../data';
+import { voiceScript, voiceScriptEn, voiceTicks } from '../data';
 import { useVoiceOffer } from '../hooks/useVoiceOffer';
+import { tint } from '@/tokens';
 
 export function VoiceGuideScreen() {
   const t = useT();
@@ -31,7 +32,7 @@ export function VoiceGuideScreen() {
         <ProgressBar value={step / voiceTicks} track={c.line} fill={palette.green} height={4} style={{ marginTop: 9 }} />
         <T s m style={{ marginTop: 6 }}>{voiceScriptEn.slice(0, Math.max(1, shown)).join(' ')}</T>
       </Card>
-      <T s center color={jobColors.onDarkDim}>{heard ? `${t('Heard', 'सुना')}: "${heard}"` : 'Say "हाँ" to accept or "नहीं" to decline'}</T>
+      <T s center color={tint.onDeepGreenMuted}>{heard ? `${t('Heard', 'सुना')}: "${heard}"` : 'Say "हाँ" to accept or "नहीं" to decline'}</T>
       <Pressable onPress={mic} accessibilityRole="button" accessibilityLabel={playing ? 'Pause' : 'Play'} style={styles.micRing}>
         <View style={styles.mic}>
           {playing ? (
@@ -39,7 +40,7 @@ export function VoiceGuideScreen() {
           ) : <Icon name="mic" size={26} color={palette.ink} />}
         </View>
       </Pressable>
-      <T s center color={jobColors.onDarkDim}>{done ? t('Tap the mic and answer', 'माइक दबाएँ और बोलें') : playing ? t('Tap to pause', 'रोकने के लिए दबाएँ') : t('Tap to keep listening', 'सुनने के लिए दबाएँ')}</T>
+      <T s center color={tint.onDeepGreenMuted}>{done ? t('Tap the mic and answer', 'माइक दबाएँ और बोलें') : playing ? t('Tap to pause', 'रोकने के लिए दबाएँ') : t('Tap to keep listening', 'सुनने के लिए दबाएँ')}</T>
       <Spacer />
       <Button variant="yellow" style={{ paddingVertical: 16 }} textStyle={{ fontSize: 15 }} onPress={accept}>{t('Accept job', 'काम लें')}</Button>
       <Button variant="ghostDark" onPress={decline}>{t('Decline', 'मना करें')}</Button>

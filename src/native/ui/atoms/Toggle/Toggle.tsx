@@ -27,6 +27,6 @@ export function Toggle({ on, onChange, big, disabled, accessibilityLabel }: Togg
 
 const styles = StyleSheet.create({
   track: { borderRadius: 20, padding: 3, flexDirection: 'row' },
-  knob: { backgroundColor: '#fff' },
+  knob: { backgroundColor: palette.white },
   disabled: { opacity: 0.45 },
 });

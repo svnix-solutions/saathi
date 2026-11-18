@@ -37,11 +37,11 @@ export function Button({ children, onPress, variant = 'primary', size, style, te
   const { c, fs } = useTheme();
   const sz = size ?? (big ? 'big' : 'regular');
   const v: Record<ButtonVariant, { bg: string; fg: string; border?: string }> = {
-    primary: { bg: palette.green, fg: '#fff' },
+    primary: { bg: palette.green, fg: palette.white },
     outline: { bg: 'transparent', fg: danger ? c.red : c.accent, border: danger ? c.line : c.accent },
     yellow: { bg: palette.yellow, fg: palette.ink },
     ghost: { bg: 'transparent', fg: c.accent },
-    ghostDark: { bg: 'transparent', fg: '#fff', border: tint.greenTrack },
+    ghostDark: { bg: 'transparent', fg: palette.white, border: tint.greenTrack },
     plain: { bg: 'transparent', fg: c.ink, border: c.line },
   };
   const k = v[variant];

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, type StyleProp, type TextStyle } from 'react-native';
-import { font, text } from '@/tokens';
+import { font, text, palette } from '@/tokens';
 import { useTheme } from '../../../theme/index';
 
 export type TTone = 'ink' | 'muted' | 'accent' | 'red' | 'white';
@@ -36,7 +36,7 @@ export function T({ children, style, variant, tone, s, m, b, center, color, size
   const { c, fs } = useTheme();
   const small = s || variant === 'small';
   const px = size ?? (small ? text.small.size : text.body.size);
-  const toneColor = tone && { ink: c.ink, muted: c.mut, accent: c.accent, red: c.red, white: '#fff' }[tone];
+  const toneColor = tone && { ink: c.ink, muted: c.mut, accent: c.accent, red: c.red, white: palette.white }[tone];
   return (
     <Text numberOfLines={numberOfLines} style={[styles.base, {
       color: color ?? toneColor ?? (m ? c.mut : c.ink), fontSize: fs(px),

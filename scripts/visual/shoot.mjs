@@ -1,3 +1,4 @@
+/* global document */
 // usage: node shoot.mjs <port> <outDir>  — screenshots every route of every app via the Prototype stories
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';

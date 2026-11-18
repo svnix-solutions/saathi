@@ -20,4 +20,4 @@ export const DesignPage: S = {
 
 export const Profile: S = { name: 'My profile', render: () => <PartnerApp initial="profile" /> };
 export const Bank: S = { name: 'Bank account', render: () => <PartnerApp initial="bank" /> };
-export const Alerts: S = { name: 'Alerts', render: () => <PartnerApp initial="alerts" /> };
+export const Alerts: S = { render: () => <PartnerApp initial="alerts" /> };

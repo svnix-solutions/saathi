@@ -23,5 +23,5 @@ export const DesignPage: S = {
 export const Home: S = { name: 'Home, online', render: () => <PartnerApp initial="home" state={{ autoOffer: true }} /> };
 export const JobRequest: S = { name: 'New job request', render: () => <PartnerApp initial="jobRequest" /> };
 export const OnJob: S = { name: 'On the job', render: () => <PartnerApp initial="onJob" /> };
-export const Earnings: S = { name: 'Earnings', render: () => <PartnerApp initial="earnings" /> };
+export const Earnings: S = { render: () => <PartnerApp initial="earnings" /> };
 export const Jobs: S = { name: 'Jobs tab', render: () => <PartnerApp initial="jobs" /> };

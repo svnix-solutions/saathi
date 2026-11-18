@@ -1,28 +1,70 @@
-# Saathi Partner app — route names
+# Saathi partner — routes
 
-Tabs (reset the stack): `home`, `jobs`, `earnings`
+Generated from `navigation/routeTable.ts`. Route names are a fixed contract: links, stories and the
+visual-regression harness use them. Use them with `nav.push(name, params)` / `nav.reset(name)`.
 
-## v1 — launch (area `v1/`)
-Sign-up is 6 steps: details → work → specializations → skills → references → refCode → aadhaar → pan → documents
-(only when the work needs more than Aadhaar and PAN) → waiting.
-signin.phone (1), signin.otp (2; correct code 4821), signin.details (3 Name and email, step 1), signin.references (4, step 3),
-signin.refCode (5), signin.aadhaar (6, step 4), signin.pan (7, step 5), signin.waiting (8),
-signin.work (9 Your work, step 2), signin.specializations (10), signin.skills (11), signin.documents (12/14, step 6),
-signin.docUpload (13; params { doc: DocId, sample?: boolean }),
-finishCode (42 Finish code; happy 3907 / not-happy 6154 from codes in src/data/decisions.ts), finish.happy (43), finish.notHappy (44),
-home (9), jobRequest (10), onJob (11), earnings (12), jobs (Jobs tab: today's and upcoming jobs — not drawn in the design, build it in the same style),
-joining (13), hours (14), idCard (15), help (16),
-checkIn (17), selfie (18), live (19), checkOut (20),
-err.noJobs (21), err.offline (22), err.cancelled (23), err.locationOff (24),
-profile (25), bank (26), alerts (27)
-
-## v2 (area `v2/`)
-shiftCheck (32), training (33), doorCode (34 start code; route name kept), payoutEarly (35),
-route (36), ratings (37), bonuses (38), timeOff (39),
-rateCustomer (40), reviews (41), quality (42), badges (43),
-stories (44), kindWords (45), shareStory (46)
-
-## v3 (area `v3/`)
-voiceGuide (47), demandMap (48), photoCheck (49), planner (50),
-benefits (51), advance (52), kitShop (53), community (54),
-career (55), documents (56), swapJob (57), savings (58)
+| route | release | design | feature | screen |
+|---|---|---|---|---|
+| `signin.details` | v1 | 20 | onboarding | Name and email |
+| `signin.otp` | v1 | 20 | onboarding | SMS code |
+| `signin.phone` | v1 | 20 | onboarding | Mobile number |
+| `signin.references` | v1 | 20 | onboarding | Two references |
+| `signin.aadhaar` | v1 | 21 | onboarding | Aadhaar upload |
+| `signin.pan` | v1 | 21 | onboarding | PAN upload |
+| `signin.refCode` | v1 | 21 | onboarding | Reference code |
+| `signin.waiting` | v1 | 21 | onboarding | Waiting for approval |
+| `signin.docUpload` | v1 | 22 | onboarding | Certificate upload |
+| `signin.documents` | v1 | 22 | onboarding | Documents list |
+| `signin.skills` | v1 | 22 | onboarding | Skills |
+| `signin.specializations` | v1 | 22 | onboarding | Specialisations |
+| `signin.work` | v1 | 22 | onboarding | Your work |
+| `earnings` | v1 | 23 | earnings | Earnings |
+| `home` | v1 | 23 | jobs | Home, online |
+| `jobRequest` | v1 | 23 | jobs | New job request |
+| `jobs` | v1 | 23 | jobs | Jobs tab |
+| `onJob` | v1 | 23 | jobs | On the job |
+| `help` | v1 | 24 | account | Help |
+| `hours` | v1 | 24 | account | Working hours |
+| `idCard` | v1 | 24 | account | Digital ID card |
+| `joining` | v1 | 24 | account | Joining |
+| `checkIn` | v1 | 25 | jobs | Check in |
+| `checkOut` | v1 | 25 | jobs | Check out |
+| `live` | v1 | 25 | jobs | Live on the job |
+| `selfie` | v1 | 25 | jobs | Selfie upload |
+| `err.cancelled` | v1 | 26 | status | Customer cancelled |
+| `err.locationOff` | v1 | 26 | status | Location is off |
+| `err.noJobs` | v1 | 26 | status | No jobs right now |
+| `err.offline` | v1 | 26 | status | No internet on the job |
+| `alerts` | v1 | 27 | account | Alerts |
+| `bank` | v1 | 27 | account | Bank account |
+| `profile` | v1 | 27 | account | My profile |
+| `doorCode` | v2 | 29 | jobs | Start with start code |
+| `payoutEarly` | v2 | 29 | earnings | Take out earnings |
+| `shiftCheck` | v2 | 29 | jobs | Shift check-in |
+| `training` | v2 | 29 | growth | Training lessons |
+| `finish.happy` | v1 | 30 | jobs | Happy code |
+| `finish.notHappy` | v1 | 30 | jobs | Not-happy code |
+| `finishCode` | v1 | 30 | jobs | Finish code |
+| `bonuses` | v2 | 31 | earnings | Bonuses |
+| `ratings` | v2 | 31 | growth | My ratings |
+| `route` | v2 | 31 | jobs | Route to the job |
+| `timeOff` | v2 | 31 | jobs | Time off |
+| `badges` | v2 | 32 | growth | Badges |
+| `quality` | v2 | 32 | growth | Quality score |
+| `rateCustomer` | v2 | 32 | jobs | Rate the customer |
+| `reviews` | v2 | 32 | growth | Reviews received |
+| `kindWords` | v2 | 33 | growth | Kind words for me |
+| `shareStory` | v2 | 33 | growth | Share my story |
+| `stories` | v2 | 33 | growth | Partner stories |
+| `demandMap` | v3 | 34 | jobs | Demand map |
+| `photoCheck` | v3 | 34 | jobs | Instant photo check |
+| `planner` | v3 | 34 | earnings | Earnings planner |
+| `voiceGuide` | v3 | 34 | jobs | Voice guide |
+| `advance` | v3 | 35 | earnings | Pay advance |
+| `benefits` | v3 | 35 | earnings | Benefits |
+| `community` | v3 | 35 | growth | Community |
+| `kitShop` | v3 | 35 | earnings | Kit shop |
+| `career` | v3 | 36 | growth | Career path |
+| `documents` | v3 | 36 | account | Documents |
+| `savings` | v3 | 36 | earnings | Savings pot |
+| `swapJob` | v3 | 36 | jobs | Swap a job |

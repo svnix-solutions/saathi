@@ -33,6 +33,8 @@ export default tseslint.config(
     },
   },
 
+  { files: ['scripts/**/*.{js,mjs}', '*.config.js'], languageOptions: { globals: { ...globals.node } } },
+
   // ---- layer boundaries ----
   {
     files: ['src/tokens/**'],
@@ -60,9 +62,9 @@ export default tseslint.config(
   },
   {
     // brand colours come from tokens; theme colours from useTheme().c
-    files: ['src/apps/customer/**/*.tsx', 'src/apps/partner/**/*.tsx'],
+    files: ['src/apps/customer/**/*.{ts,tsx}', 'src/apps/partner/**/*.{ts,tsx}', 'src/native/**/*.{ts,tsx}'],
     ignores: ['**/*.stories.tsx'],
-    rules: { 'no-restricted-syntax': ['warn', { selector: 'Literal[value=/^#[0-9a-fA-F]{3,8}$/]', message: 'Use palette / useTheme().c instead of a hex colour.' }] },
+    rules: { 'no-restricted-syntax': ['error', { selector: 'Literal[value=/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/]', message: 'Use palette / useTheme().c instead of a hex colour.' }] },
   },
   ...storybook.configs['flat/recommended'],
 );

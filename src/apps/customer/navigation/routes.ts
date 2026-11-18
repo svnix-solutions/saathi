@@ -1,8 +1,4 @@
 import type { RouteMap } from '@/native/ui';
-import { routes as legacy_v1 } from '../v1/routes';
-import { routes as legacy_v2a } from '../v2a/routes';
-import { routes as legacy_v2b } from '../v2b/routes';
-import { routes as legacy_v3 } from '../v3/routes';
 import { routes as auth } from '../features/auth';
 import { routes as home } from '../features/home';
 import { routes as booking } from '../features/booking';
@@ -17,8 +13,5 @@ import { routes as community } from '../features/community';
 import { routes as support } from '../features/support';
 import { routes as status } from '../features/status';
 
-/** Migration in progress: feature screens override the legacy area screens with the same route name. */
-const legacy: RouteMap = { ...legacy_v1, ...legacy_v2a, ...legacy_v2b, ...legacy_v3 };
-const features: RouteMap = { ...auth, ...home, ...booking, ...visit, ...bookings, ...helpers, ...ratings, ...account, ...wallet, ...membership, ...community, ...support, ...status };
-
-export const customerRoutes: RouteMap = { ...legacy, ...features };
+/** Every screen by route name, collected from the features. Route names are a fixed contract. */
+export const customerRoutes: RouteMap = { ...auth, ...home, ...booking, ...visit, ...bookings, ...helpers, ...ratings, ...account, ...wallet, ...membership, ...community, ...support, ...status };

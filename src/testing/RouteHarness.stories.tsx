@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import React from 'react';
 import { CustomerApp } from '@/apps/customer/App';
 import { PartnerApp } from '@/apps/partner/App';
-import { AdminApp } from '@/apps/admin/shell';
-import { adminPages } from '@/apps/admin/routes';
+import { AdminApp } from '@/apps/admin/App';
+import { adminPages } from '@/apps/admin/navigation/pages';
 
 /**
  * Visual-regression harness: opens any screen by route name taken from the page URL

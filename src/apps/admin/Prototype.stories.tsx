@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { AdminApp } from './App';
-import { adminPages } from './routes';
+import { adminPages } from './navigation/pages';
 
 /** The clickable Saathi Admin panel (React DOM). Every sidebar item and most rows are live. */
 const meta: Meta<typeof AdminApp> = {

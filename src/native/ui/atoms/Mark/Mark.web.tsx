@@ -1,9 +1,9 @@
 import React from 'react';
 /* Web build of Mark.tsx: DOM <svg> (see Icon.web.tsx). Keep the two files' shapes in sync. */
 import { palette } from '@/tokens';
-const Svg = (p: any) => <svg {...p} style={{ flexShrink: 0, display: 'block' }} />;
-const Path = (p: any) => <path {...p} />;
-const Rect = (p: any) => <rect {...p} />;
+const Svg = (p: React.SVGProps<SVGSVGElement>) => <svg {...p} style={{ flexShrink: 0, display: 'block' }} />;
+const Path = (p: React.SVGProps<SVGPathElement>) => <path {...p} />;
+const Rect = (p: React.SVGProps<SVGRectElement>) => <rect {...p} />;
 
 /** Saathi mark: rounded green tile, a white "S" stroke and the yellow sparkle. */
 export function Mark({ size = 52, reversed = false }: {

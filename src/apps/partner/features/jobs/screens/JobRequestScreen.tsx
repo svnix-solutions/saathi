@@ -5,7 +5,7 @@ import { dur, mmss, rupees, taskNamesHiPartner } from '@/domain';
 import { tint } from '@/tokens';
 import { Button, Card, CharacterTile, H, H2, Hr, Icon, Lft, Page, Row, Screen, Spacer, T, Tag, palette, useNav, useT, useTheme } from '@/native/ui';
 import { jobReset } from '../../../state';
-import { jobColors, newJob } from '../data';
+import { newJob } from '../data';
 import { useOfferCountdown } from '../hooks/useOfferCountdown';
 import { serviceTitle } from '../job';
 import { useJobsState } from '../state';
@@ -49,7 +49,7 @@ export function JobRequestScreen() {
           <Row><T m>{t('You earn', 'आपकी कमाई')}</T><H size={26}>{rupees(job.earn)}</H></Row>
         </Card>
         <Card tone="clear" style={{ borderColor: tint.greenTrack, borderWidth: 1 }}>
-          <T s color={jobColors.onDarkDim}>{t('Tasks', 'काम')}: {job.tasks.map((x) => t(x.toLowerCase(), taskNamesHiPartner[x])).join(', ')}</T>
+          <T s color={tint.onDeepGreenMuted}>{t('Tasks', 'काम')}: {job.tasks.map((x) => t(x.toLowerCase(), taskNamesHiPartner[x])).join(', ')}</T>
         </Card>
         <Spacer />
         <Button variant="yellow" size="tall" onPress={accept} style={{ paddingVertical: 18 }} textStyle={{ fontSize: fs(16) }}>{t('Accept job', 'काम मंज़ूर करें')}</Button>

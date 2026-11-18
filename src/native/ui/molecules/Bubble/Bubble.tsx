@@ -14,7 +14,7 @@ export function Bubble({ children, me }: BubbleProps) {
   const { c, fs } = useTheme();
   return (
     <View style={[styles.box, { backgroundColor: me ? palette.green : c.mint, alignSelf: me ? 'flex-end' : 'flex-start' }]}>
-      <Text style={[styles.text, { fontSize: fs(12), color: me ? '#fff' : c.ink }]}>{children}</Text>
+      <Text style={[styles.text, { fontSize: fs(12), color: me ? palette.white : c.ink }]}>{children}</Text>
     </View>
   );
 }

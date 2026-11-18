@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Button, Card, CharacterTile, Grid, H, H2, Lft, MapMock, Page, Pill, Screen, T, Tag, palette, useNav, useT } from '@/native/ui';
-import { demandAreas, jobColors, type DemandArea } from '../data';
+import { demandAreas, type DemandArea } from '../data';
+import { tint } from '@/tokens';
 
-const zoneBg: Record<DemandArea['tone'], string> = { r: jobColors.zoneRed, y: jobColors.zoneYellow, x: jobColors.zoneGreen };
+const zoneBg: Record<DemandArea['tone'], string> = { r: tint.zoneBusiest, y: tint.zoneBusy, x: tint.mapHalo };
 
 export function DemandMapScreen() {
   const nav = useNav();

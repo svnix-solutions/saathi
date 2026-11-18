@@ -38,6 +38,15 @@ export const tint = {
   photoDark: '#2a2f2d',
   /** sheet backdrop */
   scrim: 'rgba(15,31,28,.45)',
+  /** pale green text on deep-green screens (ID card, job request, camera) */
+  onDeepGreenMuted: '#cfe5dd',
+  /** camera preview background (same value as roadDark) */
+  cameraBg: '#24332f',
+  /** translucent green: the halo round a live map dot, and a quiet demand zone */
+  mapHalo: 'rgba(11,93,75,.18)',
+  /** demand-map zones: very busy and busy */
+  zoneBusiest: 'rgba(179,38,30,.3)',
+  zoneBusy: 'rgba(255,201,60,.6)',
 } as const;
 
 export type ColorScheme = {

@@ -2,6 +2,8 @@ import type React from 'react';
 
 export type Route = { name: string; params?: Record<string, unknown> };
 export type ScreenProps<P = Record<string, unknown>> = { params: P };
+// Each screen declares its own params type, so the map accepts any of them.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type RouteMap = Record<string, React.ComponentType<ScreenProps<any>>>;
 
 export type NavValue = {

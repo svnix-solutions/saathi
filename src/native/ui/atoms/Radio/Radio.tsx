@@ -28,7 +28,7 @@ export function Radio({ on, selected, size = 18, mark = 'check', checkSize, disa
   const dot = Math.round(size * 0.36);
   return (
     <View style={[styles.box, { width: size, height: size, borderRadius: size / 2, borderColor: sel ? palette.green : c.line, backgroundColor: sel ? palette.green : 'transparent' }, disabled ? styles.disabled : null]}>
-      {sel && mark === 'check' && <Icon name="check" size={checkSize ?? (size === 18 ? 12 : size * 0.66)} color="#fff" strokeWidth={3} />}
+      {sel && mark === 'check' && <Icon name="check" size={checkSize ?? (size === 18 ? 12 : size * 0.66)} color={palette.white} strokeWidth={3} />}
       {sel && mark === 'dot' && <View style={[styles.dot, { width: dot, height: dot, borderRadius: dot / 2 }]} />}
     </View>
   );
@@ -36,6 +36,6 @@ export function Radio({ on, selected, size = 18, mark = 'check', checkSize, disa
 
 const styles = StyleSheet.create({
   box: { borderWidth: 1.5, alignItems: 'center', justifyContent: 'center' },
-  dot: { backgroundColor: '#fff' },
+  dot: { backgroundColor: palette.white },
   disabled: { opacity: 0.45 },
 });

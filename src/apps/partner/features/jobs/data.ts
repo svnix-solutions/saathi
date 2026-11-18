@@ -2,20 +2,6 @@
 import type { Face, IconName } from '@/native/ui';
 import type { Job } from './state';
 
-/** One-off colours the job screens draw on dark or map backgrounds. */
-export const jobColors = {
-  /** pale green text on the deep-green and camera screens */
-  onDarkDim: '#cfe5dd',
-  /** selfie camera preview */
-  cameraBg: '#24332f',
-  /** halo around the partner's dot on the live map */
-  liveHalo: 'rgba(11,93,75,.18)',
-  /** demand-map zones: very busy / busy / quiet */
-  zoneRed: 'rgba(179,38,30,.3)',
-  zoneYellow: 'rgba(255,201,60,.6)',
-  zoneGreen: 'rgba(11,93,75,.18)',
-} as const;
-
 /* ---------- design page 20 · home and job request ---------- */
 
 /** The job that rings on Home (design screen 10). */

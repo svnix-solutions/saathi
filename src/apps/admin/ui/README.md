@@ -7,7 +7,7 @@ React DOM components for the Saathi admin panel. They draw with the class names 
 Import from the folder index only:
 
 ```ts
-import { Button, Tag, StatusTag, Kpi, KpiGrid, Table, TableCard, Modal, Field } from '../ui';      // from a page in v1a/ v1b/ v2v3/
+import { Button, Tag, StatusTag, Kpi, KpiGrid, Table, TableCard, Modal, Field } from '../../../ui';  // from features/<name>/pages/
 import { useAdmin, type Role } from '../session';
 import { menu, type PageMap } from '../navigation';
 import { useStore, patchBooking, inr, type Booking } from '../fixtures';
@@ -51,9 +51,9 @@ Every size reproduces a padding the design already uses, so a swap moves no pixe
 | size | inline style | same as |
 |---|---|---|
 | `lg` | none (`.btn` = 13 px padding) | `className="btn"`, `"btn o"`, `"btn r"`, `"btn y"` with no style |
-| `md` (default) | outlined `9px 16px`, solid `10px 16px` | v2v3 `Btn`; `className="btn o" style={{ padding: '9px 16px' }}`, `className="btn" style={{ padding: '10px 16px' }}` |
-| `compact` | outlined `6px 12px`, solid `7px 12px`; 12 px text | v2v3 `Btn sm` |
-| `xs` | `6px 12px`; 12 px text (all variants) | v1a `SmBtn` |
+| `md` (default) | outlined `9px 16px`, solid `10px 16px` | |
+| `compact` | outlined `6px 12px`, solid `7px 12px`; 12 px text | |
+| `xs` | `6px 12px`; 12 px text (all variants) | |
 | `sm` | none, adds class `sm` | `className="btn sm"`, `"btn o sm"`, `"btn r sm"` |
 
 Outlined = `outline` and `danger-outline`. Any other padding (e.g. `style={{ padding: 9 }}`): use `size="lg"` and
@@ -61,39 +61,7 @@ pass the same `style`. `className="btn o end"` → `<Button variant="outline" si
 Raw buttons dimmed with `style={{ opacity: … }}` keep that `style` (the stylesheet drops the shadow for
 `[style*="opacity"]`); `disabled` uses the `.dis` class (opacity .45) instead and is not the same look.
 
-## Old local helper → component
-
-Swap mechanically; each row renders the same DOM and styles. The old files (`v1a/ui.tsx`, `v2v3/ui.tsx`) are now
-thin shims built on these components, so pages keep working until they are migrated.
-
-| Old (file) | New | Props mapping |
-|---|---|---|
-| `BookingTag b={b}` (v1a/ui) | `StatusTag` | `<StatusTag kind="booking" status={b.status} waitMin={b.waitMin} when={b.when} refunded={b.refunded} />` |
-| `BookingTag b={b} list` (v1a/ui) | `StatusTag` | same plus `list` |
-| `partnerTag[p.status]` (v1a/ui) | `StatusTag` | `<StatusTag kind="partner" status={p.status} />` |
-| `payoutTag[p.status]` (v1a/ui) | `StatusTag` | `<StatusTag kind="payout" status={p.status} />` |
-| `SmBtn` (v1a/ui) | `Button size="xs"` | `variant="outline"` |
-| `SmBtn red` | `Button size="xs"` | `variant="danger-outline"` |
-| `SmBtn solid` | `Button size="xs"` | `variant="primary"` |
-| `SmBtn solid red` | `Button size="xs"` | `variant="danger"` |
-| `TLink` (v1a/ui) | `TextLink` | same props (`children`, `onClick`, `style`) |
-| `TagFilter` (v1a/ui) | `TagFilter` | same props |
-| `Btn` (v2v3/ui) | `Button` (size `md`) | `variant="primary"` |
-| `Btn o` | `Button` | `variant="outline"` |
-| `Btn red` | `Button` | `variant="danger"` |
-| `Btn o red` | `Button` | `variant="danger-outline"` |
-| `Btn sm …` | `Button size="compact"` | variant as above |
-| `Btn disabled` / `style` / `onClick` | `Button` | same names |
-| `BarRow` (v2v3/ui) | `BarRow` | same props (+ optional `tone`) |
-| `Columns` (v2v3/ui) | `Columns` | same props |
-| `TogRow` (v2v3/ui) | `TogRow` | same props |
-| `CardHead` (v2v3/ui) | `CardHead` | same props |
-| `Field` (v2v3/ui) | `Field` | same props |
-| `KPI_GRID` (v2v3/ui) | `KpiGrid` or `KPI_GRID` | `<div style={KPI_GRID}>…</div>` → `<KpiGrid>…</KpiGrid>` |
-| `inr` (v1a/store, v1b/data, v2v3/ui) | `inr` from `../fixtures` | same function |
-| `clock` (v1b/data) | `clock` from `../fixtures` | same function |
-
-### Raw markup that has a component
+## Raw markup that has a component
 
 | Raw markup in pages | Component |
 |---|---|
@@ -117,4 +85,3 @@ thin shims built on these components, so pages keep working until they are migra
 | `../layout` | `Sidebar`, `TopBar`, `AdminLayout` |
 | `../App` | `AdminApp` |
 | `../fixtures` | `bookings`, `partners`, `payouts`, `tickets` (types + `initial…()` data), `store` (`useStore`, `update`, `resetStore`, `patchBooking`, `patchPartner`, `patchTicket`, `setPayouts`), `permissions` (`useMatrix`, `matrixStore`, `rolesSummary`, `matrixRoles0`), `format` (`inr`, `clock`) |
-| `../shell` | compatibility barrel with the old names (`I`, `Av`, `Tag`, …, `AdminApp`); do not add to it |

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import React from 'react';
-import { AdminApp } from '../shell';
-import { adminPages } from '../routes';
+import { AdminApp } from '../App';
+import { adminPages } from '../navigation/pages';
 
 /** Saathi Admin V1 part B: team, permissions, role view, sign-ups, safety, services, one partner. */
 const meta: Meta<typeof AdminApp> = {
@@ -12,7 +12,7 @@ const meta: Meta<typeof AdminApp> = {
 export default meta;
 type S = StoryObj<typeof AdminApp>;
 
-const story = (initial: string, name: string, initialParams?: Record<string, any>): S => ({
+const story = (initial: string, name: string, initialParams?: Record<string, unknown>): S => ({
   name,
   parameters: { layout: 'fullscreen' },
   render: () => <AdminApp pages={adminPages} initial={initial} initialParams={initialParams} />,

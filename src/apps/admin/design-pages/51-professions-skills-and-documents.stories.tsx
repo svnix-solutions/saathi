@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import React from 'react';
-import { AdminApp } from '../shell';
-import { adminPages } from '../routes';
+import { AdminApp } from '../App';
+import { adminPages } from '../navigation/pages';
 
 /** Saathi Admin V1, design page 51: professions, specialisations, skills and the documents each needs. */
 const meta: Meta<typeof AdminApp> = {

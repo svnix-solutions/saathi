@@ -21,7 +21,7 @@ export function OtpInput({ length = 4, value, onChange, error }: OtpInputProps) 
       {Array.from({ length }).map((_, i) => {
         const active = value.length === i;
         return (
-          <TextInput key={i} ref={(r: any) => { refs.current[i] = r; }} value={value[i] ?? ''} maxLength={1} keyboardType="number-pad"
+          <TextInput key={i} ref={(r: { focus: () => void } | null) => { refs.current[i] = r; }} value={value[i] ?? ''} maxLength={1} keyboardType="number-pad"
             accessibilityLabel={`Digit ${i + 1}`}
             onChangeText={(d) => {
               const digit = d.replace(/\D/g, '').slice(-1);

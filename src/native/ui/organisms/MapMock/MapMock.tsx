@@ -27,13 +27,13 @@ export function MapMock({ height = 230, dots = [], route = true, style, children
   const [a, b] = dots;
   return (
     <View style={[{ height, backgroundColor: c.mapBg, overflow: 'hidden', position: 'relative' }, style]}>
-      {roads.map((r, i) => <View key={i} style={[{ position: 'absolute', backgroundColor: dark ? tint.roadDark : '#fff' } as ViewStyle, r]} />)}
+      {roads.map((r, i) => <View key={i} style={[{ position: 'absolute', backgroundColor: dark ? tint.roadDark : palette.white } as ViewStyle, r]} />)}
       {route && a && b && (
         <View style={{ position: 'absolute', left: Math.min(a.x, b.x) + 15, top: a.y + 14, width: Math.abs(b.x - a.x), height: 3, backgroundColor: palette.green }} />
       )}
       {dots.map((d, i) => (
         <View key={i} style={[styles.dot, { left: d.x, top: d.y, backgroundColor: d.tone === 'yellow' ? palette.yellow : d.tone === 'red' ? palette.red : palette.green }]}>
-          {d.icon ? <Icon name={d.icon} size={14} color={d.tone === 'yellow' ? palette.ink : '#fff'} /> : <Text style={styles.label}>{d.label}</Text>}
+          {d.icon ? <Icon name={d.icon} size={14} color={d.tone === 'yellow' ? palette.ink : palette.white} /> : <Text style={styles.label}>{d.label}</Text>}
         </View>
       ))}
       {children}
@@ -42,6 +42,6 @@ export function MapMock({ height = 230, dots = [], route = true, style, children
 }
 
 const styles = StyleSheet.create({
-  dot: { position: 'absolute', width: 30, height: 30, borderRadius: 15, borderWidth: 3, borderColor: '#fff', alignItems: 'center', justifyContent: 'center' },
-  label: { color: '#fff', fontSize: 10, fontWeight: '700' },
+  dot: { position: 'absolute', width: 30, height: 30, borderRadius: 15, borderWidth: 3, borderColor: palette.white, alignItems: 'center', justifyContent: 'center' },
+  label: { color: palette.white, fontSize: 10, fontWeight: '700' },
 });

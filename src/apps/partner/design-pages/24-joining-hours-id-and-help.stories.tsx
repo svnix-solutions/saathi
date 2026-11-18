@@ -19,7 +19,7 @@ export const DesignPage: S = {
   ),
 };
 
-export const Joining: S = { name: 'Joining', render: () => <PartnerApp initial="joining" /> };
+export const Joining: S = { render: () => <PartnerApp initial="joining" /> };
 export const Hours: S = { name: 'Working hours', render: () => <PartnerApp initial="hours" /> };
 export const IdCard: S = { name: 'Digital ID card', render: () => <PartnerApp initial="idCard" /> };
-export const Help: S = { name: 'Help', render: () => <PartnerApp initial="help" /> };
+export const Help: S = { render: () => <PartnerApp initial="help" /> };

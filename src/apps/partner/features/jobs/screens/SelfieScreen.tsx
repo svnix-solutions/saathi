@@ -2,9 +2,9 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Avatar, H2, Page, Row, Screen, Spacer, T, palette, useNav, useT, type ScreenProps } from '@/native/ui';
-import { jobColors } from '../data';
 import { useSelfieUpload } from '../hooks/useSelfieUpload';
 import { useJobsState } from '../state';
+import { tint } from '@/tokens';
 
 export function SelfieScreen({ params }: ScreenProps<{ mode?: 'in' | 'out' }>) {
   const t = useT();
@@ -22,7 +22,7 @@ export function SelfieScreen({ params }: ScreenProps<{ mode?: 'in' | 'out' }>) {
       nav.toast(t('Check-out selfie added', 'चेक-आउट सेल्फ़ी जुड़ गई'));
     }
   });
-  const dim = jobColors.onDarkDim;
+  const dim = tint.onDeepGreenMuted;
   return (
     <Page bg={palette.ink}>
       <Screen bg={palette.ink} gap={12}>
@@ -34,7 +34,7 @@ export function SelfieScreen({ params }: ScreenProps<{ mode?: 'in' | 'out' }>) {
           <View style={[styles.oval, { borderStyle: phase === 'camera' ? 'dashed' : 'solid' }]}>
             {phase === 'camera'
               ? <T s center color={dim}>{t('Camera', 'कैमरा')}{'\n'}{t('preview', 'प्रीव्यू')}</T>
-              : <Avatar face="sd" size={190} bg={jobColors.cameraBg} />}
+              : <Avatar face="sd" size={190} bg={tint.cameraBg} />}
           </View>
         </Pressable>
         <T s center color={dim}>{t('Keep your face in the oval. Uniform and ID card should be visible.', 'चेहरा अंडाकार में रखें। वर्दी और आईडी कार्ड दिखने चाहिए।')}</T>
@@ -64,12 +64,12 @@ export function SelfieScreen({ params }: ScreenProps<{ mode?: 'in' | 'out' }>) {
 
 const styles = StyleSheet.create({
   dim: { opacity: 0.8 },
-  camera: { height: 300, borderRadius: 18, backgroundColor: jobColors.cameraBg, alignItems: 'center', justifyContent: 'center' },
+  camera: { height: 300, borderRadius: 18, backgroundColor: tint.cameraBg, alignItems: 'center', justifyContent: 'center' },
   oval: { width: 150, height: 200, borderRadius: 100, borderWidth: 3, borderColor: palette.yellow, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
   controls: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 26 },
   side: { width: 60 },
   shutter: { width: 66, height: 66, borderRadius: 33, backgroundColor: palette.white, borderWidth: 5, borderColor: palette.yellow },
-  track: { height: 6, borderRadius: 4, backgroundColor: jobColors.cameraBg },
+  track: { height: 6, borderRadius: 4, backgroundColor: tint.cameraBg },
   fill: { height: '100%', borderRadius: 4, backgroundColor: palette.yellow },
 });
 

@@ -19,7 +19,7 @@ export type BadgeProps = {
 export function Badge({ count, max = 9, tone = 'red', style }: BadgeProps) {
   const { fs } = useTheme();
   const bg = { red: palette.red, yellow: palette.yellow, green: palette.green }[tone];
-  const fg = tone === 'yellow' ? palette.ink : '#fff';
+  const fg = tone === 'yellow' ? palette.ink : palette.white;
   if (count === undefined) return <View style={[styles.dot, { backgroundColor: bg }, style]} accessibilityLabel="New" />;
   return (
     <View style={[styles.box, { backgroundColor: bg }, style]} accessibilityLabel={`${count} new`}>

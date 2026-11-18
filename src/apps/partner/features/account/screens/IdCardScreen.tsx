@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Avatar, Button, Card, H, H2, Hr, Icon, Lft, Mark, Page, Row, Screen, Sheet, Spacer, T, Tag, palette, useNav, useT } from '@/native/ui';
-import { accountTint } from '../colors';
 import { IdVerifyCode } from '../components/IdVerifyCode';
 import { useAccountState } from '../state';
+import { tint } from '@/tokens';
 
 /** Design page 21 (section 51), screen 15 · Digital ID card. */
 export function IdCardScreen() {
@@ -36,7 +36,7 @@ export function IdCardScreen() {
           </Pressable>
         </Card>
         <Spacer />
-        <T s center color={accountTint.onDeepGreenMuted}>{t(`Valid today for booking ${st.job.id}, Flat 204`, `आज बुकिंग ${st.job.id}, फ़्लैट 204 के लिए मान्य`)}</T>
+        <T s center color={tint.onDeepGreenMuted}>{t(`Valid today for booking ${st.job.id}, Flat 204`, `आज बुकिंग ${st.job.id}, फ़्लैट 204 के लिए मान्य`)}</T>
       </Screen>
       <Sheet visible={scan} onClose={() => setScan(false)}>
         <Lft><Avatar face="sd" size={44} /><View><H2>{fullName} · KP-0142</H2><T s m>saathi.in/check/KP-0142</T></View></Lft>

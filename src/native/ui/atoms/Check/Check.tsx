@@ -18,7 +18,7 @@ export function Check({ on, size = 18, disabled }: CheckProps) {
   const { c } = useTheme();
   return (
     <View style={[styles.box, { width: size, height: size, borderColor: on ? palette.green : c.line, backgroundColor: on ? palette.green : 'transparent' }, disabled ? styles.disabled : null]}>
-      {on && <Icon name="check" size={size * 0.66} color="#fff" strokeWidth={3} />}
+      {on && <Icon name="check" size={size * 0.66} color={palette.white} strokeWidth={3} />}
     </View>
   );
 }

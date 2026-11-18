@@ -14,5 +14,5 @@ export function Toast({ message }: { message?: string | null }) {
 
 const styles = StyleSheet.create({
   box: { position: 'absolute', top: 12, left: 12, right: 12, zIndex: 60, backgroundColor: palette.ink, borderRadius: radius.input, paddingVertical: 10, paddingHorizontal: 12 },
-  text: { color: '#fff', fontFamily: font.family, fontSize: 12, fontWeight: '600' },
+  text: { color: palette.white, fontFamily: font.family, fontSize: 12, fontWeight: '600' },
 });

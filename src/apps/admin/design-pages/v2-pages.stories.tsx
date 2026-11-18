@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
-import React from 'react';
-import { AdminApp } from '../shell';
-import { adminPages } from '../routes';
+import { AdminApp } from '../App';
+import { adminPages } from '../navigation/pages';
 
 /** Saathi Admin, Version 2 pages (design 72, 75, 77, 81, 84, 92, 95). Every page is live inside the full panel. */
 const meta: Meta<typeof AdminApp> = {

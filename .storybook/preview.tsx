@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Preview } from '@storybook/react-native-web-vite';
-import { ThemeProvider } from '../src/native/theme';
+import { ThemeProvider } from '../src/native/theme/index';
 import './preview.css';
 
 /**

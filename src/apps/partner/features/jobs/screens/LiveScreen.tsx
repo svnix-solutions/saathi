@@ -6,8 +6,8 @@ import {
   Button, Card, H, H2, Hr, Icon, IconTile, MapMock, Page, Row, Screen, Spacer, T, Tag, Toggle, palette, useNav, useT, useTheme,
 } from '@/native/ui';
 import { useJobClock } from '../../../state';
-import { jobColors } from '../data';
 import { useJobsState } from '../state';
+import { tint } from '@/tokens';
 
 export function LiveScreen() {
   const t = useT();
@@ -56,7 +56,7 @@ export function LiveScreen() {
 
 const styles = StyleSheet.create({
   fill: { flex: 1 },
-  halo: { position: 'absolute', left: 112, top: 32, width: 90, height: 90, borderRadius: 45, backgroundColor: jobColors.liveHalo },
+  halo: { position: 'absolute', left: 112, top: 32, width: 90, height: 90, borderRadius: 45, backgroundColor: tint.mapHalo },
   me: {
     position: 'absolute', left: 142, top: 62, width: 30, height: 30, borderRadius: 15, borderWidth: 3, borderColor: palette.white,
     backgroundColor: palette.green, alignItems: 'center', justifyContent: 'center',

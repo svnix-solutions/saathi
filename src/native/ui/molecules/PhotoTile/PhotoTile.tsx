@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { tint } from '@/tokens';
+import { tint, palette } from '@/tokens';
 import { useTheme } from '../../../theme/index';
 import { Icon, type IconName } from '../../atoms/Icon';
 import { T } from '../../atoms/T';
@@ -35,7 +35,7 @@ export function PhotoTile({ variant = 'add', label, added, icon, onPress, height
   if (variant === 'thumb') {
     return (
       <View style={[styles.thumb, { width: size, height: size, backgroundColor: dark ? tint.photoDark : c.mint }]}>
-        {children ?? <T s color={dark ? '#fff' : c.accent}>{label}</T>}
+        {children ?? <T s color={dark ? palette.white : c.accent}>{label}</T>}
       </View>
     );
   }

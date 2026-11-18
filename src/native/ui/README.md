@@ -13,15 +13,15 @@ src/native/ui/
   device/<Name>/       Phone, PhoneRow
   hooks/<name>/        useCountdown, useInterval, useTimeout, useTimer, useNow
   index.ts             the only import path: '@/native/ui'
-src/native/theme/      ThemeProvider, useTheme, useT, types        (src/native/theme.tsx is a re-export shim)
-src/native/navigation/ NavProvider, NavOutlet, useNav, useBack, useAppState   (src/native/nav.tsx is a shim)
+src/native/theme/      ThemeProvider, useTheme, useT, types
+src/native/navigation/ NavProvider, NavOutlet, useNav, useBack, useAppState
 src/tokens/            colors (palette, tint, light, dark) · typography (font, text) · spacing (spacing, space) · radii · elevation
 src/domain/            services · pricing · codes · format · i18n/{serviceNames,taskNames}   (import from '@/domain')
-src/data/decisions.ts  compatibility barrel; the launch values themselves are in src/data/launchValues.ts
+src/data/launchValues.ts  the launch values founders change (re-exported as `decisions` by '@/domain')
 ```
 
 Every component reads colours and the text scale from `useTheme()`, so dark mode and large text work everywhere.
-All names exported before the split are still exported with the same props and the same rendering.
+
 
 ## Component inventory
 
@@ -89,120 +89,7 @@ stepMs = 1000, max?) → [value, set]` (counts up) · `useInterval(fn, ms | null
 enabled = true, key?)` · `useNow(ms = 1000) → Date.now()` · `useBack(fallback = 'home') → () => void` (navigation) ·
 `useT`, `useTheme`, `useNav`, `useAppState`.
 
-## Kit → component table
-
-Swap mechanically. "Same" means same props and same pixels. Imports: components and hooks from `@/native/ui`,
-everything in the *domain* column from `@/domain`.
-
-### customer/v1/kit.tsx
-
-| Old | New |
-|---|---|
-| `svc(id)` | `serviceById(id)` (domain) |
-| `svcName(t, id)` | `serviceName(t, id)` (domain; uses `serviceNamesHiPage18`, same words) |
-| `shortName(t, id)` | `serviceShortName(t, id)` (domain) |
-| `taskHi` | `taskNamesHi` (domain) |
-| `taskName(t, task)` | `taskName(t, task)` (domain, same) |
-| `TFn` | `TFn` (domain) |
-| `dur(t, min)` | `dur(t, min)` (domain, same) |
-| `priceOf(st)` | `priceOf(st)` (domain, same; takes `{ service, minutes }`) |
-| `clock(sec)` | `clock(sec)` (domain, same; equals `mmss` for whole seconds) |
-| `useCountdown(from, running, stepMs)` | `useCountdown(from, running, stepMs)` (same) |
-| `<MenuRow label sub onPress icon right color />` | `<MenuRow …>` (same props) |
-| `<Rows gap>` | `<Rows gap>` (same); `<Card><Rows>…</Rows></Card>` may become `<ListCard>…</ListCard>` |
-| `<BigIcon name={n} />` | `<StatusIcon name={n} style={{ marginTop: 18 }} />` |
-| `<BigIcon name={n} danger />` | `<StatusIcon name={n} tone="danger" style={{ marginTop: 18 }} />` |
-| `<Radio on={x} />` | `<Radio on={x} />` (same) |
-| `V1State`, `useV1`, `defaultUpcoming` | stay in the app (`state/`): app state, not design system |
-
-### customer/v2a/kit.tsx
-
-| Old | New |
-|---|---|
-| `visitPrice` | `visitPrice` (domain, same) |
-| `rupees` | `rupees` (domain; `inr` is an alias) |
-| `<Stepper value onChange min max />` | `<Stepper …>` (same; new optional `addLabel`, default "Add" as before) |
-| `<Line label value />` | `<KeyValue label={…} value={…} />` |
-| `<Line label value green />` | `<KeyValue label value valueTone="accent" />` |
-| `<Line label value bold />` | `<KeyValue label value variant="total" />` |
-| `<Radio on />` | `<Radio on />` (same) |
-| `<TopBack />` / `<TopBack color={x} />` | `<TopBar.Back />` / `<TopBar.Back color={x} />` |
-| `<PickSheet visible title options value onPick onClose cols />` | `<PickSheet …>` (same; new `closeLabel`) |
-| `fmtMin(m)` | `fmtMin(m)` (domain, same) |
-| `V2State`, `useV2` | stay in the app |
-
-### customer/v2b/kit.tsx (also used by customer/v3)
-
-| Old | New |
-|---|---|
-| `<Radio on />` | `<Radio on checkSize={11.88} />` for pixel-identical (v2b drew the tick at `size * 0.66`; plain `<Radio on />` draws it at 12, 0.12px larger) |
-| `<Radio on size={n} />` | `<Radio on size={n} />` (same for n ≠ 18) |
-| `useBack(fallback)` | `useBack(fallback)` (same, from `@/native/ui`) |
-| `<Back title={x} />` | `<BackHeader title={x} fallback="home" />` |
-| `<Back title={x} fallback={r} right={y} />` | `<BackHeader title={x} fallback={r} right={y} />` |
-| `<Dots count active onPress />` | `<Dots …>` (same) |
-
-### partner/v1/kit.tsx
-
-| Old | New |
-|---|---|
-| `<Page>` / `<Page bg={x}>` | `<Page>` / `<Page bg={x}>` (same) |
-| `<TopT>` / `<TopT dim b style>` | `<TopBar.Text>` / `<TopBar.Text dim b style>` |
-| `<TopH>` / `<TopH size={n}>` | `<TopBar.Title>` / `<TopBar.Title size={n}>` |
-| `<TopH2>` | `<TopBar.Heading>` |
-| `TopBar` (re-export) | `TopBar` |
-| `<Big …>` | `<Button size="tall" …>`; `variant`, `disabled`, `icon`, `style` carry over. `pad={n}` → `style={{ paddingVertical: n }}`, `size={n}` → `textStyle={{ fontSize: fs(n) }}`, `textColor={x}` → `textStyle={{ color: x }}` |
-| `<Plain onPress>` | `<Button variant="plain" onPress>` |
-| `<SignupSteps step={n} />` | `<Steps step={n} total={6} label={t(\`Sign-up · step ${n} of 6\`, \`साइन-अप · चरण ${n} / 6\`)} />` |
-| `<SignupSteps step={n} label={false} />` | `<Steps step={n} total={6} />` |
-| `<Cb on />` / `<Cb on size={n} />` | `<Check on size={24} />` / `<Check on size={n} />` |
-| `<Chev />` | `<Chevron />` |
-| `<PhotoTile added label icon onPress height bold />` | `<PhotoTile …>` (same props; `variant="add"` is the default) |
-| `<KV k={a} v={b} />` | `<KeyValue variant="plain" label={a} value={b} />` |
-| `mmss(s)` | `mmss(s)` (domain, same) |
-| `leftLabel(sec, hi)` | `leftLabel(sec, hi)` (domain, same) |
-| `useCountdown(from, running)` | `useCountdown(from, running)` (same) |
-| `useJobClock()` | stays in the app (reads `st.jobEndsAt`); its ticking part is `useNow()` |
-| `<Badge name={n} />` | `<StatusIcon name={n} />` |
-| `<Badge name={n} tone="red" />` | `<StatusIcon name={n} tone="red" />` |
-| `<GreenText onPress>` / `<GreenText center>` | `<Link onPress>` / `<Link center>` (role becomes `link`; same pixels) |
-| `jobReset`, `useStartCode`, `PayLine`, `V1State`, `defaultToday`, `withLang` | stay in the app (`state/` or the feature): partner job logic |
-
-### partner/v2/kit.tsx
-
-| Old | New |
-|---|---|
-| `<TopProgress pct={p} />` | `<TopBar.Progress value={p} />` |
-| `<Meter pct={p} mark={m} style />` | `<Meter value={p} mark={m} style />` |
-| `<TopLabel>` | `<TopBar.Label>` |
-| `<Root>` | `<Page variant="bare">` |
-| `onGreen` | `palette.white` (or `useTheme().c.onGreen`) |
-| `<Circle size bg border style>` | `<Circle …>` (same) |
-
-### partner/v3/kit.tsx
-
-| Old | New |
-|---|---|
-| `<Progress pct={p} track fill height extra style />` | `<ProgressBar value={p} track fill height extra style />` (same defaults) |
-| `<TopS style>` | `<TopBar.Text dim style>` |
-| `<TopH>` / `<TopH size={n}>` | `<TopBar.Title size={26}>` / `<TopBar.Title size={n}>` (v3 default was 26) |
-| `<PhotoTile label dark>` / with children | `<PhotoTile variant="thumb" label dark>` / `<PhotoTile variant="thumb">…</PhotoTile>` |
-| `weekAhead(weeks, from?)` | `weekAhead(weeks, from?)` (domain, same) |
-
-### Local copies inside screens
-
-| Where | Old | New |
-|---|---|---|
-| partner/v1/work.tsx | local `Radio` (22px, white dot) | `<Radio on={x} size={22} mark="dot" />` |
-| customer/v1/errors.tsx | local `OutlineInk` | `<Button variant="plain" onPress>` |
-| partner/v1/jobs.tsx | `taskHi` | `taskNamesHiPartner` (domain; note `'Wipe kitchen'` = "रसोई पोंछना" here vs "किचन पोंछना" in `taskNamesHi`) |
-| partner/v1/jobs.tsx | `serviceHi` (keyed by English title) | `serviceNamesHiByTitle` (domain) |
-| any screen | `useEffect(() => { const id = setInterval(f, ms); return () => clearInterval(id); }, [])` | `useInterval(f, ms)` |
-| any screen | `useEffect(() => { const id = setTimeout(f, ms); return () => clearTimeout(id); }, [])` | `useTimeout(f, ms)` |
-| any screen | `setSecs((s) => s + 1)` every second | `const [secs, setSecs] = useTimer(running)` |
-| admin/v1b/data.ts | `inr` | `inr` (domain) |
-
-### Word lists that disagree (kept apart on purpose)
+## Word lists that disagree (kept apart on purpose)
 
 - Service names: `serviceNamesHi` (catalogue, `services[].nameHi`) vs `serviceNamesHiPage18` (customer v1 screens):
   kitchenBath "किचन और बाथरूम" / "रसोई और बाथरूम", dishes "बर्तन और खाना तैयारी" / "बर्तन और तैयारी",

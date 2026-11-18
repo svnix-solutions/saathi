@@ -1,10 +1,10 @@
 import React from 'react';
 /* Web build of Icon.tsx: identical shapes rendered as DOM <svg> (react-native-web renders through react-dom).
    The native apps resolve Icon.tsx, which uses react-native-svg. Keep the two files' shapes in sync. */
-const Svg = (p: any) => <svg {...p} style={{ flexShrink: 0, display: 'block' }} />;
-const Path = (p: any) => <path {...p} />;
-const Circle = (p: any) => <circle {...p} />;
-const Rect = (p: any) => <rect {...p} />;
+const Svg = (p: React.SVGProps<SVGSVGElement>) => <svg {...p} style={{ flexShrink: 0, display: 'block' }} />;
+const Path = (p: React.SVGProps<SVGPathElement>) => <path {...p} />;
+const Circle = (p: React.SVGProps<SVGCircleElement>) => <circle {...p} />;
+const Rect = (p: React.SVGProps<SVGRectElement>) => <rect {...p} />;
 import { useTheme } from '../../../theme/index';
 
 /** The 22 line icons used across the design (1.8px stroke, 24 grid). */

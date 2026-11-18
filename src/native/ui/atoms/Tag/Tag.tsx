@@ -20,7 +20,7 @@ export function Tag({ children, tone = 'y', style }: TagProps) {
   const k = (tone in alias ? alias[tone as keyof typeof alias] : tone) as 'y' | 'g' | 'n' | 'x' | 'r';
   const m = {
     y: { bg: palette.yellow, fg: palette.ink, b: undefined as string | undefined },
-    g: { bg: palette.green, fg: '#fff', b: undefined },
+    g: { bg: palette.green, fg: palette.white, b: undefined },
     n: { bg: c.mint, fg: palette.greenD, b: undefined },
     x: { bg: c.chip, fg: c.mut, b: undefined },
     r: { bg: c.card, fg: c.red, b: c.red },
