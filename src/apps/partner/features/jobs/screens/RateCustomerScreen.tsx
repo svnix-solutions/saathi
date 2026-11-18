@@ -22,34 +22,34 @@ export function RateCustomerScreen() {
   return (
     <Page variant="bare">
       <TopBar>
-        <Row><H2 color={palette.white}>{t(`Job done · ${rupees(job.earn)} earned`, `काम पूरा · ${rupees(job.earn)} कमाए`)}</H2><Tag>{job.id}</Tag></Row>
+        <Row><H2 color={palette.white} style={styles.fill}>{t(`Job done · ${rupees(job.earn)} earned`, `काम पूरा · ${rupees(job.earn)} कमाए`, `ਕੰਮ ਪੂਰਾ · ${rupees(job.earn)} ਕਮਾਏ`)}</H2><Tag>{job.id}</Tag></Row>
       </TopBar>
       <Screen>
-        <H>{t('How was this home?', 'यह घर कैसा था?')}</H>
+        <H>{t('How was this home?', 'यह घर कैसा था?', 'ਇਹ ਘਰ ਕਿਹੋ ਜਿਹਾ ਸੀ?')}</H>
         <View style={styles.stars}><Stars size={32} value={stars} onChange={setStars} /></View>
         <Grid cols={2}>
-          {homeTags.map(([en, hi]) => <Pill key={en} sel={tags.includes(en)} onPress={() => toggle(en)}>{t(en, hi)}</Pill>)}
+          {homeTags.map(([en, hi, pa]) => <Pill key={en} sel={tags.includes(en)} onPress={() => toggle(en)}>{t(en, hi, pa)}</Pill>)}
         </Grid>
         <Card row tone="red" onPress={() => setReport(true)}>
           <View style={styles.fill}>
-            <H2 color={c.red}>{t('Report a problem', 'समस्या बताएँ')}</H2>
-            <T s m>Unsafe, abusive, or asked for extra work</T>
+            <H2 color={c.red}>{t('Report a problem', 'समस्या बताएँ', 'ਸਮੱਸਿਆ ਦੱਸੋ')}</H2>
+            <T s m>{t('Unsafe, abusive, or asked for extra work', 'असुरक्षित, गाली-गलौज, या ज़्यादा काम माँगा', 'ਅਸੁਰੱਖਿਅਤ, ਗਾਲ੍ਹਾਂ, ਜਾਂ ਵਾਧੂ ਕੰਮ ਮੰਗਿਆ')}</T>
           </View>
           <Icon name="shield" color={c.red} />
         </Card>
-        <T s m>{t('The customer does not see your rating. It helps us send partners to good homes.', 'ग्राहक आपकी रेटिंग नहीं देखते। इससे हम पार्टनर को अच्छे घरों में भेजते हैं।')}</T>
+        <T s m>{t('The customer does not see your rating. It helps us send partners to good homes.', 'ग्राहक आपकी रेटिंग नहीं देखते। इससे हम पार्टनर को अच्छे घरों में भेजते हैं।', 'ਗਾਹਕ ਤੁਹਾਡੀ ਰੇਟਿੰਗ ਨਹੀਂ ਦੇਖਦੇ। ਇਸ ਨਾਲ ਅਸੀਂ ਪਾਰਟਨਰਾਂ ਨੂੰ ਚੰਗੇ ਘਰਾਂ ਵਿੱਚ ਭੇਜਦੇ ਹਾਂ।')}</T>
         <Spacer />
-        <Button big onPress={() => { set({ lastHomeRating: { stars, tags } }); finish(t('Thanks. Your rating is saved.', 'धन्यवाद। रेटिंग सेव हो गई।')); }}>
-          {t('Submit', 'भेजें')}
+        <Button big onPress={() => { set({ lastHomeRating: { stars, tags } }); finish(t('Thanks. Your rating is saved.', 'धन्यवाद। रेटिंग सेव हो गई।', 'ਧੰਨਵਾਦ। ਰੇਟਿੰਗ ਸੇਵ ਹੋ ਗਈ।')); }}>
+          {t('Submit', 'भेजें', 'ਭੇਜੋ')}
         </Button>
-        <Button variant="plain" onPress={() => finish(t('Skipped', 'छोड़ दिया'))}>{t('Skip', 'छोड़ें')}</Button>
+        <Button variant="plain" onPress={() => finish(t('Skipped', 'छोड़ दिया', 'ਛੱਡ ਦਿੱਤਾ'))}>{t('Skip', 'छोड़ें', 'ਛੱਡੋ')}</Button>
       </Screen>
       <Sheet visible={report} onClose={() => setReport(false)}>
-        <H2 color={c.red}>{t('Report a problem', 'समस्या बताएँ')}</H2>
-        <T s m>Only our safety team sees this. The customer is not told who reported.</T>
-        {homeProblems.map((p) => <Card key={p} sel={problem === p} onPress={() => setProblem(p)} style={{ paddingVertical: 9 }}><T>{p}</T></Card>)}
-        <Button danger disabled={!problem} onPress={() => { setReport(false); finish('Reported. Our safety team will call you in 2 minutes.'); }}>
-          {t('Send report', 'रिपोर्ट भेजें')}
+        <H2 color={c.red}>{t('Report a problem', 'समस्या बताएँ', 'ਸਮੱਸਿਆ ਦੱਸੋ')}</H2>
+        <T s m>{t('Only our safety team sees this. The customer is not told who reported.', 'यह सिर्फ़ हमारी सुरक्षा टीम देखती है। ग्राहक को नहीं बताया जाता कि किसने रिपोर्ट किया।', 'ਇਹ ਸਿਰਫ਼ ਸਾਡੀ ਸੁਰੱਖਿਆ ਟੀਮ ਦੇਖਦੀ ਹੈ। ਗਾਹਕ ਨੂੰ ਨਹੀਂ ਦੱਸਿਆ ਜਾਂਦਾ ਕਿ ਕਿਸ ਨੇ ਰਿਪੋਰਟ ਕੀਤੀ।')}</T>
+        {homeProblems.map(([p, hi, pa]) => <Card key={p} sel={problem === p} onPress={() => setProblem(p)} style={{ paddingVertical: 9 }}><T>{t(p, hi, pa)}</T></Card>)}
+        <Button danger disabled={!problem} onPress={() => { setReport(false); finish(t('Reported. Our safety team will call you in 2 minutes.', 'रिपोर्ट हो गई। हमारी सुरक्षा टीम 2 मिनट में कॉल करेगी।', 'ਰਿਪੋਰਟ ਹੋ ਗਈ। ਸਾਡੀ ਸੁਰੱਖਿਆ ਟੀਮ 2 ਮਿੰਟ ਵਿੱਚ ਕਾਲ ਕਰੇਗੀ।')); }}>
+          {t('Send report', 'रिपोर्ट भेजें', 'ਰਿਪੋਰਟ ਭੇਜੋ')}
         </Button>
       </Sheet>
     </Page>

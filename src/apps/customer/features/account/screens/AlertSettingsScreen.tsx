@@ -12,22 +12,22 @@ export function AlertSettingsScreen() {
   const tog = (k: AlertSwitch) => (v: boolean) => setOn((s) => ({ ...s, [k]: v }));
   return (
     <Screen>
-      <BackHeader title={t('Alerts', 'सूचनाएँ')} onBack={nav.back} />
-      <H2>{t('What we tell you about', 'हम किस बारे में बताते हैं')}</H2>
+      <BackHeader title={t('Alerts', 'सूचनाएँ', 'ਸੂਚਨਾਵਾਂ')} onBack={nav.back} />
+      <H2>{t('What we tell you about', 'हम किस बारे में बताते हैं', 'ਅਸੀਂ ਕਿਹੜੀਆਂ ਗੱਲਾਂ ਦੱਸਦੇ ਹਾਂ')}</H2>
       <ListCard>
-        <Row><T style={styles.grow}>{t('Helper arrival and door code', 'हेल्पर का आना और दरवाज़ा कोड')}</T><Tag tone="n">{t('Always on', 'हमेशा चालू')}</Tag></Row>
-        <Row><T>{t('Booking reminders', 'बुकिंग की याद')}</T><Toggle on={on.reminders} onChange={tog('reminders')} /></Row>
-        <Row><T>{t('Rate your visit', 'विज़िट को रेटिंग दें')}</T><Toggle on={on.rate} onChange={tog('rate')} /></Row>
-        <Row><T>{t('Offers and discounts', 'ऑफ़र और छूट')}</T><Toggle on={on.offers} onChange={tog('offers')} /></Row>
+        <Row><T style={styles.grow}>{t('Helper arrival and door code', 'हेल्पर का आना और दरवाज़ा कोड', 'ਹੈਲਪਰ ਦਾ ਆਉਣਾ ਅਤੇ ਦਰਵਾਜ਼ੇ ਦਾ ਕੋਡ')}</T><Tag tone="n">{t('Always on', 'हमेशा चालू', 'ਹਮੇਸ਼ਾ ਚਾਲੂ')}</Tag></Row>
+        <Row><T style={styles.grow}>{t('Booking reminders', 'बुकिंग की याद', 'ਬੁਕਿੰਗ ਦੀ ਯਾਦ')}</T><Toggle on={on.reminders} onChange={tog('reminders')} /></Row>
+        <Row><T style={styles.grow}>{t('Rate your visit', 'विज़िट को रेटिंग दें', 'ਵਿਜ਼ਿਟ ਨੂੰ ਰੇਟਿੰਗ ਦਿਓ')}</T><Toggle on={on.rate} onChange={tog('rate')} /></Row>
+        <Row><T style={styles.grow}>{t('Offers and discounts', 'ऑफ़र और छूट', 'ਆਫ਼ਰ ਅਤੇ ਛੋਟ')}</T><Toggle on={on.offers} onChange={tog('offers')} /></Row>
       </ListCard>
-      <H2>{t('How', 'कैसे')}</H2>
+      <H2>{t('How', 'कैसे', 'ਕਿਵੇਂ')}</H2>
       <ListCard>
-        <Row><T>{t('In the app', 'ऐप में')}</T><Toggle on={on.app} onChange={tog('app')} /></Row>
+        <Row><T style={styles.grow}>{t('In the app', 'ऐप में', 'ਐਪ ਵਿੱਚ')}</T><Toggle on={on.app} onChange={tog('app')} /></Row>
         <Row><T>SMS</T><Toggle on={on.sms} onChange={tog('sms')} /></Row>
         <Row><T>WhatsApp</T><Toggle on={on.whatsapp} onChange={tog('whatsapp')} /></Row>
       </ListCard>
-      <ToggleCard title={t('Quiet hours', 'शांत समय')} sub={t('Nothing but arrivals, 9 pm to 8 am', 'रात 9 से सुबह 8 तक सिर्फ़ आगमन')} on={on.quiet} onChange={tog('quiet')} />
-      <T s m>{t('Arrival messages cannot be turned off; you need the door code.', 'आगमन के मैसेज बंद नहीं होते; आपको दरवाज़ा कोड चाहिए।')}</T>
+      <ToggleCard title={t('Quiet hours', 'शांत समय', 'ਸ਼ਾਂਤ ਸਮਾਂ')} sub={t('Nothing but arrivals, 9 pm to 8 am', 'रात 9 से सुबह 8 तक सिर्फ़ आगमन', 'ਰਾਤ 9 ਤੋਂ ਸਵੇਰੇ 8 ਤੱਕ ਸਿਰਫ਼ ਪਹੁੰਚਣ ਦੇ ਸੁਨੇਹੇ')} on={on.quiet} onChange={tog('quiet')} />
+      <T s m>{t('Arrival messages cannot be turned off; you need the door code.', 'आगमन के मैसेज बंद नहीं होते; आपको दरवाज़ा कोड चाहिए।', 'ਪਹੁੰਚਣ ਦੇ ਸੁਨੇਹੇ ਬੰਦ ਨਹੀਂ ਹੁੰਦੇ; ਤੁਹਾਨੂੰ ਦਰਵਾਜ਼ੇ ਦਾ ਕੋਡ ਚਾਹੀਦਾ ਹੈ।')}</T>
     </Screen>
   );
 }

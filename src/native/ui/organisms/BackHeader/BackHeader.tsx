@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import { useTheme } from '../../../theme/index';
+import { useT, useTheme } from '../../../theme/index';
 import { useBack } from '../../../navigation/index';
 import { H2 } from '../../atoms/H2';
 import { Icon } from '../../atoms/Icon';
@@ -24,16 +24,18 @@ export type BackHeaderProps = {
 /** "‹ Title" back row at the top of most inner screens. */
 export function BackHeader({ title, onBack, fallback, right, color }: BackHeaderProps) {
   const { c } = useTheme();
+  const t = useT();
   const back = useBack(fallback);
   return (
     <Row>
-      <Pressable onPress={onBack ?? (fallback !== undefined ? back : undefined)} accessibilityRole="button" accessibilityLabel="Back" style={styles.press} hitSlop={8}>
+      <Pressable onPress={onBack ?? (fallback !== undefined ? back : undefined)} accessibilityRole="button" accessibilityLabel={t('Back', 'वापस', 'ਵਾਪਸ')} style={styles.press} hitSlop={8}>
         <Icon name="back" color={color ?? c.ink} />
-        <H2 color={color}>{title}</H2>
+        <H2 color={color} style={styles.title}>{title}</H2>
       </Pressable>
       {right}
     </Row>
   );
 }
 
-const styles = StyleSheet.create({ press: { flexDirection: 'row', alignItems: 'center', gap: 8 } });
+// the arrow and title may shrink so a long title (Hindi, Punjabi, large text) wraps instead of pushing `right` off the row
+const styles = StyleSheet.create({ press: { flexDirection: 'row', alignItems: 'center', gap: 8, flexShrink: 1, minWidth: 0 }, title: { flexShrink: 1 } });

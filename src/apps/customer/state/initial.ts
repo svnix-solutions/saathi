@@ -14,4 +14,4 @@ export const initialCustomerState: CustomerState = {
 };
 
 /** The sample upcoming booking (Bookings, Change booking) until the customer books one. */
-export const defaultUpcoming: UpcomingBooking = { service: 'kitchenBath', minutes: 120, slot: 'Tomorrow · 10:00 am', slotHi: 'कल · सुबह 10:00', helper: 'Rekha M.' };
+export const defaultUpcoming: UpcomingBooking = { service: 'kitchenBath', minutes: 120, slot: 'Tomorrow · 10:00 am', slotHi: 'कल · सुबह 10:00', slotPa: 'ਕੱਲ੍ਹ · ਸਵੇਰੇ 10:00', helper: 'Rekha M.' };

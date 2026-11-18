@@ -19,10 +19,10 @@ export function ChatComposer({ value, onChange, onSend, onVoice }: ChatComposerP
   return (
     <View style={styles.outer}>
       <View style={[styles.field, { borderWidth: 1.5, borderColor: c.line, borderRadius: 12, paddingVertical: 9, paddingHorizontal: 12, backgroundColor: c.card }]}>
-        <TextInput value={value} onChangeText={onChange} placeholder={t('Type a message', 'संदेश लिखें')} placeholderTextColor={c.mut}
+        <TextInput value={value} onChangeText={onChange} placeholder={t('Type a message', 'संदेश लिखें', 'ਸੁਨੇਹਾ ਲਿਖੋ')} placeholderTextColor={c.mut}
           onSubmitEditing={onSend} returnKeyType="send"
           style={[styles.input, { fontSize: fs(13), color: c.ink, padding: 0 }]} />
-        <Pressable onPress={hasText ? onSend : onVoice} accessibilityLabel={hasText ? 'Send' : 'Voice message'} hitSlop={6}>
+        <Pressable onPress={hasText ? onSend : onVoice} accessibilityLabel={hasText ? t('Send', 'भेजें', 'ਭੇਜੋ') : t('Voice message', 'आवाज़ संदेश', 'ਆਵਾਜ਼ ਸੁਨੇਹਾ')} hitSlop={6}>
           <Icon name={hasText ? 'chevron' : 'mic'} color={c.accent} />
         </Pressable>
       </View>

@@ -8,11 +8,11 @@ export function VisitSteps({ arrived }: { arrived: boolean }) {
   const { c } = useTheme();
   return (
     <Row gap={4}>
-      <T s b color={c.accent}>{t('Assigned', 'तय')}</T>
+      <T s b color={c.accent}>{t('Assigned', 'तय', 'ਤੈਅ')}</T>
       <View style={[styles.segment, styles.done]} />
-      <T s b color={c.accent}>{t('On the way', 'रास्ते में')}</T>
+      <T s b color={c.accent}>{t('On the way', 'रास्ते में', 'ਰਾਹ ਵਿੱਚ')}</T>
       <View style={[styles.segment, { backgroundColor: arrived ? palette.green : c.line }]} />
-      {arrived ? <T s b color={c.accent}>{t('Arrived', 'पहुँचीं')}</T> : <T s m>{t('Arrived', 'पहुँचीं')}</T>}
+      {arrived ? <T s b color={c.accent}>{t('Arrived', 'पहुँचीं', 'ਪਹੁੰਚ ਗਈ')}</T> : <T s m>{t('Arrived', 'पहुँचीं', 'ਪਹੁੰਚ ਗਈ')}</T>}
     </Row>
   );
 }

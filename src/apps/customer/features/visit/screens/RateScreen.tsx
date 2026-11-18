@@ -20,25 +20,25 @@ export function RateScreen() {
     set({ rating: stars, tip, lastVisit: { service: st.service, minutes, price: priceFor(st.service, minutes) } });
     if (stars <= 2 && nav.has('ratingLow')) { nav.replace('ratingLow'); return; }
     nav.reset('bookings');
-    nav.toast(tip ? t(`Thanks! ${rupees(tip)} tip goes to Sunita in full`, `धन्यवाद! ${rupees(tip)} टिप पूरी सुनीता को जाएगी`) : t('Thanks for rating', 'रेटिंग के लिए धन्यवाद'));
+    nav.toast(tip ? t(`Thanks! ${rupees(tip)} tip goes to Sunita in full`, `धन्यवाद! ${rupees(tip)} टिप पूरी सुनीता को जाएगी`, `ਧੰਨਵਾਦ! ${rupees(tip)} ਟਿਪ ਪੂਰੀ ਸੁਨੀਤਾ ਨੂੰ ਜਾਵੇਗੀ`) : t('Thanks for rating', 'रेटिंग के लिए धन्यवाद', 'ਰੇਟਿੰਗ ਲਈ ਧੰਨਵਾਦ'));
   };
   return (
     <Screen>
       <Avatar face="sd" size={64} style={{ alignSelf: 'center', marginTop: 10 }} />
-      <H center>{t('How was Sunita?', 'सुनीता का काम कैसा था?')}</H>
+      <H center>{t('How was Sunita?', 'सुनीता का काम कैसा था?', 'ਸੁਨੀਤਾ ਦਾ ਕੰਮ ਕਿਵੇਂ ਸੀ?')}</H>
       <View style={styles.center}><Stars value={stars} onChange={setStars} size={30} /></View>
       <Grid cols={3}>
-        {rateTags.map(([en, hi]) => (
-          <Pill key={en} s sel={tags.includes(en)} onPress={() => toggleTag(en)}>{t(en, hi)}</Pill>
+        {rateTags.map(([en, hi, pa]) => (
+          <Pill key={en} s sel={tags.includes(en)} onPress={() => toggleTag(en)}>{t(en, hi, pa)}</Pill>
         ))}
       </Grid>
-      <H2 style={{ marginTop: 6 }}>{t('Add a tip', 'टिप दें')}</H2>
+      <H2 style={{ marginTop: 6 }}>{t('Add a tip', 'टिप दें', 'ਟਿਪ ਦਿਓ')}</H2>
       <Grid cols={3}>
         {tips.map((n) => <Pill key={n} sel={tip === n} onPress={() => setTip(tip === n ? 0 : n)}>{rupees(n)}</Pill>)}
       </Grid>
-      <Input small multiline value={text} onChangeText={setText} style={styles.note} placeholder={t('Tell us more (optional)', 'और बताएँ (वैकल्पिक)')} />
+      <Input small multiline value={text} onChangeText={setText} style={styles.note} placeholder={t('Tell us more (optional)', 'और बताएँ (वैकल्पिक)', 'ਹੋਰ ਦੱਸੋ (ਜੇ ਚਾਹੋ)')} />
       <Spacer />
-      <Button onPress={submit}>{t('Submit', 'भेजें')}</Button>
+      <Button onPress={submit}>{t('Submit', 'भेजें', 'ਭੇਜੋ')}</Button>
     </Screen>
   );
 }

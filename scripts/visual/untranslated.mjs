@@ -29,7 +29,9 @@ async function one(job, attempt = 1) {
   });
   await p.close();
   if (texts === null) { if (attempt < 3) return one(job, attempt + 1); (res[`${app}__${r}`] ??= {})[loc] = ['NO FRAME']; return; }
-  const english = texts.filter((t) => /[A-Za-z]{2,}/.test(t) && !ALLOW.test(t) && !/^[\p{Script=Devanagari}\p{Script=Gurmukhi}\s\d₹.,:·%()\-–/+!?'"“”‘’]*$/u.test(t));
+  // drop allowed words (brands, codes, units) from a string, then flag it if any Latin word is left
+  const WORDS = /\b(Saathi Partner|Saathi|UPI ID|UPI|OTP|SMS|ID|PAN|IFSC|BHK|WhatsApp|AutoPay|Plus|Google Pay|PhonePe|Paytm|HDFC|SBI|ICICI|Visa|Mastercard|State Bank of India|English|am|pm|km|min|hr|BP|QR|PIN|GST|[A-Z]{2,}[0-9]*|[A-Z0-9]{4,}(-[A-Z0-9]+)*|[\w.]+@[\w.]+)\b/g;
+  const english = texts.filter((t) => !ALLOW.test(t) && /[A-Za-z]{2,}/.test(t.replace(WORDS, '')));
   if (english.length) (res[`${app}__${r}`] ??= {})[loc] = english;
 }
 const q = [...jobs];

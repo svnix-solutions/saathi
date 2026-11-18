@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import { Grid, T, useTheme } from '@/native/ui';
+import { Grid, T, useT, useTheme } from '@/native/ui';
 import { radius } from '@/tokens';
 
 export type PhotoSlotsProps = {
@@ -15,14 +15,15 @@ export type PhotoSlotsProps = {
 /** Three-column grid of photo tiles (tap to remove) and a dashed "+ Add" tile. */
 export function PhotoSlots({ count, max, onAdd, onRemove }: PhotoSlotsProps) {
   const { c } = useTheme();
+  const t = useT();
   const photos = Array.from({ length: count }).map((_, i) => (
-    <Pressable key={i} onPress={() => onRemove(i)} accessibilityRole="button" accessibilityLabel={`Remove photo ${i + 1}`} style={[styles.tile, { backgroundColor: c.mint }]}>
-      <T s color={c.accent}>Photo {i + 1}</T>
+    <Pressable key={i} onPress={() => onRemove(i)} accessibilityRole="button" accessibilityLabel={t(`Remove photo ${i + 1}`, `फ़ोटो ${i + 1} हटाएँ`, `ਫ਼ੋਟੋ ${i + 1} ਹਟਾਓ`)} style={[styles.tile, { backgroundColor: c.mint }]}>
+      <T s color={c.accent}>{t(`Photo ${i + 1}`, `फ़ोटो ${i + 1}`, `ਫ਼ੋਟੋ ${i + 1}`)}</T>
     </Pressable>
   ));
   const add = count < max ? (
-    <Pressable key="add" onPress={onAdd} accessibilityRole="button" accessibilityLabel="Add photo" style={[styles.tile, styles.add, { borderColor: c.accent }]}>
-      <T s b color={c.accent}>+ Add</T>
+    <Pressable key="add" onPress={onAdd} accessibilityRole="button" accessibilityLabel={t('Add photo', 'फ़ोटो जोड़ें', 'ਫ਼ੋਟੋ ਜੋੜੋ')} style={[styles.tile, styles.add, { borderColor: c.accent }]}>
+      <T s b color={c.accent}>{t('+ Add', '+ जोड़ें', '+ ਜੋੜੋ')}</T>
     </Pressable>
   ) : null;
   return <Grid cols={3}>{[...photos, add].filter(Boolean)}</Grid>;

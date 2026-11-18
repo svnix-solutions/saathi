@@ -1,4 +1,5 @@
 /** Sample data and constants for the visit screens (prototype only). */
+import type { Tri } from '../helpers';
 
 /** The prototype's helper for the live visit. */
 export const visitHelper = { name: 'Sunita D.', first: 'Sunita', face: 'sd' as const };
@@ -17,15 +18,22 @@ export const inProgressShareLeft = 0.6367;
 export const defaultVisitTasks = ['Sweep and mop floors', 'Dusting', 'Wipe surfaces'];
 
 /** Rate and tip. */
-export const rateTags = [['On time', 'समय पर'], ['Thorough', 'अच्छी तरह'], ['Polite', 'विनम्र']] as const;
+export const rateTags = [['On time', 'समय पर', 'ਸਮੇਂ ਸਿਰ'], ['Thorough', 'अच्छी तरह', 'ਚੰਗੀ ਤਰ੍ਹਾਂ'], ['Polite', 'विनम्र', 'ਨਿਮਰ']] as const;
 export const tips = [20, 50, 100];
 
 /** Not-happy problems. */
-export const problems = [['Work not finished', 'काम अधूरा'], ['Poor quality', 'खराब काम'], ['Late', 'देर से आईं'], ['Behaviour', 'व्यवहार'], ['Something damaged', 'कुछ टूटा']] as const;
+export const problems = [
+  ['Work not finished', 'काम अधूरा', 'ਕੰਮ ਅਧੂਰਾ'], ['Poor quality', 'खराब काम', 'ਮਾੜਾ ਕੰਮ'], ['Late', 'देर से आईं', 'ਦੇਰ ਨਾਲ ਆਈ'],
+  ['Behaviour', 'व्यवहार', 'ਵਿਹਾਰ'], ['Something damaged', 'कुछ टूटा', 'ਕੁਝ ਟੁੱਟ ਗਿਆ'],
+] as const;
+/** The note the not-happy screen opens with. */
+export const notHappySampleNote: Tri = { en: 'Bathroom floor not mopped', hi: 'बाथरूम के फ़र्श पर पोछा नहीं लगा', pa: 'ਬਾਥਰੂਮ ਦੇ ਫ਼ਰਸ਼ ਤੇ ਪੋਚਾ ਨਹੀਂ ਲੱਗਿਆ' };
 
 /** Visit report. */
 export const reportWorkDone = ['Sweep and mop floors', 'Dusting', 'Wipe surfaces'];
-export const reportPhotos = ['Floor', 'Kitchen', 'Balcony'];
+export const reportPhotos: Tri[] = [
+  { en: 'Floor', hi: 'फ़र्श', pa: 'ਫ਼ਰਸ਼' }, { en: 'Kitchen', hi: 'किचन', pa: 'ਰਸੋਈ' }, { en: 'Balcony', hi: 'बालकनी', pa: 'ਬਾਲਕਨੀ' },
+];
 
 /** Lock screen: 8 min away, one minute every 3 s. */
 export const lockEtaFrom = 8;

@@ -1,7 +1,7 @@
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Avatar, Button, Card, H2, Icon, Lft, Link, Row, T, useT, useTheme } from '@/native/ui';
-import type { HelperPerson } from '../data';
+import { helperName, tr, type HelperPerson } from '../data';
 import { FavouriteChip } from './FavouriteChip';
 
 export type HelperCardProps = {
@@ -16,22 +16,25 @@ export type HelperCardProps = {
 export function HelperCard({ person, favourite, onOpen, onToggleFavourite, onBook }: HelperCardProps) {
   const t = useT();
   const { c } = useTheme();
+  const first = helperName(t, person.first);
   return (
     <Card sel={favourite}>
       <Row>
-        <Lft>
+        <Lft style={styles.grow}>
           <Avatar face={person.face} />
-          <View><Link color={c.ink} onPress={onOpen}><H2>{person.n}</H2></Link><T s m>{person.sub}</T></View>
+          <View style={styles.grow}><Link color={c.ink} onPress={onOpen}><H2>{helperName(t, person.n)}</H2></Link><T s m>{tr(t, person.sub)}</T></View>
         </Lft>
         {favourite
           ? <FavouriteChip onPress={onToggleFavourite} />
           : <Link onPress={onToggleFavourite}><Icon name="star" color={c.mut} /></Link>}
       </Row>
       <Button variant={favourite ? 'primary' : 'outline'} style={{ marginTop: 10, paddingVertical: favourite ? 10 : 9 }} onPress={onBook}>
-        {t(`Book ${person.first}`, `${person.first} को बुक करें`)}
+        {t(`Book ${person.first}`, `${first} को बुक करें`, `${first} ਨੂੰ ਬੁੱਕ ਕਰੋ`)}
       </Button>
     </Card>
   );
 }
 
 export default HelperCard;
+
+const styles = StyleSheet.create({ grow: { flex: 1 } });

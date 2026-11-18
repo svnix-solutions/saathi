@@ -10,13 +10,14 @@ export function CancelVisitSheet({ visible, onClose, onCancel }: CancelVisitShee
   const { lateCancelFee, cancelAfterArrival } = decisions.customer;
   return (
     <Sheet visible={visible} onClose={onClose}>
-      <H>{t('Cancel this booking?', 'यह बुकिंग रद्द करें?')}</H>
+      <H>{t('Cancel this booking?', 'यह बुकिंग रद्द करें?', 'ਕੀ ਇਹ ਬੁਕਿੰਗ ਰੱਦ ਕਰਨੀ ਹੈ?')}</H>
       <T m>{t(`Sunita is already on the way, so a ₹${lateCancelFee} fee applies. After she arrives it is ₹${cancelAfterArrival}.`,
-        `सुनीता रास्ते में हैं, इसलिए ₹${lateCancelFee} शुल्क लगेगा। उनके पहुँचने के बाद ₹${cancelAfterArrival}।`)}</T>
+        `सुनीता रास्ते में हैं, इसलिए ₹${lateCancelFee} शुल्क लगेगा। उनके पहुँचने के बाद ₹${cancelAfterArrival}।`,
+        `ਸੁਨੀਤਾ ਰਾਹ ਵਿੱਚ ਹੈ, ਇਸ ਲਈ ₹${lateCancelFee} ਫੀਸ ਲੱਗੇਗੀ। ਉਹਦੇ ਪਹੁੰਚਣ ਤੋਂ ਬਾਅਦ ₹${cancelAfterArrival}।`)}</T>
       <Button variant="outline" danger onPress={onCancel}>
-        {t(`Cancel · ₹${lateCancelFee}`, `रद्द करें · ₹${lateCancelFee}`)}
+        {t(`Cancel · ₹${lateCancelFee}`, `रद्द करें · ₹${lateCancelFee}`, `ਰੱਦ ਕਰੋ · ₹${lateCancelFee}`)}
       </Button>
-      <Button onPress={onClose}>{t('Keep my helper', 'हेल्पर रहने दें')}</Button>
+      <Button onPress={onClose}>{t('Keep my helper', 'हेल्पर रहने दें', 'ਹੈਲਪਰ ਰਹਿਣ ਦਿਓ')}</Button>
     </Sheet>
   );
 }

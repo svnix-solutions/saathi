@@ -2,7 +2,7 @@ import type { ServiceId } from '@/domain';
 import type { Locale } from '@/native/ui';
 
 /** The upcoming sample booking shown on Bookings and Change booking. */
-export type UpcomingBooking = { service: ServiceId; minutes: number; slot: string; slotHi: string; helper: string };
+export type UpcomingBooking = { service: ServiceId; minutes: number; slot: string; slotHi: string; slotPa?: string; helper: string };
 /** A finished visit, kept after rating so "Book again" and the receipt can read it. */
 export type LastVisit = { service: ServiceId; minutes: number; price: number };
 /** A testimonial the customer offered (design page 15). */

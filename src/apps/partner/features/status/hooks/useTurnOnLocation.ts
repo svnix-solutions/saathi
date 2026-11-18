@@ -11,7 +11,7 @@ export function useTurnOnLocation() {
   const [busy, setBusy] = useState(false);
   const open = () => {
     setBusy(true);
-    setTimeout(() => { set({ online: true, offerShown: false }); nav.reset('home'); nav.toast(t('Location is on. You are online.', 'लोकेशन चालू। आप ऑनलाइन हैं।')); }, settingsMs);
+    setTimeout(() => { set({ online: true, offerShown: false }); nav.reset('home'); nav.toast(t('Location is on. You are online.', 'लोकेशन चालू। आप ऑनलाइन हैं।', 'ਲੋਕੇਸ਼ਨ ਚਾਲੂ। ਤੁਸੀਂ ਆਨਲਾਈਨ ਹੋ।')); }, settingsMs);
   };
   return { busy, open };
 }

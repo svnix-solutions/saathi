@@ -16,7 +16,7 @@ export function AddToggle({ on, onPress }: AddToggleProps) {
   return (
     <Pressable onPress={onPress} accessibilityRole="button"
       style={[styles.chip, { borderWidth: on ? 1.5 : 1, borderColor: on ? c.selBorder : c.line, backgroundColor: on ? c.selBg : c.card }]}>
-      <T s b color={on ? c.ink : c.accent}>{on ? t('Added', 'जोड़ा') : t('Add', 'जोड़ें')}</T>
+      <T s b color={on ? c.ink : c.accent}>{on ? t('Added', 'जोड़ा', 'ਜੋੜਿਆ') : t('Add', 'जोड़ें', 'ਜੋੜੋ')}</T>
     </Pressable>
   );
 }

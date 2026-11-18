@@ -5,7 +5,7 @@ import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 const [port, out] = process.argv.slice(2);
 const keys = JSON.parse(fs.readFileSync(new URL('./keys.json', import.meta.url)));
-const conditions = { small: 'device:small', hi: 'locale:hi', pa: 'locale:pa', large: 'text:1.22', 'small+hi': 'device:small;locale:hi' };
+const conditions = { small: 'device:small', hi: 'locale:hi', pa: 'locale:pa', large: 'text:1.22', 'small+hi': 'device:small;locale:hi', 'small+pa': 'device:small;locale:pa', 'large+hi': 'text:1.22;locale:hi' };
 const only = process.env.ONLY ? new Set(process.env.ONLY.split(',')) : null;
 const jobs = [];
 for (const [cond, g] of Object.entries(conditions)) for (const app of ['customer', 'partner']) for (const r of keys[app])

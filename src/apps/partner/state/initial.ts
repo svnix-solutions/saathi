@@ -13,7 +13,7 @@ export const initialPartnerState: PartnerState = {
 
 /** Today's sample earnings list until the partner finishes a job. */
 export const defaultToday: PayLine[] = [
-  { title: 'General cleaning', titleHi: 'सामान्य सफ़ाई', sub: '11:10 am · 1 hr', amt: 126 },
-  { title: 'Dishes & meal prep', titleHi: 'बर्तन और खाना तैयारी', sub: '9:00 am · 1.5 hr', amt: 189 },
-  { title: 'Tip from customer', titleHi: 'ग्राहक से टिप', sub: '11:15 am', amt: 50, tip: true },
+  { title: 'General cleaning', titleHi: 'सामान्य सफ़ाई', titlePa: 'ਆਮ ਸਫ਼ਾਈ', sub: '11:10 am · 1 hr', amt: 126 },
+  { title: 'Dishes & meal prep', titleHi: 'बर्तन और खाना तैयारी', titlePa: 'ਭਾਂਡੇ ਅਤੇ ਖਾਣੇ ਦੀ ਤਿਆਰੀ', sub: '9:00 am · 1.5 hr', amt: 189 },
+  { title: 'Tip from customer', titleHi: 'ग्राहक से टिप', titlePa: 'ਗਾਹਕ ਤੋਂ ਟਿਪ', sub: '11:15 am', amt: 50, tip: true },
 ];

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { Icon, T, palette } from '@/native/ui';
+import { Icon, T, palette, useT } from '@/native/ui';
 
 export type LessonVideoProps = {
   playing: boolean;
@@ -11,8 +11,9 @@ export type LessonVideoProps = {
 
 /** Dark-green video placeholder with a yellow play / pause / done button. */
 export function LessonVideo({ playing, finished, onToggle }: LessonVideoProps) {
+  const t = useT();
   return (
-    <Pressable onPress={() => !finished && onToggle()} accessibilityRole="button" accessibilityLabel={playing ? 'Pause' : 'Play'} style={styles.frame}>
+    <Pressable onPress={() => !finished && onToggle()} accessibilityRole="button" accessibilityLabel={playing ? t('Pause', 'रोकें', 'ਰੋਕੋ') : t('Play', 'चलाएँ', 'ਚਲਾਓ')} style={styles.frame}>
       <View style={styles.button}>
         {finished ? <Icon name="check" color={palette.ink} /> : playing ? <T b color={palette.ink}>II</T> : <T b color={palette.ink} size={16}>▶</T>}
       </View>

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { cannedReply, firstChat, firstPicks, personGreeting, type ChatMessage } from '../data';
+import { cannedReply, firstChat, firstPicks, personGreeting, type ChatMessage, type L } from '../data';
 
 /** Delay before the bot answers, and before a person joins (ms). */
 const BOT_DELAY = 1100;
@@ -16,23 +16,24 @@ export function useSupportChat() {
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
 
-  const replyLater = useCallback((reply: string, ms: number) => {
+  const replyLater = useCallback((reply: L, ms: number) => {
     setTyping(true);
     timer.current = setTimeout(() => { setTyping(false); setMessages((m) => [...m, { text: reply }]); }, ms);
   }, []);
 
-  /** Sends `q` as the customer; returns false when it is blank. */
-  const send = useCallback((q: string) => {
-    if (!q.trim()) return false;
-    setMessages((m) => [...m, { me: true, text: q.trim() }]);
-    replyLater(cannedReply(q), BOT_DELAY);
+  /** Sends `q` as the customer (typed text, or a translated quick reply); returns false when it is blank. */
+  const send = useCallback((q: string | L) => {
+    const en = typeof q === 'string' ? q.trim() : q.en;
+    if (!en) return false;
+    setMessages((m) => [...m, { me: true, text: typeof q === 'string' ? en : q }]);
+    replyLater(cannedReply(en), BOT_DELAY);
     return true;
   }, [replyLater]);
 
   /** Picks a quick reply under message `i`; returns false when that message was already answered. */
-  const choose = useCallback((i: number, choice: string) => {
+  const choose = useCallback((i: number, choice: L) => {
     if (picked[i]) return false;
-    setPicked((p) => ({ ...p, [i]: choice }));
+    setPicked((p) => ({ ...p, [i]: choice.en }));
     send(choice);
     return true;
   }, [picked, send]);

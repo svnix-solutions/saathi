@@ -14,9 +14,9 @@ export function NeighbourHelpers({ onBook }: { onBook: (helper: string) => void 
           <Row>
             <Lft>
               <Avatar face={h.face} size={26} />
-              <View><T b>{h.name}</T><T s m>Favourite of {h.flats} flats here</T></View>
+              <View><T b>{t(h.name, h.nameHi, h.namePa)}</T><T s m>{t(`Favourite of ${h.flats} flats here`, `यहाँ ${h.flats} फ़्लैट की पसंद`, `ਇੱਥੇ ${h.flats} ਫ਼ਲੈਟਾਂ ਦੀ ਪਸੰਦ`)}</T></View>
             </Lft>
-            <Link onPress={() => onBook(h.name)}>{t('Book', 'बुक')}</Link>
+            <Link onPress={() => onBook(h.name)}>{t('Book', 'बुक', 'ਬੁੱਕ')}</Link>
           </Row>
         </React.Fragment>
       ))}

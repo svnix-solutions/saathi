@@ -23,45 +23,45 @@ export function SigninAddressScreen({ params }: ScreenProps<{ add?: boolean }>) 
 
   const save = () => {
     if (outside) { nav.push('err.outsideArea'); return; }
-    if (add) { nav.back(); nav.toast(t('Address added', 'पता जोड़ा गया')); return; }
+    if (add) { nav.back(); nav.toast(t('Address added', 'पता जोड़ा गया', 'ਪਤਾ ਜੋੜ ਦਿੱਤਾ')); return; }
     set({ signedIn: true, address: { label: 'Home', line: line.trim(), note: note.trim() } });
     nav.reset('home');
     const first = st.name.split(' ')[0];
-    nav.toast(t(`Welcome, ${first}`, `स्वागत है, ${first}`));
+    nav.toast(t(`Welcome, ${first}`, `स्वागत है, ${first}`, `ਜੀ ਆਇਆਂ ਨੂੰ, ${first}`));
   };
 
   return (
     <Screen>
-      {add ? <BackHeader title={t('Add new address', 'नया पता जोड़ें')} onBack={nav.back} /> : (
+      {add ? <BackHeader title={t('Add new address', 'नया पता जोड़ें', 'ਨਵਾਂ ਪਤਾ ਜੋੜੋ')} onBack={nav.back} /> : (
         <>
           <Steps step={3} total={3} />
-          <T s m>{t('New customer · step 3 of 3', 'नए ग्राहक · कदम 3 में से 3')}</T>
+          <T s m>{t('New customer · step 3 of 3', 'नए ग्राहक · कदम 3 में से 3', 'ਨਵੇਂ ਗਾਹਕ · 3 ਵਿੱਚੋਂ ਕਦਮ 3')}</T>
         </>
       )}
-      <H size={22}>{t('Where should the helper come?', 'हेल्पर कहाँ आए?')}</H>
+      <H size={22}>{t('Where should the helper come?', 'हेल्पर कहाँ आए?', 'ਹੈਲਪਰ ਕਿੱਥੇ ਆਵੇ?')}</H>
       <Card sel={useLoc} row onPress={toggleLocation}>
         <Lft>
           <Icon name="pin" color={c.accent} />
           <View>
-            <H2>{t('Use my current location', 'मेरी अभी की जगह लें')}</H2>
-            <T s m>{t('Block C, near the park', 'ब्लॉक सी, पार्क के पास')}</T>
+            <H2>{t('Use my current location', 'मेरी अभी की जगह लें', 'ਮੇਰੀ ਹੁਣ ਵਾਲੀ ਥਾਂ ਲਓ')}</H2>
+            <T s m>{t('Block C, near the park', 'ब्लॉक सी, पार्क के पास', 'ਬਲਾਕ ਸੀ, ਪਾਰਕ ਦੇ ਕੋਲ')}</T>
           </View>
         </Lft>
       </Card>
-      <H2>{t('Flat and building', 'फ़्लैट और बिल्डिंग')}</H2>
-      <Input value={line} onChangeText={setLine} placeholder={t('Flat 204, Block C', 'फ़्लैट 204, ब्लॉक सी')} />
-      <H2>{t('How to reach (optional)', 'कैसे पहुँचें (वैकल्पिक)')}</H2>
-      <Input small value={note} onChangeText={setNote} placeholder={t('Gate 2, tell the guard flat 204', 'गेट 2, गार्ड को फ़्लैट 204 बताएँ')} />
+      <H2>{t('Flat and building', 'फ़्लैट और बिल्डिंग', 'ਫ਼ਲੈਟ ਅਤੇ ਬਿਲਡਿੰਗ')}</H2>
+      <Input value={line} onChangeText={setLine} placeholder={t('Flat 204, Block C', 'फ़्लैट 204, ब्लॉक सी', 'ਫ਼ਲੈਟ 204, ਬਲਾਕ ਸੀ')} />
+      <H2>{t('How to reach (optional)', 'कैसे पहुँचें (वैकल्पिक)', 'ਕਿਵੇਂ ਪਹੁੰਚਣਾ ਹੈ (ਜ਼ਰੂਰੀ ਨਹੀਂ)')}</H2>
+      <Input small value={note} onChangeText={setNote} placeholder={t('Gate 2, tell the guard flat 204', 'गेट 2, गार्ड को फ़्लैट 204 बताएँ', 'ਗੇਟ 2, ਗਾਰਡ ਨੂੰ ਫ਼ਲੈਟ 204 ਦੱਸੋ')} />
       {valid && !outside && (
         <Card tone="yellow">
-          <T s color={palette.ink}><T s b color={palette.ink}>{t('We serve this address.', 'हम इस पते पर सेवा देते हैं।')}</T> {t('A helper can reach you in about 15 minutes.', 'हेल्पर लगभग 15 मिनट में पहुँच सकता है।')}</T>
+          <T s color={palette.ink}><T s b color={palette.ink}>{t('We serve this address.', 'हम इस पते पर सेवा देते हैं।', 'ਅਸੀਂ ਇਸ ਪਤੇ ਤੇ ਸੇਵਾ ਦਿੰਦੇ ਹਾਂ।')}</T> {t('A helper can reach you in about 15 minutes.', 'हेल्पर लगभग 15 मिनट में पहुँच सकता है।', 'ਹੈਲਪਰ ਲਗਭਗ 15 ਮਿੰਟ ਵਿੱਚ ਪਹੁੰਚ ਸਕਦਾ ਹੈ।')}</T>
         </Card>
       )}
       {outside && (
-        <Card tone="red"><T s color={c.red}>{t('We are not in Sector 40 yet.', 'हम अभी सेक्टर 40 में नहीं हैं।')}</T></Card>
+        <Card tone="red"><T s color={c.red}>{t('We are not in Sector 40 yet.', 'हम अभी सेक्टर 40 में नहीं हैं।', 'ਅਸੀਂ ਹਾਲੇ ਸੈਕਟਰ 40 ਵਿੱਚ ਨਹੀਂ ਹਾਂ।')}</T></Card>
       )}
       <Spacer />
-      <Button disabled={!valid} onPress={save}>{add ? t('Save address', 'पता सेव करें') : t('Save and open Home', 'सेव करें और होम खोलें')}</Button>
+      <Button disabled={!valid} onPress={save}>{add ? t('Save address', 'पता सेव करें', 'ਪਤਾ ਸੇਵ ਕਰੋ') : t('Save and open Home', 'सेव करें और होम खोलें', 'ਸੇਵ ਕਰੋ ਅਤੇ ਹੋਮ ਖੋਲ੍ਹੋ')}</Button>
     </Screen>
   );
 }

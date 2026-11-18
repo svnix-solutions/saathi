@@ -15,8 +15,8 @@ export function useVoiceOffer() {
   useInterval(() => setStep((s) => Math.min(voiceTicks, s + 1)), voiceTickMs, playing && !done);
   useEffect(() => { if (done) setPlaying(false); }, [done]);
 
-  const accept = () => { nav.toast(t('Job accepted · head to Block C', 'काम मिल गया · ब्लॉक सी चलें')); setTimeout(() => nav.push('onJob'), 600); };
-  const decline = () => { nav.toast(t('Job declined', 'काम मना किया')); setTimeout(() => nav.reset('home'), 600); };
+  const accept = () => { nav.toast(t('Job accepted · head to Block C', 'काम मिल गया · ब्लॉक सी चलें', 'ਕੰਮ ਮਿਲ ਗਿਆ · ਬਲਾਕ ਸੀ ਚੱਲੋ')); setTimeout(() => nav.push('onJob'), 600); };
+  const decline = () => { nav.toast(t('Job declined', 'काम मना किया', 'ਕੰਮ ਤੋਂ ਮਨ੍ਹਾ ਕੀਤਾ')); setTimeout(() => nav.reset('home'), 600); };
   const mic = () => {
     if (!done) { setPlaying((p) => !p); return; }
     setHeard('हाँ');

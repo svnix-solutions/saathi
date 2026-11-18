@@ -1,6 +1,7 @@
 import React from 'react';
 import { H, Pill, Sheet, useT } from '@/native/ui';
 import { rescheduleSlots } from '../data';
+import { slotPa } from '../slot';
 
 export type RescheduleSheetProps = { visible: boolean; slot: string; onPick: (slot: string, slotHi: string) => void; onClose: () => void };
 
@@ -9,9 +10,9 @@ export function RescheduleSheet({ visible, slot, onPick, onClose }: RescheduleSh
   const t = useT();
   return (
     <Sheet visible={visible} onClose={onClose}>
-      <H>{t('Pick a new time', 'नया समय चुनें')}</H>
+      <H>{t('Pick a new time', 'नया समय चुनें', 'ਨਵਾਂ ਸਮਾਂ ਚੁਣੋ')}</H>
       {rescheduleSlots.map(([en, hi]) => (
-        <Pill key={en} sel={slot === en} onPress={() => onPick(en, hi)}>{t(en, hi)}</Pill>
+        <Pill key={en} sel={slot === en} onPress={() => onPick(en, hi)}>{t(en, hi, slotPa(en))}</Pill>
       ))}
     </Sheet>
   );

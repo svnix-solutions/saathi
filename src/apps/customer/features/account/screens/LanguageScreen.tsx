@@ -7,7 +7,7 @@ import { LanguageSettings } from '../components/LanguageSettings';
 export function LanguageScreen() {
   const [st] = useCustomerState();
   const theme = useTheme();
-  const lang = st.language ?? 'en';
+  const lang = st.language ?? theme.locale;
   const scale = st.textScale ?? theme.textScale;
   const dark = st.darkMode ?? theme.dark;
   return (

@@ -25,11 +25,15 @@ export function LessonCard({ lesson: l, index, done, current, locked, watched, o
       <Lft style={styles.grow}>
         {done ? <Check on size={24} /> : <IconTile name={l.icon} bg={current ? c.card : undefined} />}
         <View style={styles.grow}>
-          <H2>{t(l.title, l.hi)}</H2>
-          <T s m>{done ? `${l.mins} min video` : locked ? `Opens after lesson ${index}` : `${watched} of ${l.mins} min watched`}</T>
+          <H2>{t(l.title, l.hi, l.pa)}</H2>
+          <T s m>
+            {done ? t(`${l.mins} min video`, `${l.mins} मिनट का वीडियो`, `${l.mins} ਮਿੰਟ ਦੀ ਵੀਡੀਓ`)
+              : locked ? t(`Opens after lesson ${index}`, `पाठ ${index} के बाद खुलेगा`, `ਪਾਠ ${index} ਤੋਂ ਬਾਅਦ ਖੁੱਲ੍ਹੇਗਾ`)
+                : t(`${watched} of ${l.mins} min watched`, `${l.mins} में से ${watched} मिनट देखा`, `${l.mins} ਵਿੱਚੋਂ ${watched} ਮਿੰਟ ਦੇਖੀ`)}
+          </T>
         </View>
       </Lft>
-      {current && <Tag>{watched > 0 ? t('Continue', 'जारी रखें') : t('Start', 'शुरू करें')}</Tag>}
+      {current && <Tag>{watched > 0 ? t('Continue', 'जारी रखें', 'ਜਾਰੀ ਰੱਖੋ') : t('Start', 'शुरू करें', 'ਸ਼ੁਰੂ ਕਰੋ')}</Tag>}
     </Card>
   );
 }

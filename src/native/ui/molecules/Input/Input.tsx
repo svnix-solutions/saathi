@@ -18,17 +18,19 @@ export type InputProps = {
   /** password field */
   secure?: boolean;
   accessibilityLabel?: string;
+  /** style for the text itself (e.g. `textAlign: 'center'`), merged after the defaults */
+  inputStyle?: StyleProp<TextStyle>;
 };
 
 /** Text field (the design's `.inp`): 1.5px border, 12px radius. */
-export function Input({ value, onChangeText, placeholder, prefix, keyboardType, style, small, multiline, maxLength, secure, accessibilityLabel }: InputProps) {
+export function Input({ value, onChangeText, placeholder, prefix, keyboardType, style, small, multiline, maxLength, secure, accessibilityLabel, inputStyle }: InputProps) {
   const { c, fs } = useTheme();
   return (
     <View style={[styles.box, { borderWidth: 1.5, borderRadius: radius.input, padding: 12, borderColor: c.line, backgroundColor: c.card, alignItems: multiline ? 'flex-start' : 'center' }, style]}>
       {prefix && <Text style={[styles.prefix, { color: c.mut, fontSize: fs(15) }]}>{prefix}</Text>}
       <TextInput value={value} onChangeText={onChangeText} placeholder={placeholder} placeholderTextColor={c.mut}
         keyboardType={keyboardType} multiline={multiline} maxLength={maxLength} secureTextEntry={secure} accessibilityLabel={accessibilityLabel}
-        style={{ flex: 1, minWidth: 0, fontFamily: font.family, fontSize: fs(small ? 13 : 15), fontWeight: small ? '400' : '600', color: c.ink, padding: 0, outlineStyle: 'none', minHeight: multiline ? 46 : undefined } as unknown as TextStyle} />
+        style={[{ flex: 1, minWidth: 0, fontFamily: font.family, fontSize: fs(small ? 13 : 15), fontWeight: small ? '400' : '600', color: c.ink, padding: 0, outlineStyle: 'none', minHeight: multiline ? 46 : undefined } as unknown as TextStyle, inputStyle]} />
     </View>
   );
 }

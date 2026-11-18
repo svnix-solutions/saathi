@@ -47,9 +47,9 @@ export function LanguageSettings({ lang, scale, dark }: LanguageSettingsProps) {
           ))}
         </Grid>
         <Card style={styles.list}>
-          <Row><T>{t('Dark mode', 'डार्क मोड', 'ਡਾਰਕ ਮੋਡ')}</T><Toggle on={dark} onChange={(v) => set({ darkMode: v })} /></Row>
+          <Row><T style={styles.grow}>{t('Dark mode', 'डार्क मोड', 'ਡਾਰਕ ਮੋਡ')}</T><Toggle on={dark} onChange={(v) => set({ darkMode: v })} /></Row>
           <Hr />
-          <Row><T>{t('Read screens aloud', 'स्क्रीन पढ़कर सुनाएँ', 'ਸਕ੍ਰੀਨ ਪੜ੍ਹ ਕੇ ਸੁਣਾਓ')}</T><Toggle on={!!st.readAloud} onChange={readAloud} /></Row>
+          <Row><T style={styles.grow}>{t('Read screens aloud', 'स्क्रीन पढ़कर सुनाएँ', 'ਸਕ੍ਰੀਨ ਪੜ੍ਹ ਕੇ ਸੁਣਾਓ')}</T><Toggle on={!!st.readAloud} onChange={readAloud} /></Row>
           <Hr />
           <Row><T style={styles.grow}>{t('Helper should speak my language', 'हेल्पर मेरी भाषा बोले', 'ਹੈਲਪਰ ਮੇਰੀ ਭਾਸ਼ਾ ਬੋਲੇ')}</T><Toggle on={st.helperLang ?? true} onChange={(v) => set({ helperLang: v })} /></Row>
         </Card>

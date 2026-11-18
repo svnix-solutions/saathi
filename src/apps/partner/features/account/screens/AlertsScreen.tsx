@@ -19,12 +19,12 @@ export function AlertsScreen() {
         <Row>
           <Pressable onPress={nav.back} disabled={!nav.canGoBack} accessibilityRole="button" style={styles.back}>
             {nav.canGoBack && <Icon name="back" color={c.ink} />}
-            <H>{t('Alerts', 'सूचनाएँ')}</H>
+            <H>{t('Alerts', 'सूचनाएँ', 'ਸੂਚਨਾਵਾਂ')}</H>
           </Pressable>
-          <Link onPress={() => { set({ alertsRead: alerts.map((a) => a.id) }); nav.toast(t('All marked as read', 'सब पढ़ा हुआ')); }}>{t('Mark all read', 'सब पढ़ा हुआ करें')}</Link>
+          <Link onPress={() => { set({ alertsRead: alerts.map((a) => a.id) }); nav.toast(t('All marked as read', 'सब पढ़ा हुआ', 'ਸਭ ਪੜ੍ਹਿਆ ਹੋਇਆ')); }}>{t('Mark all read', 'सब पढ़ा हुआ करें', 'ਸਭ ਪੜ੍ਹਿਆ ਕਰੋ')}</Link>
         </Row>
         {alerts.map((a) => (
-          <AlertCard key={a.id} icon={a.icon} title={t(a.en, a.hi)} sub={t(a.subEn, a.subHi)} unread={!read.includes(a.id)} onPress={() => open(a)} />
+          <AlertCard key={a.id} icon={a.icon} title={t(a.en, a.hi, a.pa)} sub={t(a.subEn, a.subHi, a.subPa)} unread={!read.includes(a.id)} onPress={() => open(a)} />
         ))}
       </Screen>
     </Page>

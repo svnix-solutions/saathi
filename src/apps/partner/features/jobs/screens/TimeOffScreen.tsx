@@ -14,35 +14,38 @@ export function TimeOffScreen() {
   const toggle = (d: number) => setSel((s) => (s.includes(d) ? s.filter((x) => x !== d) : [...s, d].sort((a, b) => a - b)));
   const n = sel.length;
   const ask = () => {
-    const when = sel.map((d) => d).join(', ') + ' Nov';
-    setApproved((a) => [{ when, why: reason === 'Other' && other ? other : reason, status: 'Pending' }, ...a]);
+    const days = sel.join(', ');
+    const when = { en: days + ' Nov', hi: days + ' नवंबर', pa: days + ' ਨਵੰਬਰ' };
+    const r = timeOffReasons.find(([en]) => en === reason) ?? timeOffReasons[0];
+    const why = reason === 'Other' && other ? { en: other, hi: other, pa: other } : { en: r[0], hi: r[1], pa: r[2] };
+    setApproved((a) => [{ when, why, status: 'Pending' }, ...a]);
     setSel([]);
-    nav.toast(t(`Request sent for ${when}. We reply within a day.`, `${when} के लिए अनुरोध भेजा।`));
+    nav.toast(t(`Request sent for ${when.en}. We reply within a day.`, `${when.hi} के लिए अनुरोध भेजा। एक दिन में जवाब देंगे।`, `${when.pa} ਲਈ ਬੇਨਤੀ ਭੇਜੀ। ਇੱਕ ਦਿਨ ਵਿੱਚ ਜਵਾਬ ਦੇਵਾਂਗੇ।`));
   };
   return (
     <Page variant="bare">
       <Screen>
-        <BackHeader title={t('Time off', 'छुट्टी')} onBack={nav.back} />
-        <H>{t('Which days are you away?', 'आप किन दिनों में नहीं होंगी?')}</H>
+        <BackHeader title={t('Time off', 'छुट्टी', 'ਛੁੱਟੀ')} onBack={nav.back} />
+        <H>{t('Which days are you away?', 'आप किन दिनों में नहीं होंगी?', 'ਤੁਸੀਂ ਕਿਹੜੇ ਦਿਨ ਨਹੀਂ ਹੋਵੋਗੇ?')}</H>
         <Grid cols={7} gap={5}>
           {timeOffDays.map((d) => <Pill key={d} sel={sel.includes(d)} onPress={() => toggle(d)}>{d}</Pill>)}
         </Grid>
-        <H2>{t('Reason', 'कारण')}</H2>
+        <H2>{t('Reason', 'कारण', 'ਕਾਰਨ')}</H2>
         <Grid cols={2}>
-          {timeOffReasons.map(([en, hi]) => <Pill key={en} sel={reason === en} onPress={() => setReason(en)}>{t(en, hi)}</Pill>)}
+          {timeOffReasons.map(([en, hi, pa]) => <Pill key={en} sel={reason === en} onPress={() => setReason(en)}>{t(en, hi, pa)}</Pill>)}
         </Grid>
-        {reason === 'Other' && <Input small value={other} onChangeText={setOther} placeholder="Tell us a little" />}
-        <Card tone="yellow"><T color={palette.ink}>Your monthly plan customer on these days will get another partner.</T></Card>
-        <H2>{t('Already approved', 'पहले से मंज़ूर')}</H2>
+        {reason === 'Other' && <Input small value={other} onChangeText={setOther} placeholder={t('Tell us a little', 'थोड़ा बताइए', 'ਥੋੜ੍ਹਾ ਦੱਸੋ')} />}
+        <Card tone="yellow"><T color={palette.ink}>{t('Your monthly plan customer on these days will get another partner.', 'इन दिनों आपके मासिक प्लान वाले ग्राहक को दूसरा पार्टनर मिलेगा।', 'ਇਹਨਾਂ ਦਿਨਾਂ ਵਿੱਚ ਤੁਹਾਡੇ ਮਹੀਨੇ ਦੇ ਪਲਾਨ ਵਾਲੇ ਗਾਹਕ ਨੂੰ ਕੋਈ ਹੋਰ ਪਾਰਟਨਰ ਮਿਲੇਗਾ।')}</T></Card>
+        <H2>{t('Already approved', 'पहले से मंज़ूर', 'ਪਹਿਲਾਂ ਤੋਂ ਮਨਜ਼ੂਰ')}</H2>
         {approved.map((a, i) => (
-          <Card key={a.when + i} row>
-            <View style={styles.fill}><H2>{a.when}</H2><T s m>{a.why}</T></View>
-            <Tag tone={a.status === 'Approved' ? 'n' : 'y'}>{a.status}</Tag>
+          <Card key={a.when.en + i} row>
+            <View style={styles.fill}><H2>{t(a.when.en, a.when.hi, a.when.pa)}</H2><T s m>{t(a.why.en, a.why.hi, a.why.pa)}</T></View>
+            <Tag tone={a.status === 'Approved' ? 'n' : 'y'}>{a.status === 'Approved' ? t('Approved', 'मंज़ूर', 'ਮਨਜ਼ੂਰ') : t('Pending', 'बाकी', 'ਬਾਕੀ')}</Tag>
           </Card>
         ))}
         <Spacer />
         <Button big disabled={n === 0} onPress={ask}>
-          {n === 0 ? t('Pick the days first', 'पहले दिन चुनें') : t(`Ask for ${n} day${n > 1 ? 's' : ''} off`, `${n} दिन की छुट्टी माँगें`)}
+          {n === 0 ? t('Pick the days first', 'पहले दिन चुनें', 'ਪਹਿਲਾਂ ਦਿਨ ਚੁਣੋ') : t(`Ask for ${n} day${n > 1 ? 's' : ''} off`, `${n} दिन की छुट्टी माँगें`, `${n} ਦਿਨ ਦੀ ਛੁੱਟੀ ਮੰਗੋ`)}
         </Button>
       </Screen>
     </Page>

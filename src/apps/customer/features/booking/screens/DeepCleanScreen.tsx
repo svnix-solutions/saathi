@@ -20,24 +20,26 @@ export function DeepCleanScreen() {
   };
   return (
     <Screen>
-      <BackHeader title={t('Deep clean', 'डीप क्लीन')} onBack={nav.back} />
-      <Lft><CharacterTile name="deep" size={64} /><H style={styles.grow}>{t('Build it room by room', 'कमरे के हिसाब से बनाएँ')}</H></Lft>
+      <BackHeader title={t('Deep clean', 'डीप क्लीन', 'ਡੀਪ ਕਲੀਨ')} onBack={nav.back} />
+      <Lft><CharacterTile name="deep" size={64} /><H style={styles.grow}>{t('Build it room by room', 'कमरे के हिसाब से बनाएँ', 'ਕਮਰੇ ਦੇ ਹਿਸਾਬ ਨਾਲ ਬਣਾਓ')}</H></Lft>
       <ListCard>
         {ROOMS.map((r) => (
-          <QuantityRow key={r.id} label={r.name} sub={r.sub} value={qty[r.id] ?? 0} max={r.max} onChange={(n) => setQty({ ...qty, [r.id]: n })} />
+          <QuantityRow key={r.id} label={t(r.name, r.nameHi, r.namePa)} sub={t(r.sub, r.subHi, r.subPa)} value={qty[r.id] ?? 0} max={r.max} onChange={(n) => setQty({ ...qty, [r.id]: n })} />
         ))}
       </ListCard>
       <Card sel={two} row onPress={() => setTwo(!two)}>
         <View style={styles.grow}>
-          <H2>2 helpers together</H2>
-          <T s m>{minutes ? `Done in ${fmtMin(together)} instead of ${fmtMin(minutes)}` : 'Add a room first'}</T>
+          <H2>{t('2 helpers together', '2 हेल्पर एक साथ', '2 ਹੈਲਪਰ ਇਕੱਠੇ')}</H2>
+          <T s m>{minutes
+            ? t(`Done in ${fmtMin(together)} instead of ${fmtMin(minutes)}`, `${fmtMin(together, t)} में पूरा, ${fmtMin(minutes, t)} की जगह`, `${fmtMin(together, t)} ਵਿੱਚ ਪੂਰਾ, ${fmtMin(minutes, t)} ਦੀ ਥਾਂ`)
+            : t('Add a room first', 'पहले एक कमरा जोड़ें', 'ਪਹਿਲਾਂ ਇੱਕ ਕਮਰਾ ਜੋੜੋ')}</T>
         </View>
         <Toggle on={two} onChange={setTwo} />
       </Card>
       <Spacer />
       <Row gap={12}>
-        <View><T s m>{fmtMin(minutes)} of work</T><H>{rupees(price)}</H></View>
-        <Button style={styles.grow} disabled={!minutes} onPress={pickTime}>{t('Pick a time', 'समय चुनें')}</Button>
+        <View><T s m>{t(`${fmtMin(minutes)} of work`, `${fmtMin(minutes, t)} का काम`, `${fmtMin(minutes, t)} ਦਾ ਕੰਮ`)}</T><H>{rupees(price)}</H></View>
+        <Button style={styles.grow} disabled={!minutes} onPress={pickTime}>{t('Pick a time', 'समय चुनें', 'ਸਮਾਂ ਚੁਣੋ')}</Button>
       </Row>
     </Screen>
   );

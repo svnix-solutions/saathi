@@ -11,9 +11,9 @@ export const cancelPay = 30;
 
 /** How location is used, on the "Location is off" screen. */
 export const locationPoints = [
-  ['Not tracked when you are offline', 'ऑफ़लाइन होने पर ट्रैक नहीं होता'],
-  ['Customers see you only on their job', 'ग्राहक सिर्फ़ अपने काम पर देखते हैं'],
-  ['Stops by itself at check-out', 'चेक-आउट पर अपने-आप बंद'],
+  ['Not tracked when you are offline', 'ऑफ़लाइन होने पर ट्रैक नहीं होता', 'ਆਫ਼ਲਾਈਨ ਹੋਣ ਉੱਤੇ ਟ੍ਰੈਕ ਨਹੀਂ ਹੁੰਦਾ'],
+  ['Customers see you only on their job', 'ग्राहक सिर्फ़ अपने काम पर देखते हैं', 'ਗਾਹਕ ਸਿਰਫ਼ ਆਪਣੇ ਕੰਮ ਉੱਤੇ ਵੇਖਦੇ ਹਨ'],
+  ['Stops by itself at check-out', 'चेक-आउट पर अपने-आप बंद', 'ਚੈੱਕ-ਆਊਟ ਉੱਤੇ ਆਪਣੇ-ਆਪ ਬੰਦ'],
 ] as const;
 /** "Opening settings…" shows this long before the partner is online. */
 export const settingsMs = 800;

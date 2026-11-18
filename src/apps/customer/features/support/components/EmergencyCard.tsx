@@ -10,13 +10,13 @@ export function EmergencyCard({ onPress }: { onPress: () => void }) {
     <Card onPress={onPress} style={{ backgroundColor: c.red, borderWidth: 0 }}>
       <Lft>
         <Icon name="shield" size={26} color={palette.white} />
-        <View>
-          <H2 color={palette.white} style={styles.title}>{t('Emergency', 'आपातकाल')}</H2>
-          <T s color={palette.white}>{t('Calls our safety team right now', 'हमारी सुरक्षा टीम को अभी कॉल करता है')}</T>
+        <View style={styles.text}>
+          <H2 color={palette.white} style={styles.title}>{t('Emergency', 'आपातकाल', 'ਐਮਰਜੈਂਸੀ')}</H2>
+          <T s color={palette.white}>{t('Calls our safety team right now', 'हमारी सुरक्षा टीम को अभी कॉल करता है', 'ਸਾਡੀ ਸੁਰੱਖਿਆ ਟੀਮ ਨੂੰ ਹੁਣੇ ਕਾਲ ਕਰਦਾ ਹੈ')}</T>
         </View>
       </Lft>
     </Card>
   );
 }
 
-const styles = StyleSheet.create({ title: { fontSize: 15 } });
+const styles = StyleSheet.create({ title: { fontSize: 15 }, text: { flex: 1 } });

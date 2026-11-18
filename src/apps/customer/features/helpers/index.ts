@@ -5,6 +5,7 @@ import { HelperReviewsScreen } from './screens/HelperReviewsScreen';
 import { ChatScreen } from './screens/ChatScreen';
 
 export { FavouritesScreen, HelperProfileScreen, HelperReviewsScreen, ChatScreen };
+export { helperName, latinParts, tr, type Tri } from './data';
 
 /**
  * Helpers feature — public API of this folder. Other features import only from here.

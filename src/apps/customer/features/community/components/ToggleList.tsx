@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Card, Hr, Row, T, Toggle } from '@/native/ui';
 
 export type ToggleItem = { label: string; on: boolean; onChange: (v: boolean) => void };
@@ -11,11 +11,11 @@ export function ToggleList({ items }: { items: ToggleItem[] }) {
       {items.map((it, i) => (
         <React.Fragment key={it.label}>
           {i > 0 && <Hr />}
-          <Row><T>{it.label}</T><Toggle on={it.on} onChange={it.onChange} /></Row>
+          <Row><View style={styles.label}><T>{it.label}</T></View><Toggle on={it.on} onChange={it.onChange} /></Row>
         </React.Fragment>
       ))}
     </Card>
   );
 }
 
-const styles = StyleSheet.create({ gap: { gap: 10 } });
+const styles = StyleSheet.create({ gap: { gap: 10 }, label: { flex: 1 } });

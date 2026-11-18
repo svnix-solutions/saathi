@@ -2,7 +2,7 @@ import type { DocId, ProfessionId } from '@/data/professions';
 import type { Locale } from '@/native/ui';
 
 /** One line in today's earnings list. */
-export type PayLine = { title: string; titleHi: string; sub: string; amt: number; tip?: boolean };
+export type PayLine = { title: string; titleHi: string; titlePa?: string; sub: string; amt: number; tip?: boolean };
 
 /**
  * Everything the partner prototype remembers while you click through it.

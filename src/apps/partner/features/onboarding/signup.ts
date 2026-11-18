@@ -2,7 +2,9 @@
 import {
   docType, profession, requiredDocs, skillsOf, specializations, specsOf, type DocId, type ProfessionId, type Requirement,
 } from '@/data/professions';
+import type { TFn } from '@/domain';
 import type { PartnerState } from '../../state';
+import { docHelp, professionName, specName } from './words';
 
 /** Only the digits of a typed value. */
 export const digits = (s: string) => s.replace(/\D/g, '');
@@ -28,15 +30,15 @@ export const needsCertificates = (st: PartnerState) =>
   !!st.profession && requiredDocs(st.profession, st.specs ?? []).some((r) => r.doc !== 'aadhaar' && r.doc !== 'pan');
 
 /** "Everyone", "Every nurse · GNM, ANM or B.Sc", "Because you picked Kids", "Every barber · add if you have one". */
-export function askedLine(r: Requirement, hi: boolean) {
+export function askedLine(r: Requirement, t: TFn) {
   const d = docType(r.doc);
   const spec = specializations.find((s) => s.id === r.specialization);
   const p = r.profession && profession(r.profession);
-  const who = spec ? (hi ? `क्योंकि आपने ${spec.nameHi} चुना` : `Because you picked ${spec.name}`)
-    : p ? (hi ? `हर ${p.nameHi} के लिए` : `Every ${p.name.toLowerCase()}`) : hi ? 'सभी के लिए' : 'Everyone';
-  const more = !r.required ? (hi ? 'हो तो जोड़ें' : 'add if you have one')
-    : d.asksNumber && d.asksExpiry ? (hi ? 'नंबर और कब तक मान्य' : 'number and valid-until date')
-      : p && !d.asksExpiry ? d.help : '';
+  const who = spec ? t(`Because you picked ${spec.name}`, `क्योंकि आपने ${spec.nameHi} चुना`, `ਕਿਉਂਕਿ ਤੁਸੀਂ ${specName(t, spec)} ਚੁਣਿਆ`)
+    : p ? t(`Every ${p.name.toLowerCase()}`, `हर ${p.nameHi} के लिए`, `ਹਰ ${professionName(t, p)} ਲਈ`) : t('Everyone', 'सभी के लिए', 'ਸਾਰਿਆਂ ਲਈ');
+  const more = !r.required ? t('add if you have one', 'हो तो जोड़ें', 'ਹੋਵੇ ਤਾਂ ਜੋੜੋ')
+    : d.asksNumber && d.asksExpiry ? t('number and valid-until date', 'नंबर और कब तक मान्य', 'ਨੰਬਰ ਅਤੇ ਕਦੋਂ ਤੱਕ ਜਾਇਜ਼')
+      : p && !d.asksExpiry ? docHelp(t, d) : '';
   return more ? `${who} · ${more}` : who;
 }
 

@@ -11,16 +11,16 @@ export function TestimonialsScreen() {
   const list = quotes.filter(quoteFilters[filter].f);
   return (
     <Screen>
-      <BackHeader title={t('What customers say', 'ग्राहक क्या कहते हैं')} fallback="home" />
+      <BackHeader title={t('What customers say', 'ग्राहक क्या कहते हैं', 'ਗਾਹਕ ਕੀ ਕਹਿੰਦੇ ਹਨ')} fallback="home" />
       <Lft gap={6}>
         {quoteFilters.map((x, i) => (
-          <Pill key={x.k} s sel={filter === i} onPress={() => setFilter(i)} style={{ paddingVertical: 6, paddingHorizontal: 12 }}>{t(x.k, x.hi)}</Pill>
+          <Pill key={x.k} s sel={filter === i} onPress={() => setFilter(i)} style={{ paddingVertical: 6, paddingHorizontal: 12 }}>{t(x.k, x.hi, x.pa)}</Pill>
         ))}
       </Lft>
       {list.map((q) => <TestimonialCard key={q.name} quote={q} />)}
-      {list.length === 0 && <T s m center>No testimonials here yet.</T>}
+      {list.length === 0 && <T s m center>{t('No testimonials here yet.', 'यहाँ अभी कोई प्रशंसापत्र नहीं है।', 'ਇੱਥੇ ਅਜੇ ਕੋਈ ਪ੍ਰਸ਼ੰਸਾ ਪੱਤਰ ਨਹੀਂ ਹੈ।')}</T>}
       <Spacer />
-      <Button variant="outline" onPress={() => nav.push('testimonialConsent')}>{t('Share your experience', 'अपना अनुभव बताएँ')}</Button>
+      <Button variant="outline" onPress={() => nav.push('testimonialConsent')}>{t('Share your experience', 'अपना अनुभव बताएँ', 'ਆਪਣਾ ਤਜਰਬਾ ਦੱਸੋ')}</Button>
     </Screen>
   );
 }

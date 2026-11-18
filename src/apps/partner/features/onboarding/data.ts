@@ -16,9 +16,17 @@ export const appLanguages: { k: Locale; l: string }[] = [{ k: 'hi', l: 'हि�
 
 /** Sample sign-up details. */
 export const sampleDetails = { fullName: 'Sunita Devi', email: 'sunita.devi@example.com', area: 'Block C' };
+/** The sample name and area as shown in Hindi and Punjabi (placeholders and the PAN name check). */
+export const sampleNames = {
+  fullName: ['Sunita Devi', 'सुनीता देवी', 'ਸੁਨੀਤਾ ਦੇਵੀ'], area: ['Block C', 'ब्लॉक सी', 'ਬਲਾਕ ਸੀ'],
+  name: ['Sunita', 'सुनीता', 'ਸੁਨੀਤਾ'], ref1: ['Kamla Devi', 'कमला देवी', 'ਕਮਲਾ ਦੇਵੀ'], ref2: ['Ramesh Kumar', 'रमेश कुमार', 'ਰਮੇਸ਼ ਕੁਮਾਰ'],
+} as const;
 
 /** How reference 2 knows the partner. */
-export const referenceRelations = [{ en: 'Neighbour', hi: 'पड़ोसी' }, { en: 'Past employer', hi: 'पुराने मालिक' }, { en: 'Relative', hi: 'रिश्तेदार' }];
+export const referenceRelations = [
+  { en: 'Neighbour', hi: 'पड़ोसी', pa: 'ਗੁਆਂਢੀ' }, { en: 'Past employer', hi: 'पुराने मालिक', pa: 'ਪੁਰਾਣੇ ਮਾਲਕ' },
+  { en: 'Relative', hi: 'रिश्तेदार', pa: 'ਰਿਸ਼ਤੇਦਾਰ' },
+];
 
 /** Reference 1 is already confirmed in the design; its number cannot be reused. */
 export const firstReferencePhone = '9822014567';
@@ -29,10 +37,11 @@ export const maskedAadhaar = 'XXXX XXXX 4821';
 export const samplePan = 'ABCDE1234F';
 
 /** Field label for the document number, by document type. */
-export const docNumberLabels: Partial<Record<DocId, [string, string]>> = {
-  aadhaar: ['Aadhaar number', 'आधार नंबर'], pan: ['PAN number', 'पैन नंबर'],
-  nursing_registration: ['Registration number', 'रजिस्ट्रेशन नंबर'], electrical_licence: ['Licence number', 'लाइसेंस नंबर'],
+export const docNumberLabels: Partial<Record<DocId, [string, string, string]>> = {
+  aadhaar: ['Aadhaar number', 'आधार नंबर', 'ਆਧਾਰ ਨੰਬਰ'], pan: ['PAN number', 'पैन नंबर', 'ਪੈਨ ਨੰਬਰ'],
+  nursing_registration: ['Registration number', 'रजिस्ट्रेशन नंबर', 'ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਨੰਬਰ'],
+  electrical_licence: ['Licence number', 'लाइसेंस नंबर', 'ਲਾਇਸੈਂਸ ਨੰਬਰ'],
 };
 
 /** Sample filled-in certificate (`params.sample`). */
-export const sampleCertificate = { number: 'MH203307', validUntil: '31 Mar 2029' };
+export const sampleCertificate = { number: 'MH203307', validUntil: '31 Mar 2029', validUntilHi: '31 मार्च 2029', validUntilPa: '31 ਮਾਰਚ 2029' };

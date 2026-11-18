@@ -12,7 +12,7 @@ export function PastBookingCard({ service, price, meta, onBookAgain }: PastBooki
     <Card>
       <Row><H2>{serviceName(t, service)}</H2><T>{rupees(price)}</T></Row>
       <T s m style={{ marginTop: 4 }}>{meta}</T>
-      <View style={{ marginTop: 8 }}><Link onPress={onBookAgain}>{t('Book again', 'फिर से बुक करें')}</Link></View>
+      <View style={{ marginTop: 8 }}><Link onPress={onBookAgain}>{t('Book again', 'फिर से बुक करें', 'ਫਿਰ ਤੋਂ ਬੁੱਕ ਕਰੋ')}</Link></View>
     </Card>
   );
 }

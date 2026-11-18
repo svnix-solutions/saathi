@@ -10,27 +10,30 @@ export function ReceiptScreen({ params }: ScreenProps<{ id?: string }>) {
   const id = params.id ?? sampleReceipt.id;
   return (
     <Screen>
-      <BackHeader title={`${t('Receipt', 'रसीद')} · #${id}`} onBack={nav.back} />
+      <BackHeader title={`${t('Receipt', 'रसीद', 'ਰਸੀਦ')} · #${id}`} onBack={nav.back} />
       <View style={styles.center}>
         <View style={styles.paidIcon}>
           <Icon name="check" size={22} color={palette.white} strokeWidth={3} />
         </View>
-        <H size={24}>{t('Paid', 'भुगतान')} {sampleReceipt.paid}</H>
-        <T s m>{sampleReceipt.when}</T>
+        <H size={24}>{t('Paid', 'भुगतान', 'ਭੁਗਤਾਨ')} {sampleReceipt.paid}</H>
+        <T s m>{t(sampleReceipt.when.en, sampleReceipt.when.hi, sampleReceipt.when.pa)}</T>
       </View>
       <Card style={styles.lines}>
-        {sampleReceipt.lines.map((l) => <KeyValue key={l.label} label={l.label} value={l.value} valueTone={l.accent ? 'accent' : 'default'} />)}
+        {sampleReceipt.lines.map((l) => (
+          <KeyValue key={l.label.en} label={l.code ? <>{t(l.label.en, l.label.hi, l.label.pa)} {l.code}</> : t(l.label.en, l.label.hi, l.label.pa)}
+            value={l.value} valueTone={l.accent ? 'accent' : 'default'} />
+        ))}
         <Hr />
-        <KeyValue variant="total" label="Total" value={sampleReceipt.total} />
+        <KeyValue variant="total" label={t('Total', 'कुल', 'ਕੁੱਲ')} value={sampleReceipt.total} />
       </Card>
       <Card style={styles.paidWith}>
-        {sampleReceipt.paidWith.map((p) => <Row key={p.label}><T s m>{p.label}</T><T s>{p.value}</T></Row>)}
+        {sampleReceipt.paidWith.map((p) => <Row key={p.label.en}><T s m>{t(p.label.en, p.label.hi, p.label.pa)}</T><T s>{p.value}</T></Row>)}
       </Card>
-      <Link onPress={() => nav.push('visitReport', { id })}>See the visit report</Link>
+      <Link onPress={() => nav.push('visitReport', { id })}>{t('See the visit report', 'विज़िट रिपोर्ट देखें', 'ਵਿਜ਼ਿਟ ਰਿਪੋਰਟ ਵੇਖੋ')}</Link>
       <Spacer />
       <Grid cols={2}>
-        <Button variant="outline" style={{ paddingVertical: 11 }} onPress={() => nav.toast(`Invoice #${id} downloaded (PDF)`)}>{t('Get invoice', 'इनवॉइस लें')}</Button>
-        <Button style={{ paddingVertical: 12 }} onPress={() => nav.push('chores', { service: 'general', helper: 'Sunita D.' })}>{t('Book again', 'फिर से बुक करें')}</Button>
+        <Button variant="outline" style={{ paddingVertical: 11 }} onPress={() => nav.toast(t(`Invoice #${id} downloaded (PDF)`, `इनवॉइस #${id} डाउनलोड हुआ (PDF)`, `ਇਨਵੌਇਸ #${id} ਡਾਊਨਲੋਡ ਹੋ ਗਿਆ (PDF)`))}>{t('Get invoice', 'इनवॉइस लें', 'ਇਨਵੌਇਸ ਲਓ')}</Button>
+        <Button style={{ paddingVertical: 12 }} onPress={() => nav.push('chores', { service: 'general', helper: 'Sunita D.' })}>{t('Book again', 'फिर से बुक करें', 'ਫਿਰ ਤੋਂ ਬੁੱਕ ਕਰੋ')}</Button>
       </Grid>
     </Screen>
   );

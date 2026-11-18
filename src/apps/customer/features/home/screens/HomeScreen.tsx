@@ -28,14 +28,14 @@ export function HomeScreen({ params }: ScreenProps<{ category?: Category }>) {
       <Screen>
         <Row>
           <SavedAddress address={st.address} />
-          <Pressable onPress={() => nav.reset('account')} accessibilityLabel="Account"><Avatar face="nk" size={32} /></Pressable>
+          <Pressable onPress={() => nav.reset('account')} accessibilityLabel={t('Account', 'खाता', 'ਖਾਤਾ')}><Avatar face="nk" size={32} /></Pressable>
         </Row>
         {cat === 'cleaning' && <Card tone="yellow" onPress={() => nav.push('chores', { service: st.service })}>
           <Lft>
             <CharacterTile name="hero" />
             <View>
-              <H2 color={palette.ink}>{t('Helper in 15 minutes', '15 मिनट में हेल्पर')}</H2>
-              <T s color={palette.ink}>{t('Or schedule for later', 'या बाद का समय चुनें')}</T>
+              <H2 color={palette.ink}>{t('Helper in 15 minutes', '15 मिनट में हेल्पर', '15 ਮਿੰਟ ਵਿੱਚ ਹੈਲਪਰ')}</H2>
+              <T s color={palette.ink}>{t('Or schedule for later', 'या बाद का समय चुनें', 'ਜਾਂ ਬਾਅਦ ਦਾ ਸਮਾਂ ਚੁਣੋ')}</T>
             </View>
           </Lft>
         </Card>}
@@ -48,7 +48,7 @@ export function HomeScreen({ params }: ScreenProps<{ category?: Category }>) {
               <Card key={s.id} onPress={() => nav.push('chores', { service: s.id })}>
                 <CharacterTile name={s.character} />
                 <H2 style={{ marginTop: 5 }}>{serviceName(t, s.id)}</H2>
-                <T s m>{t(`from ${rupees(s.per30)}`, `${rupees(s.per30)} से`)}</T>
+                <T s m>{t(`from ${rupees(s.per30)}`, `${rupees(s.per30)} से`, `${rupees(s.per30)} ਤੋਂ`)}</T>
               </Card>
             ))}
           </Grid>
@@ -57,7 +57,7 @@ export function HomeScreen({ params }: ScreenProps<{ category?: Category }>) {
               <CharacterTile name={custom.character} />
               <View>
                 <H2>{serviceName(t, custom.id)}</H2>
-                <T s m>{t(`You choose the chores · ${rupees(custom.per30)}`, `काम आप चुनें · ${rupees(custom.per30)}`)}</T>
+                <T s m>{t(`You choose the chores · ${rupees(custom.per30)}`, `काम आप चुनें · ${rupees(custom.per30)}`, `ਕੰਮ ਤੁਸੀਂ ਚੁਣੋ · ${rupees(custom.per30)}`)}</T>
               </View>
             </Lft>
           </Card>
