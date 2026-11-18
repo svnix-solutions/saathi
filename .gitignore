@@ -16,3 +16,7 @@ web/design/decisions.html
 web/design/brand.html
 web/design/version-1.html
 web/db/er-diagram.html
+
+# deploy/: built demo and Netlify link state
+deploy/site/
+deploy/.netlify/
