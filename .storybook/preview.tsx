@@ -26,7 +26,8 @@ const preview: Preview = {
     layout: 'centered',
     backgrounds: { options: { canvas: { name: 'Canvas', value: '#cfd8d4' }, page: { name: 'Page', value: '#f3f7f5' }, white: { name: 'White', value: '#ffffff' } } },
     options: {
-      storySort: { order: ['Saathi', ['Introduction', 'Brand', 'Decisions'], 'Foundations', 'Customer app', 'Partner app', 'Admin panel'] },
+      // pages sort by their two-digit design number; stories inside a page keep file order (Design Page first)
+      storySort: { method: 'alphabetical', order: ['Saathi', ['Introduction', 'Brand', 'Decisions'], 'Foundations', 'Customer app', 'Partner app', 'Admin panel'] },
     },
   },
   initialGlobals2: undefined,

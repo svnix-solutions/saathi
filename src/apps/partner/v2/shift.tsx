@@ -1,13 +1,14 @@
-/** Design page 26 · shift check, training, door code, early payout (screens 32–35). */
+/** Design page 26 · shift check, training, start code, early payout (screens 32–35). */
 import React, { useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import {
   Button, Card, CharacterTile, CheckRow, Check, Col, H, H2, Hr, Icon, IconTile, Lft, OtpInput, Pill, Grid, Row, Screen,
   Sheet, Spacer, T, Tag, TopBar, palette, useAppState, useNav, useT, useTheme, type IconName,
 } from '@/native/ui';
-import { decisions, rupees } from '@/data/decisions';
+import { codes, decisions, rupees } from '@/data/decisions';
 import { PartnerTabs, initialPartnerState, type PartnerState } from '../chrome';
 import { Circle, Meter, Root, TopLabel, TopProgress, onGreen } from './kit';
+import { useStartCode } from '../v1/kit';
 
 /* ---------- 32 · Shift check-in ---------- */
 export function ShiftCheckScreen() {
@@ -185,19 +186,19 @@ export function TrainingScreen() {
   );
 }
 
-/* ---------- 34 · Start with door code ---------- */
+/* ---------- 34 · Start with start code ---------- */
 export function DoorCodeScreen({ params }: { params: { code?: string } }) {
   const nav = useNav();
   const t = useT();
   const { c } = useTheme();
   const [st, set] = useAppState<PartnerState>();
   const job = st.job ?? initialPartnerState.job;
-  const right = params.code ?? '4821';
-  const [code, setCode] = useState('');
-  const [error, setError] = useState(false);
   const [away, setAway] = useState(false);
+  const right = params.code ?? codes.start;
+  // same rule and tries as check-in
+  const { code, type, wrong: error, left, locked, verify } = useStartCode(right);
   const start = () => {
-    if (code !== right) { setError(true); return; }
+    if (!verify()) return;
     set({ jobStarted: true });
     nav.toast(t(`Code matches. ${job.minutes / 60 >= 1 ? job.minutes / 60 + ' hr' : job.minutes + ' min'} clock started.`, 'कोड सही है। घड़ी शुरू।'));
     nav.replace('onJob');
@@ -215,17 +216,25 @@ export function DoorCodeScreen({ params }: { params: { code?: string } }) {
           </Lft>
           <IconTile name="call" onPress={() => nav.toast(`Calling ${job.customer}…`)} />
         </Card>
-        <H style={{ marginTop: 8 }}>{t('Ask the customer for the code', 'ग्राहक से कोड पूछें')}</H>
-        <OtpInput value={code} error={error} onChange={(v) => { setCode(v); setError(false); }} />
+        {locked ? <>
+          <H style={{ marginTop: 8 }}>{t('Only support can start this job now', 'अब यह काम सिर्फ़ सपोर्ट शुरू कर सकता है')}</H>
+          <T m>{t(`${codes.maxTries} wrong start codes were typed. Support will call ${job.customer} and start the job with you.`, `${codes.maxTries} बार गलत स्टार्ट कोड डाला गया। सपोर्ट ${job.customer} को कॉल करके आपके साथ काम शुरू करेगा।`)}</T>
+          <Spacer />
+          <Button big icon="call" onPress={() => nav.toast(t('Calling Saathi support…', 'साथी सपोर्ट को कॉल हो रहा है…'))}>{t('Call support', 'सपोर्ट को कॉल करें')}</Button>
+        </> : <>
+        <H style={{ marginTop: 8 }}>{t('Ask the customer for their start code', 'ग्राहक से स्टार्ट कोड पूछें')}</H>
+        <OtpInput value={code} error={error} onChange={type} />
         {error
-          ? <T s color={c.red}>{t('Code does not match. Ask the customer to read it again.', 'कोड मेल नहीं खाता। ग्राहक से दोबारा पूछें।')}</T>
+          ? <T s color={c.red}>{t(`Code does not match. ${left} ${left === 1 ? 'try' : 'tries'} left.`, `कोड मेल नहीं खाता। ${left} कोशिश बाकी।`)}</T>
           : <T s m>{t('The 1 hr clock starts when the code matches.', 'कोड मिलते ही 1 घंटे की घड़ी शुरू होगी।')}</T>}
-        <T s m>Prototype code: {right}</T>
+        <T s m>{t(`After ${codes.maxTries} wrong codes only support can start the job.`, `${codes.maxTries} गलत कोड के बाद काम सिर्फ़ सपोर्ट शुरू कर सकता है।`)}</T>
+        <T s m>{t('Prototype start code', 'प्रोटोटाइप स्टार्ट कोड')}: {right}</T>
         <Spacer />
         <Button big disabled={code.length < 4} onPress={start}>{t('Start job', 'काम शुरू करें')}</Button>
         <Button variant="outline" style={{ borderColor: c.line }} textStyle={{ color: c.ink }} onPress={() => setAway(true)}>
           {t('Customer is not at home', 'ग्राहक घर पर नहीं हैं')}
         </Button>
+        </>}
       </Screen>
       <Sheet visible={away} onClose={() => setAway(false)}>
         <H2>{t('Customer is not at home', 'ग्राहक घर पर नहीं हैं')}</H2>

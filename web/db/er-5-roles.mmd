@@ -1,0 +1,53 @@
+erDiagram
+  admin_users ||--o{ admin_user_roles : "holds"
+  roles ||--o{ admin_user_roles : "is given as"
+  zones |o--o{ admin_user_roles : "limits to"
+  roles ||--o{ role_permissions : "has"
+  permissions ||--o{ role_permissions : "is granted in"
+  admin_users ||--o{ audit_log : "acts in"
+
+  admin_users { bigint id PK
+    text email UK
+    text name
+    text password_hash
+    timestamptz last_login_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  roles { bigint id PK
+    text code UK
+    text name
+    text description
+    numeric refund_limit
+    boolean is_system
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  permissions { bigint id PK
+    text code UK
+    text area
+    text description
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  role_permissions { bigint role_id PK,FK
+    bigint permission_id PK,FK
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  admin_user_roles { bigint id PK
+    bigint admin_user_id FK
+    bigint role_id FK
+    bigint zone_id FK
+    bigint granted_by FK
+    timestamptz expires_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  zones { bigint id PK
+    text name UK }
+  audit_log { bigint id PK
+    bigint admin_user_id FK
+    text action
+    text entity
+    bigint entity_id }

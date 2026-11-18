@@ -17,7 +17,8 @@ Use `go(name, params)` from `useAdmin()`. `section` = which sidebar item is high
 
 ## v1b (area `v1b/`)
 team (85, team), permissions (86, team), roleView (87 — switches the session to Support for two zones, then shows the dashboard as Support sees it), signups (88, partners),
-safety (89, safety), services (90, pricing), partnerDetail (91, partners; params: { id })
+safety (89, safety), services (90, pricing; "Professions & documents" button opens `professions`), partnerDetail (91, partners; params: { id }),
+professions (98 / design page 51, pricing; professions, specialisations, skills and document rules)
 
 ## v2/v3 (area `v2v3/`)
 customers (72, customers), ratings (75, ratings), zones (77, pricing), customerDetail (81, customers; params: { id }),

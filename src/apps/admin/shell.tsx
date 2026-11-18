@@ -141,7 +141,9 @@ export type Section =
   | 'partners' | 'customers' | 'ratings'
   | 'pricing' | 'payouts' | 'campaigns' | 'support' | 'team';
 
-export const menu: { group: string; items: { key: Section; label: string; icon: IconName; home: string; badge?: number; badgeRed?: boolean }[] }[] = [
+export const menu: { group: string; items: { key: Section; label: string; icon: IconName; home: string; badge?: number; badgeRed?: boolean;
+  /** pages listed under the item while its section is open */
+  subs?: { page: string; label: string }[] }[] }[] = [
   { group: 'Operations', items: [
     { key: 'dashboard', label: 'Dashboard', icon: 'home', home: 'dashboard' },
     { key: 'bookings', label: 'Bookings', icon: 'list', home: 'bookings', badge: 2 },
@@ -155,7 +157,9 @@ export const menu: { group: string; items: { key: Section; label: string; icon: 
     { key: 'ratings', label: 'Ratings', icon: 'star', home: 'ratings' },
   ] },
   { group: 'Business', items: [
-    { key: 'pricing', label: 'Pricing & zones', icon: 'sparkle', home: 'services' },
+    { key: 'pricing', label: 'Pricing & zones', icon: 'sparkle', home: 'services', subs: [
+      { page: 'services', label: 'Services' }, { page: 'professions', label: 'Professions & documents' }, { page: 'zones', label: 'Zones' },
+    ] },
     { key: 'payouts', label: 'Payouts', icon: 'wallet', home: 'payouts' },
     { key: 'campaigns', label: 'Campaigns', icon: 'bell', home: 'campaigns' },
     { key: 'support', label: 'Support', icon: 'call', home: 'support', badge: 5 },
@@ -254,7 +258,16 @@ export function AdminApp({ pages, initial = 'dashboard', initialParams = {}, ses
                         <I n={it.icon} /><span className="lbl">{it.label}</span>
                         {it.badge && <span className="nb" style={it.badgeRed ? { background: '#ffb4ab' } : undefined}>{it.badge}</span>}
                       </div>
-                    ))}
+                    )).flatMap((el, i) => {
+                      const it = items[i];
+                      if (def?.section !== it.key || !it.subs) return [el];
+                      return [el, ...it.subs.filter((sp) => ctx.has(sp.page)).map((sp) => (
+                        <div key={sp.page} role="link" tabIndex={0} className={`nav sub ${cur.page === sp.page ? 'on' : ''}`}
+                          onClick={() => ctx.go(sp.page)} onKeyDown={(e) => e.key === 'Enter' && ctx.go(sp.page)}>
+                          <span className="lbl">{sp.label}</span>
+                        </div>
+                      ))];
+                    })}
                   </React.Fragment>
                 );
               })}

@@ -1,0 +1,107 @@
+erDiagram
+  bookings ||--o{ payments : "is paid by"
+  payments ||--o{ refunds : "may have"
+  admin_users |o--o{ refunds : "approves"
+  partners ||--o{ partner_earnings : "earns"
+  bookings |o--o{ partner_earnings : "produces"
+  partners ||--o{ payouts : "receives"
+  payouts |o--o{ partner_earnings : "pays out"
+  bookings |o--o{ support_tickets : "is about"
+  customers |o--o{ support_tickets : "raises"
+  partners |o--o{ support_tickets : "raises"
+  admin_users |o--o{ support_tickets : "handles"
+  support_tickets ||--o{ ticket_messages : "has"
+  admin_users |o--o{ ticket_messages : "writes"
+  admin_users ||--o{ audit_log : "acts in"
+
+  bookings { bigint id PK
+    bigint customer_id FK
+    bigint partner_id FK
+    text status
+    numeric amount
+    numeric partner_earning
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  customers { bigint id PK
+    varchar mobile UK
+    text name
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partners { bigint id PK
+    varchar mobile UK
+    text name
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  payments { bigint id PK
+    bigint booking_id FK
+    text method
+    numeric amount
+    text status
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  refunds { bigint id PK
+    bigint payment_id FK
+    numeric amount
+    text reason
+    bigint approved_by FK
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partner_earnings { bigint id PK
+    bigint partner_id FK
+    bigint booking_id FK
+    text kind
+    numeric amount
+    bigint payout_id FK
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  payouts { bigint id PK
+    bigint partner_id FK
+    date period_start
+    date period_end
+    numeric amount
+    numeric fee
+    text status
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  admin_users { bigint id PK
+    text email UK
+    text name
+    timestamptz last_login_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  support_tickets { bigint id PK
+    bigint booking_id FK
+    bigint customer_id FK
+    bigint partner_id FK
+    text reason
+    text status
+    bigint assigned_to FK
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  ticket_messages { bigint id PK
+    bigint ticket_id FK
+    text sender
+    bigint admin_user_id FK
+    text body
+    boolean is_private_note
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  audit_log { bigint id PK
+    bigint admin_user_id FK
+    text action
+    text entity
+    bigint entity_id
+    jsonb detail
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }

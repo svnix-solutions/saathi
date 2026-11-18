@@ -1,25 +1,31 @@
 /** 88 Partner sign-ups */
 import React, { useState } from 'react';
 import { I, Modal, Tabs, useAdmin } from '../shell';
+import { docType, profession, requiredDocs, specializations, type ProfessionId } from '../../../data/professions';
 
 type Status = 'check' | 'filling' | 'sent' | 'approved' | 'rejected';
 type Ref = { name: string; phone: string; rel: string; ok: boolean };
 type Signup = {
   id: string; name: string; wait: string; late?: boolean; zone: string; note: string; status: Status;
   phone: string; email: string; lang: string; aadhaar: string; pan: string; refs: Ref[]; checks: boolean[]; reason?: string;
+  /** the work she signed up for; certificates come from the document rules on the professions page */
+  prof: ProfessionId; specs: string[];
 };
+/** Certificates the work needs, beyond Aadhaar and PAN. */
+const certsOf = (s: Signup) => requiredDocs(s.prof, s.specs).filter((r) => r.doc !== 'aadhaar' && r.doc !== 'pan').map((r) => ({ ...docType(r.doc), required: r.required }));
+const workOf = (s: Signup) => [profession(s.prof).name, ...s.specs.map((id) => specializations.find((x) => x.id === id)?.name)].join(' · ');
 
 const refsSunita: Ref[] = [
   { name: 'Kamla Devi', phone: '+91 98220 14567', rel: 'neighbour', ok: true },
   { name: 'Ramesh Kumar', phone: '+91 98765 43210', rel: 'past employer', ok: true },
 ];
 const signups0: Signup[] = [
-  { id: 'sunita', name: 'Sunita Devi', wait: '2 hr', zone: 'Block C', note: 'all 5 steps done', status: 'check', phone: '+91 98111 20034', email: 'sunita.devi@example.com', lang: 'Hindi', aadhaar: '4821', pan: 'ABCDE1234F', refs: refsSunita, checks: [true, true, true, false] },
-  { id: 'pooja', name: 'Pooja Verma', wait: '5 hr', zone: 'Block A', note: 'all 5 steps done', status: 'check', phone: '+91 98990 31245', email: 'pooja.v@example.com', lang: 'Hindi, English', aadhaar: '7310', pan: 'BQKPV5521L', refs: [{ name: 'Geeta Rawat', phone: '+91 99100 22341', rel: 'neighbour', ok: true }, { name: 'Anil Mehra', phone: '+91 98110 77812', rel: 'past employer', ok: true }], checks: [false, false, false, false] },
-  { id: 'lata', name: 'Lata Sharma', wait: '1 day', late: true, zone: 'Block D', note: 'PAN photo sent again', status: 'check', phone: '+91 97170 55420', email: 'lata.sharma@example.com', lang: 'Hindi', aadhaar: '1196', pan: 'CMRPS8830K', refs: [{ name: 'Usha Rani', phone: '+91 98180 66120', rel: 'neighbour', ok: true }, { name: 'Vikas Jain', phone: '+91 98731 40021', rel: 'past employer', ok: true }], checks: [false, true, true, false] },
-  { id: 'meena', name: 'Meena Kumari', wait: '', zone: 'Block B', note: '1 of 2 references confirmed', status: 'filling', phone: '+91 96500 11872', email: 'meena.k@example.com', lang: 'Hindi', aadhaar: '5502', pan: '—', refs: [{ name: 'Savita', phone: '+91 98100 22110', rel: 'neighbour', ok: true }, { name: 'Raj Malhotra', phone: '+91 98111 99001', rel: 'past employer', ok: false }], checks: [false, false, false, false] },
-  { id: 'asha', name: 'Asha Rani', wait: '', zone: 'Sector 18', note: 'Aadhaar back side missing', status: 'filling', phone: '+91 95600 77341', email: 'asha.rani@example.com', lang: 'Hindi, Punjabi', aadhaar: '—', pan: 'DLPPR2210M', refs: [{ name: 'Kusum', phone: '+91 98720 31010', rel: 'neighbour', ok: true }, { name: 'Neha Arora', phone: '+91 99580 11223', rel: 'past employer', ok: true }], checks: [false, false, false, false] },
-  { id: 'rita', name: 'Rita Kaur', wait: '', zone: 'Sector 21', note: 'Asked: photo not clear', status: 'sent', reason: 'Photo not clear', phone: '+91 98880 41001', email: 'rita.kaur@example.com', lang: 'Punjabi, Hindi', aadhaar: '6634', pan: 'EKKPK4410Q', refs: refsSunita, checks: [false, true, true, false] },
+  { id: 'sunita', prof: 'house_help', specs: ['deep_clean'], name: 'Sunita Devi', wait: '2 hr', zone: 'Block C', note: 'all 5 steps done', status: 'check', phone: '+91 98111 20034', email: 'sunita.devi@example.com', lang: 'Hindi', aadhaar: '4821', pan: 'ABCDE1234F', refs: refsSunita, checks: [true, true, true, false] },
+  { id: 'pooja', prof: 'nurse', specs: ['elderly'], name: 'Pooja Verma', wait: '5 hr', zone: 'Block A', note: 'all 5 steps done', status: 'check', phone: '+91 98990 31245', email: 'pooja.v@example.com', lang: 'Hindi, English', aadhaar: '7310', pan: 'BQKPV5521L', refs: [{ name: 'Geeta Rawat', phone: '+91 99100 22341', rel: 'neighbour', ok: true }, { name: 'Anil Mehra', phone: '+91 98110 77812', rel: 'past employer', ok: true }], checks: [false, false, false, false] },
+  { id: 'lata', prof: 'house_help', specs: [], name: 'Lata Sharma', wait: '1 day', late: true, zone: 'Block D', note: 'PAN photo sent again', status: 'check', phone: '+91 97170 55420', email: 'lata.sharma@example.com', lang: 'Hindi', aadhaar: '1196', pan: 'CMRPS8830K', refs: [{ name: 'Usha Rani', phone: '+91 98180 66120', rel: 'neighbour', ok: true }, { name: 'Vikas Jain', phone: '+91 98731 40021', rel: 'past employer', ok: true }], checks: [false, true, true, false] },
+  { id: 'meena', prof: 'house_help', specs: ['cooking'], name: 'Meena Kumari', wait: '', zone: 'Block B', note: '1 of 2 references confirmed', status: 'filling', phone: '+91 96500 11872', email: 'meena.k@example.com', lang: 'Hindi', aadhaar: '5502', pan: '—', refs: [{ name: 'Savita', phone: '+91 98100 22110', rel: 'neighbour', ok: true }, { name: 'Raj Malhotra', phone: '+91 98111 99001', rel: 'past employer', ok: false }], checks: [false, false, false, false] },
+  { id: 'asha', prof: 'barber', specs: ['men', 'kids'], name: 'Asha Rani', wait: '', zone: 'Sector 18', note: 'Aadhaar back side missing', status: 'filling', phone: '+91 95600 77341', email: 'asha.rani@example.com', lang: 'Hindi, Punjabi', aadhaar: '—', pan: 'DLPPR2210M', refs: [{ name: 'Kusum', phone: '+91 98720 31010', rel: 'neighbour', ok: true }, { name: 'Neha Arora', phone: '+91 99580 11223', rel: 'past employer', ok: true }], checks: [false, false, false, false] },
+  { id: 'rita', prof: 'home_service', specs: ['electrician'], name: 'Rita Kaur', wait: '', zone: 'Sector 21', note: 'Asked: photo not clear', status: 'sent', reason: 'Photo not clear', phone: '+91 98880 41001', email: 'rita.kaur@example.com', lang: 'Punjabi, Hindi', aadhaar: '6634', pan: 'EKKPK4410Q', refs: refsSunita, checks: [false, true, true, false] },
 ];
 const checkLabels = ['Photos are clear and uncut', 'Name matches on both cards', 'Face matches the profile photo', 'Police verification started'];
 const reasons = ['Photo not clear', 'Name does not match', 'Card cut off', 'Wrong document'];
@@ -92,14 +98,14 @@ export function Signups(_: { params: Record<string, any> }) {
       </div>
 
       {sel ? <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-        <div className="row"><div><div className="h2" style={{ fontSize: 16 }}>{sel.name}</div><div className="s m">{sel.phone} · {sel.email} · {sel.zone} · {sel.lang}</div></div><span className="tag n">Mobile verified</span></div>
+        <div className="row"><div><div className="h2" style={{ fontSize: 16 }}>{sel.name}</div><div className="s m">{sel.phone} · {sel.email} · {sel.zone} · {sel.lang}</div><div className="s"><b>Work:</b> {workOf(sel)}</div></div><span className="tag n">Mobile verified</span></div>
         <div className="hr" />
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
-          {['Aadhaar front', 'Aadhaar back', 'PAN card'].map((d) => {
+          {['Aadhaar front', 'Aadhaar back', 'PAN card', ...certsOf(sel).map((c) => c.name)].map((d) => {
             const missing = (d === 'Aadhaar back' && sel.id === 'asha') || (d === 'PAN card' && sel.id === 'meena');
             return (
               <div key={d} className="s clk" onClick={() => missing ? toast(`${d} not uploaded yet`) : setPhoto(d)}
-                style={{ height: 92, borderRadius: 11, background: missing ? 'var(--white)' : 'var(--mint)', border: missing ? '1.5px dashed var(--line)' : 0, display: 'grid', placeItems: 'center', color: missing ? 'var(--mut)' : 'var(--green)', textAlign: 'center' }}>
+                style={{ height: certsOf(sel).length ? 72 : 92, borderRadius: 11, background: missing ? 'var(--white)' : 'var(--mint)', border: missing ? '1.5px dashed var(--line)' : 0, display: 'grid', placeItems: 'center', color: missing ? 'var(--mut)' : 'var(--green)', textAlign: 'center' }}>
                 <div><I n="cam" /><div>{d}</div>{missing && <div>Not uploaded</div>}</div>
               </div>);
           })}
@@ -107,6 +113,10 @@ export function Signups(_: { params: Record<string, any> }) {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div className="card" style={{ padding: '9px 11px' }}><div className="s m">Aadhaar</div><b style={{ letterSpacing: '.1em' }}>XXXX XXXX {sel.aadhaar}</b><div className="s m">Name on card: {sel.name}</div></div>
           <div className="card" style={{ padding: '9px 11px' }}><div className="s m">PAN</div><b style={{ letterSpacing: '.1em' }}>{sel.pan}</b><div className="s m">Name on card: {sel.name}</div></div>
+          {certsOf(sel).map((c) => (
+            <div key={c.id} className="card" style={{ padding: '9px 11px' }}><div className="s m">{c.name}{!c.required && ' · optional'}</div>
+              <b style={{ letterSpacing: c.asksNumber ? '.1em' : undefined }}>{c.asksNumber ? (c.id === 'nursing_registration' ? 'DNC-2019-04417' : 'WM-DL-88213') : 'Uploaded'}</b>
+              <div className="s m">{c.asksExpiry ? 'Valid till Mar 2028' : c.help}</div></div>))}
         </div>
         <div className="h2">Checks</div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 7 }} className="s">
@@ -149,9 +159,9 @@ export function Signups(_: { params: Record<string, any> }) {
 
     <Modal open={!!photo} onClose={() => setPhoto(null)} title={`${photo} · ${sel?.name}`} actions={<><button className="btn o sm" onClick={() => { setPhoto(null); setWhy((w) => (w.includes('Photo not clear') ? w : [...w, 'Photo not clear'])); }}>Not clear</button><button className="btn sm" onClick={() => setPhoto(null)}>Looks fine</button></>}>
       <div style={{ height: 220, borderRadius: 14, background: 'var(--mint)', display: 'grid', placeItems: 'center', color: 'var(--green)', textAlign: 'center' }} className="s">
-        <div><I n="cam" style={{ width: 34, height: 34 }} /><div style={{ marginTop: 6 }}>{photo}</div><div className="m">{photo === 'PAN card' ? sel?.pan : `XXXX XXXX ${sel?.aadhaar}`} · {sel?.name}</div></div>
+        <div><I n="cam" style={{ width: 34, height: 34 }} /><div style={{ marginTop: 6 }}>{photo}</div><div className="m">{photo === 'PAN card' ? sel?.pan : photo?.startsWith('Aadhaar') ? `XXXX XXXX ${sel?.aadhaar}` : 'Certificate'} · {sel?.name}</div></div>
       </div>
-      <div className="s m">Check the photo is sharp, all four corners show, and the name matches the details.</div>
+      <div className="s m">Check the photo is sharp, all four corners show, and the name matches the details. A certificate must also show the course or council.</div>
     </Modal>
     <Modal open={reject} onClose={() => setReject(false)} title={`Reject ${sel?.name}?`}
       actions={<><button className="btn o sm" onClick={() => setReject(false)}>Keep</button><button className="btn r sm" onClick={() => {

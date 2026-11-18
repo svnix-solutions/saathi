@@ -7,7 +7,7 @@ import {
 } from '@/native/ui';
 import { decisions, rupees } from '@/data/decisions';
 import { PartnerTabs } from '../chrome';
-import { Big, Page, Plain, TopBar, TopH, TopH2, TopT, defaultToday, leftLabel, mmss, useCountdown, useJobClock, type V1State } from './kit';
+import { Big, Page, Plain, TopBar, TopH, TopH2, TopT, defaultToday, leftLabel, mmss, useCountdown, useJobClock, jobReset, type V1State } from './kit';
 
 /** The job that rings on Home (design screen 10). */
 export const newJob = {
@@ -104,7 +104,7 @@ export function JobRequest() {
     nav.toast(t('Missed: the job went to another partner', 'छूट गया: काम दूसरे पार्टनर को गया'));
   }, [left]);
   const accept = () => {
-    set({ job: { ...job, done: [] }, offer: undefined, offerShown: true, selfieIn: false, selfieOut: false, jobEndsAt: undefined, photos: undefined });
+    set({ ...jobReset, job: { ...job, done: [] }, offer: undefined, offerShown: true });
     nav.replace('checkIn');
     nav.toast(t('Job accepted. Head to Block C.', 'काम मंज़ूर। ब्लॉक सी जाएँ।'));
   };
@@ -153,12 +153,12 @@ export function FinishButton({ label, labelHi, pad = 16, size = 15 }: { label: s
   const missing = st.job.tasks.filter((x) => !st.job.done.includes(x));
   return (
     <>
-      <Big pad={pad} size={size} onPress={() => (missing.length ? setAsk(true) : nav.push('checkOut'))}>{t(label, labelHi)}</Big>
+      <Big pad={pad} size={size} onPress={() => (missing.length ? setAsk(true) : nav.push('finishCode'))}>{t(label, labelHi)}</Big>
       <Sheet visible={ask} onClose={() => setAsk(false)}>
         <H2>{t(`${missing.length} task not ticked`, `${missing.length} काम पर टिक नहीं`)}</H2>
         <T s m>{missing.map((x) => t(x, taskHi[x])).join(', ')}. {t('Tick it if it is done, or tell the customer why.', 'हो गया हो तो टिक करें, नहीं तो ग्राहक को कारण बताएँ।')}</T>
         <Big onPress={() => setAsk(false)}>{t('Keep working', 'काम जारी रखें')}</Big>
-        <Plain onPress={() => { setAsk(false); nav.push('checkOut'); }}>{t('Finish anyway', 'फिर भी खत्म करें')}</Plain>
+        <Plain onPress={() => { setAsk(false); nav.push('finishCode'); }}>{t('Finish anyway', 'फिर भी खत्म करें')}</Plain>
       </Sheet>
     </>
   );

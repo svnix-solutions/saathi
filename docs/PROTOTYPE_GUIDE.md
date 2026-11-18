@@ -1,11 +1,10 @@
 # Saathi prototype — build guide
 
 The product is **Saathi** (customer app), **Saathi Partner** (helper app) and **Saathi Admin** (web panel).
-The design source still says "KleanKart": always write **Saathi** / **Saathi Partner** / **Saathi Admin** instead.
 
-- Design source of truth: `docs/design/kleankart-design.html` (one `<section class="page">` per design page; the
-  `<!-- NN. NAME -->` comments mark sections). Rendered PDFs for looking at the pages: `docs/design/customer-app.pdf`,
-  `worker-app.pdf`, `admin-panel.pdf` (Read tool with `pages:`). Launch values: `src/data/decisions.ts`.
+- Design source of truth: `web/design/saathi-design.html` (one `<section class="page">` per design page; the
+  `<!-- NN. NAME -->` comments mark sections). Rendered PDFs for looking at the pages: `web/design/customer-app.pdf`,
+  `worker-app.pdf`, `admin-panel.pdf` (Read tool with `pages:`; make them with `python3 web/design/build.py`, they are not in git). Launch values: `src/data/decisions.ts`.
 - Stack: Storybook 10 with `@storybook/react-native-web-vite`. Customer and Partner apps are **React Native**
   (rendered on web via react-native-web). The admin panel is **React DOM**.
 - Storybook dev server is already running on http://localhost:6006. Do not start or stop it.

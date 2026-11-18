@@ -1,0 +1,11 @@
+# Netlify demo of the Saathi prototype, design and website. Deployed by ./demo.sh (see the comment there).
+[build]
+  # the demo is built by demo.sh before deploying; Netlify's build step only packages the login function
+  command = "true"
+  publish = "site"
+  edge_functions = "netlify/edge-functions"
+
+# Every path, pages and PDFs alike, asks for the demo login first.
+[[edge_functions]]
+  path = "/*"
+  function = "auth"

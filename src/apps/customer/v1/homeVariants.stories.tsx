@@ -5,7 +5,7 @@ import { CustomerApp } from '../App';
 
 /** The home screen under four conditions it must survive at launch. */
 const meta: Meta = {
-  title: 'Customer app/V1 · Launch/06 Small phones, large text, Hindi and dark mode',
+  title: 'Customer app/V1 · Launch/08 Small phones, large text, Hindi and dark mode',
   parameters: { layout: 'centered' },
 };
 export default meta;

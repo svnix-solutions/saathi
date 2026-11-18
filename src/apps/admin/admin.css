@@ -1,4 +1,4 @@
-/* Saathi admin panel styles — ported from docs/design/kleankart-design.html, scoped under .sa.
+/* Saathi admin panel styles — ported from web/design/saathi-design.html, scoped under .sa.
    Write admin JSX with the same class names the design uses (card, row, lft, tag g/n/x/r, btn o, kpi, stat, tbs, pg, ...). */
 .sa { --green:#0b5d4b; --green-d:#073f33; --mint:#e3f2ec; --yellow:#ffc93c; --ink:#0f1f1c; --mut:#5b6b67; --line:#dbe5e1; --bg:#f3f7f5; --white:#fff; --red:#b3261e;
   color:var(--ink); font:12px/1.4 "Avenir Next","Helvetica Neue",Arial,sans-serif; font-variant-numeric:tabular-nums; box-sizing:border-box; }
@@ -169,3 +169,7 @@
 .sa .modal { background:#fff; border-radius:18px; padding:22px; width:440px; max-width:calc(100vw - 32px); display:grid; gap:12px; box-shadow:0 30px 60px -20px rgba(7,63,51,.5); }
 .sa .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:11px 18px; border-radius:12px; font-weight:600; z-index:60; }
 .sa .side.mini { width:64px; } .sa .side.mini .lbl, .sa .side.mini .sg, .sa .side.mini .nb { display:none; }
+
+/* sub-pages listed under an open sidebar item (Pricing & zones → Services, Professions, Zones) */
+.sa .side .nav.sub {padding:5px 10px 5px 40px; font-size:12px; font-weight:500; opacity:.85;}
+.sa .side .nav.sub.on {background:none; box-shadow:none; color:#fff; font-weight:700; opacity:1;}

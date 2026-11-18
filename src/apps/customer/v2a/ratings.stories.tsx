@@ -4,7 +4,7 @@ import { PhoneRow } from '@/native/ui';
 import { CustomerApp } from '../App';
 
 const meta: Meta = {
-  title: 'Customer app/V2/13 Ratings, reviews and rewards',
+  title: 'Customer app/V2/15 Ratings, reviews and rewards',
   parameters: { layout: 'centered' },
 };
 export default meta;

@@ -13,12 +13,15 @@ Tabs (reset the stack): `home`, `bookings`, `account`
 | signin.otp | 2 SMS code (correct code in the prototype: 4821, anything else shows the error) |
 | signin.name | 3 New customer: name |
 | signin.address | 4 New customer: address |
-| home | 5 Home |
+| home | 5 Home, with Cleaning / Nursing / Repair / Barber on top (params: { category }) |
 | chores | 6 Choose chores (params: { service }) |
 | time | 7 Duration and time |
 | confirm | 8 Confirm and pay |
 | tracking | 9 Helper on the way |
+| tracking (params: { arrived: true }) | 9b Start code at the door |
 | inProgress | 10 Job in progress |
+| visit.finish | 9d Two finish codes (happy 3907 / not happy 6154) |
+| visit.notHappy | 9e After the not-happy code |
 | rate | 11 Rate and tip |
 | bookings | 12 My bookings |
 | addresses | 13 Addresses and home details |

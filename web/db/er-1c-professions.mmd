@@ -1,0 +1,86 @@
+erDiagram
+  professions ||--o{ specializations : "has"
+  professions ||--o{ skills : "has"
+  professions ||--o{ partners : "work of"
+  professions |o--o{ services : "done by"
+  specializations |o--o{ services : "narrows"
+  partners ||--o{ partner_specializations : "holds"
+  specializations ||--o{ partner_specializations : "held in"
+  partners ||--o{ partner_skills : "ticks"
+  skills ||--o{ partner_skills : "ticked in"
+  document_types ||--o{ document_requirements : "asked by"
+  professions |o--o{ document_requirements : "needs"
+  specializations |o--o{ document_requirements : "needs"
+  document_types ||--o{ partner_documents : "kind of"
+  partners ||--o{ partner_documents : "uploads"
+
+  professions { bigint id PK
+    text code UK
+    text name
+    boolean is_live
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  specializations { bigint id PK
+    bigint profession_id FK
+    text code
+    text name
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  skills { bigint id PK
+    bigint profession_id FK
+    text code
+    text name
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partners { bigint id PK
+    text name
+    bigint profession_id FK
+    text status
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  services { bigint id PK
+    text code UK
+    bigint profession_id FK
+    bigint specialization_id FK
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partner_specializations { bigint partner_id PK,FK
+    bigint specialization_id PK,FK
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partner_skills { bigint partner_id PK,FK
+    bigint skill_id PK,FK
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  document_types { bigint id PK
+    text code UK
+    text name
+    boolean has_back_side
+    boolean asks_number
+    boolean asks_expiry
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  document_requirements { bigint id PK
+    bigint document_type_id FK
+    bigint profession_id FK
+    bigint specialization_id FK
+    boolean is_mandatory
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }
+  partner_documents { bigint id PK
+    bigint partner_id FK
+    bigint document_type_id FK
+    text status
+    date expires_at
+    timestamptz created_at
+    timestamptz last_modified
+    boolean is_active }

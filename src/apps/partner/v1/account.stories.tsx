@@ -3,7 +3,7 @@ import React from 'react';
 import { PhoneRow } from '@/native/ui';
 import { PartnerApp } from '../App';
 
-const meta: Meta = { title: 'Partner app/V1 · Launch/24 My profile, bank account and alerts', parameters: { layout: 'centered' } };
+const meta: Meta = { title: 'Partner app/V1 · Launch/27 My profile, bank account and alerts', parameters: { layout: 'centered' } };
 export default meta;
 type S = StoryObj;
 
