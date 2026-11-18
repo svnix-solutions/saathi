@@ -3,18 +3,11 @@ import React from 'react';
 import { Pressable, View } from 'react-native';
 import { H2, Icon, Pill, Row, Sheet, T, Button, palette, useNav, useTheme, useAppState } from '@/native/ui';
 import { decisions, rupees } from '@/data/decisions';
-import type { CustomerState } from '../chrome';
+import { useCustomerState, type CustomerState } from '../state';
 
-/** Extra optional state used by the v2a screens. */
-export type V2State = CustomerState & {
-  walletBalance?: number;
-  points?: number;
-  favourites?: string[];
-  blocked?: string[];
-  supplies?: Record<string, number>;
-  readAlerts?: number[];
-};
-export const useV2 = () => useAppState<V2State>();
+/** @deprecated use CustomerState / useCustomerState from '../state'. */
+export type V2State = CustomerState;
+export const useV2 = useCustomerState;
 
 export const visitPrice = decisions.prices.general * 2; // 1 hr general cleaning = ₹158
 export { rupees };

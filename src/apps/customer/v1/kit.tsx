@@ -3,30 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { Hr, Icon, Row, T, useTheme, useAppState, type IconName } from '@/native/ui';
 import { services, priceFor, type ServiceId } from '@/data/decisions';
-import type { CustomerState } from '../chrome';
+import { defaultUpcoming, useCustomerState, type CustomerState } from '../state';
 
-/** v1 adds a few optional fields to the shared CustomerState. */
-export type V1State = CustomerState & {
-  /** confirm screen: UPI fails once when true (default false) */
-  simulatePaymentFail?: boolean;
-  paymentFailedOnce?: boolean;
-  /** minutes added during the visit */
-  extraMinutes?: number;
-  /** scheduled day when `when` is 'later' */
-  day?: 'today' | 'tomorrow' | 'wed';
-  /** the upcoming sample booking (bookings / changeBooking) */
-  upcoming?: { service: ServiceId; minutes: number; slot: string; slotHi: string; helper: string } | null;
-  /** set once the visit is rated */
-  lastVisit?: { service: ServiceId; minutes: number; price: number };
-  homeSize?: '1' | '2' | '3';
-  bathrooms?: number;
-  pets?: boolean;
-  elderly?: boolean;
-  email?: string;
-};
-export const useV1 = () => useAppState<V1State>();
-
-export const defaultUpcoming = { service: 'kitchenBath' as ServiceId, minutes: 120, slot: 'Tomorrow · 10:00 am', slotHi: 'कल · सुबह 10:00', helper: 'Rekha M.' };
+/** @deprecated use CustomerState / useCustomerState from '../state'. */
+export type V1State = CustomerState;
+export const useV1 = useCustomerState;
+export { defaultUpcoming };
 
 /** Service names as the v1 design writes them (Hindi from design page 18). */
 const svcHi: Record<ServiceId, string> = {

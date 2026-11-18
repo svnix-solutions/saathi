@@ -8,65 +8,11 @@ import {
   Button, Check, H, H2, Icon, Row, T, ThemeProvider, TopBar, palette, useAppState, useTheme, type IconName, type Locale,
 } from '@/native/ui';
 import { font } from '@/tokens';
-import type { PartnerState } from '../chrome';
-import { codes } from '@/data/decisions';
+import { defaultToday, jobReset, useJobClock, useStartCode, type PartnerState, type PayLine } from '../state';
 
-/** Everything that belongs to one job. Cleared when a job is accepted and when it is closed, so tries and
- *  photos from one job never carry into the next. */
-export const jobReset = {
-  selfieIn: false, selfieOut: false, jobEndsAt: undefined, photos: undefined, familyLive: false,
-  startTries: 0, startVerified: false, finishTries: 0,
-};
-
-/** The customer's start code, used by check-in and the start-code screen: 5 tries per job, then only support can start it. */
-export function useStartCode(right: string = codes.start) {
-  const [st, set] = useAppState<PartnerState>();
-  const [code, setCode] = useState('');
-  const [wrong, setWrong] = useState(false);
-  const tries = st.startTries ?? 0;
-  const left = codes.maxTries - tries;
-  /** true when the code matches; a miss uses one try and clears the boxes */
-  const verify = () => {
-    if (code === right) { set({ startVerified: true, startTries: 0 }); return true; }
-    set({ startTries: tries + 1 }); setWrong(true); setCode('');
-    return false;
-  };
-  const type = (v: string) => { setCode(v); setWrong(false); };
-  return { code, type, wrong, left, locked: left <= 0, verified: !!st.startVerified, verify };
-}
-
-/** Today's list on the earnings screen. */
-export type PayLine = { title: string; titleHi: string; sub: string; amt: number; tip?: boolean };
-
-/** Extra optional fields this area keeps in the shared partner state. */
-export type V1State = PartnerState & {
-  locale?: Locale;
-  /** auto-ring a new job ~4 s after Home opens online (off on design pages) */
-  autoOffer?: boolean;
-  offerShown?: boolean;
-  jobsToday?: number;
-  earnedToday?: number;
-  week?: number;
-  weekJobs?: number;
-  today?: PayLine[];
-  email?: string;
-  area?: string;
-  emergency?: string;
-  ref2?: { name: string; phone: string; rel: string };
-  selfieIn?: boolean;
-  selfieOut?: boolean;
-  jobEndsAt?: number;
-  checkedInAt?: string;
-  photos?: string[];
-  alertsRead?: string[];
-  familyLive?: boolean;
-};
-
-export const defaultToday: PayLine[] = [
-  { title: 'General cleaning', titleHi: 'सामान्य सफ़ाई', sub: '11:10 am · 1 hr', amt: 126 },
-  { title: 'Dishes & meal prep', titleHi: 'बर्तन और खाना तैयारी', sub: '9:00 am · 1.5 hr', amt: 189 },
-  { title: 'Tip from customer', titleHi: 'ग्राहक से टिप', sub: '11:15 am', amt: 50, tip: true },
-];
+/** @deprecated use PartnerState / usePartnerState from '../state'. */
+export type V1State = PartnerState;
+export { defaultToday, jobReset, useJobClock, useStartCode, type PayLine };
 
 /** Re-provides the theme with the language the partner picked in the app (st.locale). */
 export function withLang<P extends object>(C: React.ComponentType<P>) {
@@ -166,15 +112,6 @@ export function useCountdown(from: number, running = true) {
   return [left, setLeft] as const;
 }
 
-/** Seconds left on the current job. Uses st.jobEndsAt when set, else starts at 38:12 (the design's value). */
-export function useJobClock() {
-  const [st] = useAppState<V1State>();
-  const fallback = useRef(Date.now() + 2292 * 1000);
-  const ends = st.jobEndsAt ?? fallback.current;
-  const [now, setNow] = useState(Date.now());
-  useEffect(() => { const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id); }, []);
-  return Math.max(0, Math.round((ends - now) / 1000));
-}
 export const leftLabel = (sec: number, hi: boolean) => (hi ? `${mmss(sec)} बाकी` : `${mmss(sec)} left`);
 
 /** Round icon badge (the 64px `.ic` circles on the quiet/error screens). */
