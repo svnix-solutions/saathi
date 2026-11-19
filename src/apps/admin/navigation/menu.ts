@@ -1,5 +1,6 @@
 import type { IconName } from '../ui/Icon/Icon';
 import type { Section } from './types';
+import { rxWaiting } from '../features/care';
 
 export type MenuSub = { page: string; label: string };
 
@@ -9,7 +10,7 @@ export type MenuItem = {
   icon: IconName;
   /** page opened by the item */
   home: string;
-  /** yellow count on the right */
+  /** yellow count on the right (a getter keeps it live, e.g. Care's prescriptions waiting) */
   badge?: number;
   /** draw the badge pink (urgent) */
   badgeRed?: boolean;
@@ -19,11 +20,18 @@ export type MenuItem = {
 
 export type MenuGroup = { group: string; items: MenuItem[] };
 
-/** The sidebar: three groups, 13 sections. */
+/** The sidebar: three groups, 14 sections. */
 export const menu: MenuGroup[] = [
   { group: 'Operations', items: [
     { key: 'dashboard', label: 'Dashboard', icon: 'home', home: 'dashboard' },
     { key: 'bookings', label: 'Bookings', icon: 'list', home: 'bookings', badge: 2 },
+    { key: 'care', label: 'Care', icon: 'plus', home: 'care',
+      /** prescriptions waiting for review; read at render so approving one lowers it */
+      get badge() { return rxWaiting() || undefined; },
+      subs: [
+        { page: 'care', label: 'Overview' }, { page: 'care.prescriptions', label: 'Prescriptions' }, { page: 'care.plans', label: 'Care plans' },
+        { page: 'care.staff', label: 'Clinical staff' }, { page: 'care.incidents', label: 'Incidents' },
+      ] },
     { key: 'live', label: 'Live map', icon: 'pin', home: 'live' },
     { key: 'safety', label: 'Safety', icon: 'shield', home: 'safety', badge: 1, badgeRed: true },
     { key: 'automation', label: 'Automation', icon: 'bolt', home: 'smart' },

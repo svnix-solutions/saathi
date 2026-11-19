@@ -1,0 +1,78 @@
+/* Saathi Care feature (overview, prescriptions, plans, clinical staff, incidents). Every selector is scoped under .sa
+   and prefixed care-. Where a rule overrides a design class (.card padding, .h2 size…), it repeats that class. */
+
+/* page bodies: the columns under the title row */
+.sa .care-body { display:grid; gap:14px; flex:1; min-height:0; align-items:start; }
+.sa .care-body-overview { grid-template-columns:minmax(0,1.65fr) minmax(0,1fr); }
+.sa .care-body-rx { grid-template-columns:minmax(0,.9fr) minmax(0,1.45fr) minmax(0,.9fr); }
+.sa .care-body-side { grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); }
+.sa .care-side { display:flex; flex-direction:column; gap:14px; }
+.sa .care-panel { display:flex; flex-direction:column; gap:9px; }
+
+/* titles and small text */
+.sa .h2.care-title { font-size:15px; }
+.sa .h2.care-name { font-size:17px; }
+.sa .care-head { padding:0 10px 8px; gap:10px; flex-wrap:wrap; }
+.sa .care-sub { font-size:11.5px; }
+.sa .care-nowrap { white-space:nowrap; }
+.sa .lft.care-wrap { flex-wrap:wrap; gap:6px; }
+.sa .care-actions { display:flex; gap:8px; flex-wrap:wrap; }
+.sa .care-actions > .btn { flex:1; }
+.sa .care-list { display:grid; gap:8px; }
+
+/* list items (prescription queue, plans at risk) */
+.sa .card.care-item { padding:10px 12px; display:grid; gap:4px; cursor:pointer; }
+.sa .card.care-item:hover { border-color:var(--green); }
+.sa .card.care-item.sel { border-color:var(--green); background:var(--mint); }
+.sa .card.care-risk { padding:11px 12px; display:grid; gap:8px; border-color:var(--red); }
+.sa .care-risk b.care-missed { color:var(--red); }
+
+/* key/value grid in detail cards */
+.sa .care-kv { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:10px; }
+.sa .card.care-cell { padding:9px 11px; display:grid; gap:2px; }
+.sa .card.care-callout { background:var(--yellow); border:0; padding:9px 11px; }
+.sa .card.care-alert { border-color:var(--red); background:#fdf1ef; padding:9px 11px; }
+.sa .care-alert b { color:var(--red); }
+.sa .card.care-quote { background:var(--bg); padding:10px 12px; font-style:italic; }
+
+/* prescription photo placeholder */
+.sa .care-photo { position:relative; height:230px; border-radius:14px; background:var(--white); border:1.5px solid var(--line); overflow:hidden;
+  display:grid; grid-template-rows:auto 1fr auto; padding:16px 18px; gap:8px; color:var(--ink); }
+.sa .care-photo.care-photo-blurry > * { filter:blur(2.2px); }
+.sa .care-photo.care-photo-cut { clip-path:inset(0 0 26% 0); }
+.sa .care-photo-head { display:flex; justify-content:space-between; border-bottom:1.5px solid var(--green); padding-bottom:6px; }
+.sa .care-photo-rx { font:italic 700 22px Georgia,serif; color:var(--green); }
+.sa .care-photo-lines { display:grid; gap:7px; align-content:start; font-family:"Bradley Hand","Segoe Script",cursive; font-size:14px; overflow-wrap:anywhere; min-width:0; }
+.sa .care-photo-sign { justify-self:end; font-family:"Bradley Hand","Segoe Script",cursive; font-size:13px; border-top:1px solid var(--mut); padding-top:3px; }
+.sa .care-photo.care-photo-tall { height:320px; }
+
+/* checklist */
+.sa .care-checks { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+
+/* reason chips */
+.sa .pill.care-chip { padding:6px 10px; font-size:12px; }
+.sa .pill.care-chip.sel { border-color:var(--green); background:var(--mint); color:var(--green); }
+
+/* progress cell in the plans table */
+.sa .care-progress { display:grid; gap:4px; min-width:120px; }
+
+/* side drawer for one plan */
+.sa .care-drawer-bg { position:fixed; inset:0; background:rgba(15,31,28,.35); z-index:40; display:flex; justify-content:flex-end; }
+.sa .care-drawer { width:460px; max-width:100vw; height:100%; background:var(--white); padding:20px 22px; display:flex; flex-direction:column; gap:12px;
+  box-shadow:-30px 0 60px -30px rgba(7,63,51,.5); overflow:auto; }
+.sa .care-sessions { display:grid; gap:0; border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+.sa .care-session { display:grid; grid-template-columns:28px 1fr auto auto; gap:10px; align-items:center; padding:7px 10px; border-bottom:1px solid var(--line); }
+.sa .care-session:last-child { border-bottom:0; }
+.sa .care-session.care-session-today { background:var(--mint); }
+.sa .care-session-n { color:var(--mut); font-weight:700; text-align:right; }
+
+/* staff picker in the reassign modal */
+.sa .care-pick { display:grid; gap:7px; max-height:280px; overflow:auto; }
+.sa .card.care-pick-row { padding:9px 11px; display:grid; grid-template-columns:auto 1fr 90px; gap:10px; align-items:center; cursor:pointer; }
+.sa .card.care-pick-row.sel { border-color:var(--green); background:var(--mint); }
+
+/* tables: small tags inside cells */
+.sa td .tag + .tag { margin-left:4px; }
+.sa td.care-wrapcell { white-space:normal; }
+.sa .care-specs { min-width:110px; }
+.sa .care-util { display:grid; grid-template-columns:1fr 34px; gap:8px; align-items:center; min-width:110px; }

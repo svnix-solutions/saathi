@@ -15,6 +15,11 @@ export type RouteInfo = {
 export const routeTable: Record<string, RouteInfo> = {
   "dashboard": { release: 'v1', designPage: 5, feature: 'operations', title: "Live operations" },
   "partners": { release: 'v1', designPage: 6, feature: 'partners', title: "Partners and pricing" },
+  "care": { release: 'v2', designPage: 39, feature: 'care', title: "Saathi Care overview" },
+  "care.prescriptions": { release: 'v2', designPage: 39, feature: 'care', title: "Care prescriptions to review" },
+  "care.plans": { release: 'v2', designPage: 39, feature: 'care', title: "Care plans" },
+  "care.staff": { release: 'v2', designPage: 39, feature: 'care', title: "Clinical staff" },
+  "care.incidents": { release: 'v2', designPage: 39, feature: 'care', title: "Clinical incidents and doctor reviews" },
   "professions": { release: 'v1', designPage: 51, feature: 'partners', title: "Professions, skills and documents" },
   "login": { release: 'v1', designPage: 70, feature: 'auth', title: "Sign in" },
   "payouts": { release: 'v1', designPage: 71, feature: 'finance', title: "Payouts, offers and support" },

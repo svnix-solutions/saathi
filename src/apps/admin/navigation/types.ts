@@ -2,7 +2,7 @@ import type React from 'react';
 
 /** Sidebar sections. A page belongs to one; roles open sections (see `session/roles.ts`). */
 export type Section =
-  | 'dashboard' | 'bookings' | 'live' | 'safety' | 'automation'
+  | 'dashboard' | 'bookings' | 'care' | 'live' | 'safety' | 'automation'
   | 'partners' | 'customers' | 'ratings'
   | 'pricing' | 'payouts' | 'campaigns' | 'support' | 'team';
 

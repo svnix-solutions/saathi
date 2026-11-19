@@ -12,6 +12,7 @@ import { routes as membership } from '../features/membership';
 import { routes as community } from '../features/community';
 import { routes as support } from '../features/support';
 import { routes as status } from '../features/status';
+import { routes as care } from '../features/care';
 
 /** Every screen by route name, collected from the features. Route names are a fixed contract. */
-export const customerRoutes: RouteMap = { ...auth, ...home, ...booking, ...visit, ...bookings, ...helpers, ...ratings, ...account, ...wallet, ...membership, ...community, ...support, ...status };
+export const customerRoutes: RouteMap = { ...auth, ...home, ...booking, ...visit, ...bookings, ...helpers, ...ratings, ...account, ...wallet, ...membership, ...community, ...support, ...status, ...care };

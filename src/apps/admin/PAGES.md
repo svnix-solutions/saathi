@@ -7,6 +7,11 @@ visual-regression harness use them. Use them with `useAdmin().go(name, params)`.
 |---|---|---|---|---|
 | `dashboard` | v1 | 5 | operations | Live operations |
 | `partners` | v1 | 6 | partners | Partners and pricing |
+| `care` | v2 | 39 | care | Saathi Care overview |
+| `care.prescriptions` | v2 | 39 | care | Care prescriptions to review |
+| `care.plans` | v2 | 39 | care | Care plans |
+| `care.staff` | v2 | 39 | care | Clinical staff |
+| `care.incidents` | v2 | 39 | care | Clinical incidents and doctor reviews |
 | `professions` | v1 | 51 | partners | Professions, skills and documents |
 | `login` | v1 | 70 | auth | Sign in |
 | `payouts` | v1 | 71 | finance | Payouts, offers and support |
