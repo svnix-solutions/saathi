@@ -1,14 +1,14 @@
-/** Service characters (`.ch .c1`–`.c9`). Pos/size match the design CSS. */
+/** Service characters (`.ch .c1`–`.c9`): a square Unsplash photo per service (public/img/photos, credits in CREDITS.md there). */
 export const characters = {
-  clean: { src: 'clean.png', x: 65, y: 13 },
-  deep: { src: 'deep.png', x: 50, y: 9 },
-  kitchen: { src: 'kitchen.png', x: 46, y: 3 },
-  laundry: { src: 'laundry.png', x: 38, y: 4 },
-  custom: { src: 'custom.png', x: 46, y: 15 },
-  hero: { src: 'hero.png', x: 52, y: 4 },
-  nurse: { src: 'nurse.png', x: 50, y: 8 },
-  repair: { src: 'repair.png', x: 57, y: 4 },
-  barber: { src: 'barber.png', x: 50, y: 8 },
+  clean: { src: 'photos/clean.jpg', x: 50, y: 50 },
+  deep: { src: 'photos/deep.jpg', x: 50, y: 50 },
+  kitchen: { src: 'photos/kitchen.jpg', x: 50, y: 50 },
+  laundry: { src: 'photos/laundry.jpg', x: 50, y: 50 },
+  custom: { src: 'photos/custom.jpg', x: 50, y: 50 },
+  hero: { src: 'photos/hero.jpg', x: 50, y: 50 },
+  nurse: { src: 'photos/nurse.jpg', x: 50, y: 50 },
+  repair: { src: 'photos/repair.jpg', x: 50, y: 50 },
+  barber: { src: 'photos/barber.jpg', x: 50, y: 50 },
 } as const;
 export type Character = keyof typeof characters;
 export const characterIds = Object.keys(characters) as Character[];

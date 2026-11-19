@@ -16,7 +16,7 @@ export function SigninPhoneScreen() {
     <Screen>
       <Row style={{ marginTop: 10, alignItems: 'flex-end' }}>
         <Mark size={52} />
-        <CharacterTile name="hero" width={92} height={110} radius={18} zoom={260} x={50} y={9} />
+        <CharacterTile name="hero" width={92} height={110} radius={18} zoom={120} y={100} />
       </Row>
       <H size={22}>{t('Enter your mobile number', 'अपना मोबाइल नंबर डालें', 'ਆਪਣਾ ਮੋਬਾਈਲ ਨੰਬਰ ਪਾਓ')}</H>
       <T m>{t('We will send a 4-digit code. New here? The same step creates your account.', 'हम 4 अंकों का कोड भेजेंगे। नए हैं? इसी कदम से आपका खाता बन जाता है।', 'ਅਸੀਂ 4 ਅੰਕਾਂ ਦਾ ਕੋਡ ਭੇਜਾਂਗੇ। ਨਵੇਂ ਹੋ? ਇਸੇ ਕਦਮ ਨਾਲ ਤੁਹਾਡਾ ਖਾਤਾ ਬਣ ਜਾਂਦਾ ਹੈ।')}</T>

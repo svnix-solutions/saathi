@@ -85,3 +85,10 @@ anything new in a feature stylesheet scoped under `.sa` with a feature prefix.
 Dark mode, large text, Hindi and small phone are theme props, not separate screens: the Storybook toolbar sets them
 for every phone, and stories can pass them (`<CustomerApp initial="home" dark />`, `textScale={1.22}`,
 `locale="hi"`, `device="small"`).
+
+## People and service pictures
+
+Faces (`<Avatar face>`) and service pictures (`<CharacterTile name>`) are square Unsplash photos in
+`public/img/photos/`, listed with their photographers in `public/img/photos/CREDITS.md`. To add a person, add a
+320×320 face-centred crop there, a line in `src/native/ui/atoms/Avatar/faces.ts`, a `.f-xx` rule in `admin.css` (for
+the admin panel), and a row in CREDITS.md.
