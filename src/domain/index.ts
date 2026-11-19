@@ -5,3 +5,4 @@ export * from './pricing';
 export * from './codes';
 export * from './format';
 export * from './i18n';
+export * from './care';

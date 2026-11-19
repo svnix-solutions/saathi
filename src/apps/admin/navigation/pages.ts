@@ -11,6 +11,7 @@ import { pages as team } from '../features/team';
 import { pages as finance } from '../features/finance';
 import { pages as support } from '../features/support';
 import { pages as catalog } from '../features/catalog';
+import { pages as care } from '../features/care';
 
 /** Every admin page by name, collected from the features (see PAGES.md). */
-export const adminPages: PageMap = { ...auth, ...operations, ...safety, ...automation, ...campaigns, ...partners, ...customers, ...quality, ...team, ...finance, ...support, ...catalog };
+export const adminPages: PageMap = { ...auth, ...operations, ...safety, ...automation, ...campaigns, ...partners, ...customers, ...quality, ...team, ...finance, ...support, ...catalog, ...care };

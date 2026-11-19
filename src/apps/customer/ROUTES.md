@@ -62,3 +62,14 @@ visual-regression harness use them. Use them with `nav.push(name, params)` / `na
 | `notHome` | v3 | 19 | booking | Not-at-home visit |
 | `plus` | v3 | 19 | membership | Plus membership |
 | `sharedHome` | v3 | 19 | membership | Shared home |
+| `care.home` | v2 | 37 | care | Saathi Care home |
+| `care.physio` | v2 | 37 | care | Physiotherapy: the problem |
+| `care.plans` | v2 | 37 | care | Physio session plans |
+| `care.nurse` | v2 | 37 | care | Nurse care by the hour or day |
+| `care.procedures` | v2 | 37 | care | Short nurse procedures |
+| `care.prescription` | v2 | 37 | care | Prescription photo |
+| `care.patient` | v2 | 37 | care | Patient details |
+| `care.schedule` | v2 | 37 | care | Care start date and visit days |
+| `care.confirm` | v2 | 37 | care | Care confirm and pay |
+| `care.plan` | v2 | 37 | care | My care plan |
+| `care.notes` | v2 | 37 | care | Visit notes |

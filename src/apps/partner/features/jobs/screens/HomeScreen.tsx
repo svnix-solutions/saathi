@@ -3,7 +3,7 @@ import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { clockTime, rupees } from '@/domain';
 import {
-  Avatar, Card, Grid, H, H2, Icon, IconTile, Lft, Page, Row, Screen, T, Tag, Toggle, TopBar, palette, useNav, useT, useTheme,
+  Avatar, Card, Chevron, Grid, H, H2, Icon, IconTile, Lft, Page, Row, Screen, T, Tag, Toggle, TopBar, palette, useNav, useT, useTheme,
 } from '@/native/ui';
 import { PartnerTabs } from '../../../navigation/PartnerTabs';
 import { homeShortcuts } from '../data';
@@ -48,6 +48,18 @@ export function HomeScreen() {
           </View>
           <Toggle big on={online} onChange={goOnline} />
         </Card>
+        {st.profession === 'nurse' && (
+          <Card row onPress={() => nav.push('care.today')}>
+            <Lft style={styles.fill}>
+              <IconTile name="plus" />
+              <View style={styles.fill}>
+                <H2>{t('Saathi Care visits today', 'आज की Saathi Care विज़िट', 'ਅੱਜ ਦੀਆਂ Saathi Care ਵਿਜ਼ਿਟਾਂ')}</H2>
+                <T s m>{t('Patients, checklists and visit notes', 'मरीज़, चेकलिस्ट और विज़िट नोट्स', 'ਮਰੀਜ਼, ਚੈੱਕਲਿਸਟ ਅਤੇ ਵਿਜ਼ਿਟ ਨੋਟਸ')}</T>
+              </View>
+            </Lft>
+            <Chevron />
+          </Card>
+        )}
         <Grid cols={2}>
           <Card onPress={() => nav.reset('jobs')}><T s m>{t('Jobs today', 'आज के काम', 'ਅੱਜ ਦੇ ਕੰਮ')}</T><H>{st.jobsToday ?? 3}</H></Card>
           <Card onPress={() => nav.reset('earnings')}><T s m>{t('Earned today', 'आज की कमाई', 'ਅੱਜ ਦੀ ਕਮਾਈ')}</T><H>{rupees(st.earnedToday ?? 412)}</H></Card>

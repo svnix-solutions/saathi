@@ -76,6 +76,11 @@ export const routeTable: Record<string, RouteInfo> = {
   "documents": { release: 'v3', designPage: 36, feature: 'account', title: "Documents" },
   "savings": { release: 'v3', designPage: 36, feature: 'earnings', title: "Savings pot" },
   "swapJob": { release: 'v3', designPage: 36, feature: 'jobs', title: "Swap a job" },
+  "care.today": { release: 'v2', designPage: 38, feature: 'care', title: "Today's care visits" },
+  "care.visit": { release: 'v2', designPage: 38, feature: 'care', title: "Visit checklist" },
+  "care.notes": { release: 'v2', designPage: 38, feature: 'care', title: "Visit notes" },
+  "care.patient": { release: 'v2', designPage: 38, feature: 'care', title: "Patient on a plan" },
+  "care.credentials": { release: 'v2', designPage: 38, feature: 'care', title: "Licence and registration" },
 };
 
 /** Route names in a release, e.g. everything that must work at launch: `routesIn('v1')`. */

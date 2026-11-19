@@ -70,6 +70,17 @@ export const routeTable: Record<string, RouteInfo> = {
   "notHome": { release: 'v3', designPage: 19, feature: 'booking', title: "Not-at-home visit" },
   "plus": { release: 'v3', designPage: 19, feature: 'membership', title: "Plus membership" },
   "sharedHome": { release: 'v3', designPage: 19, feature: 'membership', title: "Shared home" },
+  "care.home": { release: 'v2', designPage: 37, feature: 'care', title: "Saathi Care home" },
+  "care.physio": { release: 'v2', designPage: 37, feature: 'care', title: "Physiotherapy: the problem" },
+  "care.plans": { release: 'v2', designPage: 37, feature: 'care', title: "Physio session plans" },
+  "care.nurse": { release: 'v2', designPage: 37, feature: 'care', title: "Nurse care by the hour or day" },
+  "care.procedures": { release: 'v2', designPage: 37, feature: 'care', title: "Short nurse procedures" },
+  "care.prescription": { release: 'v2', designPage: 37, feature: 'care', title: "Prescription photo" },
+  "care.patient": { release: 'v2', designPage: 37, feature: 'care', title: "Patient details" },
+  "care.schedule": { release: 'v2', designPage: 37, feature: 'care', title: "Care start date and visit days" },
+  "care.confirm": { release: 'v2', designPage: 37, feature: 'care', title: "Care confirm and pay" },
+  "care.plan": { release: 'v2', designPage: 37, feature: 'care', title: "My care plan" },
+  "care.notes": { release: 'v2', designPage: 37, feature: 'care', title: "Visit notes" },
 };
 
 /** Route names in a release, e.g. everything that must work at launch: `routesIn('v1')`. */

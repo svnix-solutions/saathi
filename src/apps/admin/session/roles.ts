@@ -14,13 +14,13 @@ export const roles: Role[] = ['Owner', 'Operations', 'Support', 'Finance', 'Part
  */
 export const roleSections: Record<Role, Section[] | 'all'> = {
   Owner: 'all',
-  Operations: ['dashboard', 'bookings', 'live', 'safety', 'automation', 'partners', 'customers', 'ratings'],
+  Operations: ['dashboard', 'bookings', 'care', 'live', 'safety', 'automation', 'partners', 'customers', 'ratings'],
   Support: ['dashboard', 'bookings', 'safety', 'customers', 'support'],
   Finance: ['dashboard', 'payouts', 'pricing'],
   'Partner team': ['dashboard', 'partners', 'ratings', 'live'],
-  Quality: ['dashboard', 'bookings', 'live', 'partners', 'customers', 'ratings'],
+  Quality: ['dashboard', 'bookings', 'care', 'live', 'partners', 'customers', 'ratings'],
   Marketing: ['dashboard', 'customers', 'ratings', 'campaigns'],
-  Viewer: ['dashboard', 'bookings', 'live', 'partners', 'customers', 'ratings', 'payouts', 'support', 'team'],
+  Viewer: ['dashboard', 'bookings', 'care', 'live', 'partners', 'customers', 'ratings', 'payouts', 'support', 'team'],
 };
 
 /** True when any of `roles` can open `section`. Unknown role names open nothing. */

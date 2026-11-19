@@ -1,4 +1,7 @@
-/** Design page 03 · Book a helper — screen 5 · Home, with the kinds of work on top; 5b–5d · Nursing, Repair, Barber (params: { category }). */
+/**
+ * Design page 03 · Book a helper — screen 5 · Home, with the kinds of work on top; 5b–5d · Nursing, Repair, Barber (params: { category }).
+ * Design page 37 · the Saathi Care card under the 15-minute card, and as the hero when the Care (nursing) chip is picked.
+ */
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import {
@@ -9,6 +12,7 @@ import { useCustomerState } from '../../../state';
 import { CustomerTabs } from '../../../navigation/CustomerTabs';
 import { SavedAddress } from '../../booking';
 import { ServiceRowCard } from '../components/ServiceRowCard';
+import { CareCard } from '../components/CareCard';
 import { CATEGORY_NOTE, TRUST } from '../data';
 
 export function HomeScreen({ params }: ScreenProps<{ category?: Category }>) {
@@ -39,8 +43,9 @@ export function HomeScreen({ params }: ScreenProps<{ category?: Category }>) {
             </View>
           </Lft>
         </Card>}
+        {(cat === 'cleaning' || cat === 'nursing') && <CareCard hero={cat === 'nursing'} />}
         <ChipGroup accessibilityLabel={t('Kind of work', 'काम का प्रकार', 'ਕੰਮ ਦੀ ਕਿਸਮ')} value={cat} onChange={setCat}
-          items={categories.map((x) => ({ key: x.id, label: t(x.name, x.nameHi, x.namePa) }))} />
+          items={categories.map((x) => ({ key: x.id, label: x.id === 'nursing' ? t('Care', 'देखभाल', 'ਦੇਖਭਾਲ') : t(x.name, x.nameHi, x.namePa) }))} />
         <H size={16}>{t(info.title, info.titleHi, info.titlePa)}</H>
         {cat === 'cleaning' ? <>
           <Grid cols={2}>

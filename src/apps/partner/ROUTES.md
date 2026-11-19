@@ -68,3 +68,8 @@ visual-regression harness use them. Use them with `nav.push(name, params)` / `na
 | `documents` | v3 | 36 | account | Documents |
 | `savings` | v3 | 36 | earnings | Savings pot |
 | `swapJob` | v3 | 36 | jobs | Swap a job |
+| `care.today` | v2 | 38 | care | Today's care visits |
+| `care.visit` | v2 | 38 | care | Visit checklist |
+| `care.notes` | v2 | 38 | care | Visit notes |
+| `care.patient` | v2 | 38 | care | Patient on a plan |
+| `care.credentials` | v2 | 38 | care | Licence and registration |
