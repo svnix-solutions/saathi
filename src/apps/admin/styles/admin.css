@@ -65,41 +65,41 @@
 .sa .st svg {width:16px; height:16px;}
 .sa .st.big svg {width:32px; height:32px;}
 .sa .st .e {color:var(--line);}
-.sa .ch {width:46px; height:46px; border-radius:13px; background:var(--mint) no-repeat; background-size:100%; flex:none; animation:bob 3s ease-in-out infinite;}
-.sa .c1 {background-image:url(/img/2d/clean.svg); background-position:50% 50%;}
-.sa .c2 {background-image:url(/img/2d/deep.svg); background-position:50% 50%; animation-delay:-.6s;}
-.sa .c3 {background-image:url(/img/2d/kitchen.svg); background-position:50% 50%; animation-delay:-1.2s;}
-.sa .c4 {background-image:url(/img/2d/laundry.svg); background-position:50% 50%; animation-delay:-1.8s;}
-.sa .c5 {background-image:url(/img/2d/custom.svg); background-position:50% 50%; animation-delay:-2.4s;}
-.sa .c6 {background-image:url(/img/2d/hero.svg); background-position:50% 50%;}
+.sa .ch {width:46px; height:46px; border-radius:13px; background:var(--mint) no-repeat; background-size:cover; flex:none; animation:bob 3s ease-in-out infinite;}
+.sa .c1 {background-image:url(/img/photos/clean.jpg); background-position:50% 50%;}
+.sa .c2 {background-image:url(/img/photos/deep.jpg); background-position:50% 50%; animation-delay:-.6s;}
+.sa .c3 {background-image:url(/img/photos/kitchen.jpg); background-position:50% 50%; animation-delay:-1.2s;}
+.sa .c4 {background-image:url(/img/photos/laundry.jpg); background-position:50% 50%; animation-delay:-1.8s;}
+.sa .c5 {background-image:url(/img/photos/custom.jpg); background-position:50% 50%; animation-delay:-2.4s;}
+.sa .c6 {background-image:url(/img/photos/hero.jpg); background-position:50% 50%;}
 @keyframes bob{ 50% { transform:translateY(-4px); } }
 @media (prefers-reduced-motion: reduce){.sa .ch{ animation:none; }}
 .sa .av[class*="f-"] {background-color:var(--yellow); background-repeat:no-repeat; font-size:0 !important; animation:none;}
-.sa .f-sd {background-image:url(/img/2d/sd.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-rm {background-image:url(/img/2d/rm.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-kr {background-image:url(/img/2d/kr.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-gk {background-image:url(/img/2d/gk.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-mt {background-image:url(/img/2d/mt.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-ms {background-image:url(/img/2d/ms.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-ap {background-image:url(/img/2d/ap.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-rg {background-image:url(/img/2d/rg.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-fa {background-image:url(/img/2d/fa.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-pn {background-image:url(/img/2d/pn.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-st {background-image:url(/img/2d/st.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-rv {background-image:url(/img/2d/rv.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-ak {background-image:url(/img/2d/ak.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-kd {background-image:url(/img/2d/kd.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-pv {background-image:url(/img/2d/pv.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-ls {background-image:url(/img/2d/ls.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-ad {background-image:url(/img/2d/ad.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-ol {background-image:url(/img/2d/ol.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-ac {background-image:url(/img/2d/ac.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-au {background-image:url(/img/2d/au.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-s1 {background-image:url(/img/2d/s1.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-s2 {background-image:url(/img/2d/s2.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-mk {background-image:url(/img/2d/mk.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-nk {background-image:url(/img/2d/nk.svg); background-position:50% 30%; background-size:135%;}
-.sa .f-ab {background-image:url(/img/2d/ab.svg); background-position:50% 30%; background-size:135%;}
+.sa .f-sd {background-image:url(/img/photos/sd.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-rm {background-image:url(/img/photos/rm.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-kr {background-image:url(/img/photos/kr.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-gk {background-image:url(/img/photos/gk.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-mt {background-image:url(/img/photos/mt.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-ms {background-image:url(/img/photos/ms.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-ap {background-image:url(/img/photos/ap.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-rg {background-image:url(/img/photos/rg.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-fa {background-image:url(/img/photos/fa.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-pn {background-image:url(/img/photos/pn.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-st {background-image:url(/img/photos/st.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-rv {background-image:url(/img/photos/rv.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-ak {background-image:url(/img/photos/ak.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-kd {background-image:url(/img/photos/kd.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-pv {background-image:url(/img/photos/pv.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-ls {background-image:url(/img/photos/ls.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-ad {background-image:url(/img/photos/ad.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-ol {background-image:url(/img/photos/ol.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-ac {background-image:url(/img/photos/ac.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-au {background-image:url(/img/photos/au.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-s1 {background-image:url(/img/photos/s1.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-s2 {background-image:url(/img/photos/s2.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-mk {background-image:url(/img/photos/mk.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-nk {background-image:url(/img/photos/nk.jpg); background-position:50% 50%; background-size:cover;}
+.sa .f-ab {background-image:url(/img/photos/ab.jpg); background-position:50% 50%; background-size:cover;}
 .sa .tog span {width:14px; height:14px; border-radius:50%; background:#fff;}
 .sa .win {box-shadow:0 34px 60px -30px rgba(7,63,51,.4);}
 .sa .card, .sa .pill, .sa .inp {box-shadow:0 1px 2px rgba(15,31,28,.05);}

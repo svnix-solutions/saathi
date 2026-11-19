@@ -86,9 +86,9 @@ Dark mode, large text, Hindi and small phone are theme props, not separate scree
 for every phone, and stories can pass them (`<CustomerApp initial="home" dark />`, `textScale={1.22}`,
 `locale="hi"`, `device="small"`).
 
-## People and characters
+## People and service pictures
 
-Faces (`<Avatar face>`) and service characters (`<CharacterTile name>`) are flat 2D drawings in `public/img/2d/`,
-drawn by `scripts/art/make-2d.mjs`. To change someone's look or add a person, edit the `people` table in that script,
-run `node scripts/art/make-2d.mjs`, and add the face to `src/native/ui/atoms/Avatar/faces.ts` (and `admin.css` for the
-admin panel).
+Faces (`<Avatar face>`) and service pictures (`<CharacterTile name>`) are square Unsplash photos in
+`public/img/photos/`, listed with their photographers in `public/img/photos/CREDITS.md`. To add a person, add a
+320×320 face-centred crop there, a line in `src/native/ui/atoms/Avatar/faces.ts`, a `.f-xx` rule in `admin.css` (for
+the admin panel), and a row in CREDITS.md.

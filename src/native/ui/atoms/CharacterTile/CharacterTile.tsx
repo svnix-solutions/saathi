@@ -12,7 +12,7 @@ export type CharacterTileProps = {
   size?: number;
   width?: number;
   height?: number;
-  /** image zoom in % of the tile (default 100: the whole drawing) */
+  /** image zoom in % of the tile (default 100: the whole photo) */
   zoom?: number;
   radius?: number;
   /** crop position overrides in % */
