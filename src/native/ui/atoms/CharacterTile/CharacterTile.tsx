@@ -12,7 +12,7 @@ export type CharacterTileProps = {
   size?: number;
   width?: number;
   height?: number;
-  /** image zoom in % of the tile (default 230) */
+  /** image zoom in % of the tile (default 100: the whole drawing) */
   zoom?: number;
   radius?: number;
   /** crop position overrides in % */
@@ -24,7 +24,7 @@ export type CharacterTileProps = {
 };
 
 /** A service character cropped into a rounded tile (the design's `.ch`). */
-export function CharacterTile({ name, size = 46, width, height, zoom = 230, radius = radii.tile, x, y, bg, style }: CharacterTileProps) {
+export function CharacterTile({ name, size = 46, width, height, zoom = 100, radius = radii.tile, x, y, bg, style }: CharacterTileProps) {
   const { c } = useTheme();
   const ch = characters[name];
   return (

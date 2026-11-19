@@ -85,3 +85,10 @@ anything new in a feature stylesheet scoped under `.sa` with a feature prefix.
 Dark mode, large text, Hindi and small phone are theme props, not separate screens: the Storybook toolbar sets them
 for every phone, and stories can pass them (`<CustomerApp initial="home" dark />`, `textScale={1.22}`,
 `locale="hi"`, `device="small"`).
+
+## People and characters
+
+Faces (`<Avatar face>`) and service characters (`<CharacterTile name>`) are flat 2D drawings in `public/img/2d/`,
+drawn by `scripts/art/make-2d.mjs`. To change someone's look or add a person, edit the `people` table in that script,
+run `node scripts/art/make-2d.mjs`, and add the face to `src/native/ui/atoms/Avatar/faces.ts` (and `admin.css` for the
+admin panel).
